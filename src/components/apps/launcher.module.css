@@ -1,0 +1,29 @@
+#drawer {
+    width: 100%;
+}
+
+#tile-container {
+    padding: 30px;
+    padding-top: 66px;
+    display: flex;
+}
+
+.tile-wrapper {
+    padding-right: 18px;
+}
+
+.tile-layer1 {
+    height: 100px;
+    width: 100px;
+    backdrop-filter: blur(10px);
+    box-shadow: var(--default-box-shadow);
+}
+
+.tile-layer2 {
+    position: relative;
+    top: -99px;
+    left: 1px;
+    height: 98px;
+    width: 98px;
+    backdrop-filter: var(--default-ui-brightness);
+}

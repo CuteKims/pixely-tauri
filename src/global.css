@@ -1,0 +1,48 @@
+:root {
+    --default-ui-color: rgba(255,255,255,.5);
+    --default-font-color: #161616;
+    --default-font-weight: 500;
+    --default-ui-brightness: brightness(115%);
+    
+    --default-box-shadow: 0px 0px 6px rgba(0,0,0,.16);
+
+    font-synthesis: none;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    -webkit-text-size-adjust: 100%;
+}
+
+body, #root {
+    border: 0;
+    padding: 0;
+    margin: 0;
+    overflow: hidden;
+    user-select: none;
+}
+
+p {
+    margin: auto;
+    color: var(--default-font-color);
+    font-weight: var(--default-font-weight);
+    font-size: 15px;
+}
+
+@media (prefers-color-scheme: dark) {
+    :root {
+        --default-ui-color: rgba(0,0,0,.5);
+        --default-font-color: #fff;
+        --default-font-weight: 100;
+        --default-ui-brightness: brightness(85%)
+    }
+}
+
+::-webkit-scrollbar {
+    display: none;
+}
+
+.default-svg {
+    position: relative;
+    left: -50px;
+    filter: drop-shadow(50px 0px 0px var(--default-font-color));
+}
