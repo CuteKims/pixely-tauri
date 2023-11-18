@@ -1,16 +1,13 @@
-use crate::bridger;
+use crate::bridger::{models, impls};
 
+use async_trait::async_trait;
 
-impl bridger::impls::ExecuteAction for bridger::models::ActionDispatch {
-    fn execute(&self) -> Result<bridger::models::Return, String> {
-        match self {
-            Self::InstallJava => {
-                Ok(bridger::models::Return::Ok(()))
-            },
-            Self::InstallInstance => {
-                Ok(bridger::models::Return::Ok(()))
-            }
-        }        
+#[async_trait]
+impl impls::ExecuteTask for models::AsyncTask {
+    async fn execute(&self) -> Result<models::Return, String> {
+        let result = match self.request_header {
+            models::AsyncTaskHeaders::InstallInstance => todo!(),
+            models::AsyncTaskHeaders::InstallJava => todo!(),
+        };
     }
 }
-

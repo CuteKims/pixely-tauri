@@ -1,30 +1,37 @@
 use serde;
 
-pub enum RequestBody {
-    Get(ActionGet),
-    Dispatch(ActionDispatch)
+#[derive(serde::Deserialize)]
+pub enum Task {
+    Instant(InstantTask),
+    Async(AsyncTask)
 }
-pub enum ActionGet {
+
+#[derive(serde::Deserialize)]
+pub struct InstantTask {
+    pub request_header: InstantTaskHeaders,
+    pub request_body: String
+}
+
+#[derive(serde::Deserialize)]
+pub struct AsyncTask {
+    pub request_header: AsyncTaskHeaders,
+    pub request_body: String
+}
+
+#[derive(serde::Deserialize)]
+pub enum InstantTaskHeaders {
     InstancesInstalled,
     JavasInstalled,
     VersionManifest,
 }
 
-pub enum ActionDispatch {
+#[derive(serde::Deserialize)]
+pub enum AsyncTaskHeaders {
     InstallInstance,
     InstallJava,
 }
 
-pub struct Request {
-    pub request_body: RequestBody
-}
-
-#[derive(serde::Deserialize)]
-pub struct RawRequest<'a> {
-    pub request_type: &'a str,
-    pub request_action: &'a str,
-}
-
+#[derive(serde::Serialize)]
 pub enum Return {
     Value(String),
     Ok(())

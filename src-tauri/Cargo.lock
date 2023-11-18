@@ -2586,6 +2586,7 @@ dependencies = [
 name = "pixely-tauri"
 version = "0.0.0"
 dependencies = [
+ "async-trait",
  "futures",
  "keyring",
  "reqwest",

@@ -1,9 +1,25 @@
-interface IBackendResultParser {
-    rawResult: string,
-    parse(): BackendResult,
+class TaskResponseParser {
+    rawTaskResponse: string;
+
+    constructor(rawTaskResponse: string) {
+        this.rawTaskResponse = rawTaskResponse;
+    }
+
+    parse(): ParsedTaskResponse {
+        try {
+            return JSON.parse(this.rawTaskResponse);
+        } catch (error: any) {
+            throw new Error(error)
+        }
+    }
 }
 
-enum BackendResult {
+type ParsedTaskResponse = {
+    header: TaskResponseHeader,
+    body: InstancesInstalled
+}
+
+enum TaskResponseHeader {
     InstancesInstalled,
     JavasInstalled,
 }

@@ -17,6 +17,7 @@
     width: 100px;
     backdrop-filter: blur(10px);
     box-shadow: var(--default-box-shadow);
+    transition: .5s;
 }
 
 .tile-layer2 {
@@ -25,5 +26,20 @@
     left: 1px;
     height: 98px;
     width: 98px;
+    background-color: transparent;
     backdrop-filter: var(--default-ui-brightness);
+    pointer-events: none;
+    transition: backdrop-filter .5s;
+}
+
+.tile-layer1:hover {
+    background-color: rgba(255, 255, 255, .1);
+    box-shadow: 0px 0px 6px rgba(0, 0, 0, .16);
+    transition: .1s;
+}
+
+@media (prefers-color-scheme: dark) {
+    .tile-layer1:hover {
+        background-color: rgba(0, 0, 0, .1);
+    }
 }
