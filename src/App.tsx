@@ -1,77 +1,61 @@
-import { useEffect, useState, createContext, useReducer } from 'react';
+import { useEffect, useState, createContext, useReducer, ProviderProps, useContext } from 'react';
 
-import bgimage from './bgimage/wallpaper5.jpg';
+import { GlobalStateActionTypes, GlobalStateContext } from './components/hocs/state/context';
+
+import bgimage from './assets/bgimage/wallpaper14.jpg';
 
 import Titlebar from './components/titlebar';
-import Menu from './components/menu';
+import Menu from './components/models/menu';
 
 import AppLauncher from './components/apps/launcher';
+import { appWindow } from '@tauri-apps/api/window';
 
-type GlobalState = {
-    flags: {
-        menu: boolean,
-        exit: boolean,
-        focus: boolean,
-    },
-    appStateStack: AppState[],
-}
 
-type AppState = {
-    name: String,
-}
-
-type StateAction = {
-    type: StateActionTypes,
-    payload: any,
-}
-
-enum StateActionTypes {
-    SetMenuFlag,
-    SetExitFlag,
-    SetFocusFlag,
-    PopAppStateStack,
-    PushAppStateStack,
-}
-
-const initialGlobalState: GlobalState = {
-    flags: {
-        menu: true,
-        exit: false,
-        focus: true,
-    },
-    appStateStack: [],
-}
-
-const GlobalStateReducer = (state: GlobalState, action: StateAction): GlobalState => {
-    try {
-        switch (action.type) {
-            case StateActionTypes.SetMenuFlag: {
-                return {
-                    ...state,
-                    flags: {
-                        ...state.flags,
-                        menu: action.payload
-                    },
-                }
-            };
-            default: return state;
-        };
-    } catch (error: any) {
-        throw new Error(error)
-    }
-}
 
 function App() {
-    const [windowSize, setWindowSize] = useState({height: window.innerHeight, width: window.innerWidth});
-    const handleResize = () => {
-        setWindowSize({height: window.innerHeight, width: window.innerWidth})
+    const {state, dispatch} = useContext(GlobalStateContext);
+    const updateWindowSize = () => {
+        dispatch({
+            type: GlobalStateActionTypes.SetWindowSize,
+            value: {
+                height: window.innerHeight,
+                width: window.innerWidth,
+            }
+        });
+        appWindow.isMaximized().then(isMaximized => {
+            dispatch({
+                type: GlobalStateActionTypes.SetIsMaximized,
+                value: isMaximized
+            });
+        })
     };
+    const updateIsFocus = () => {
+        appWindow.isFocused().then(isFocused => {
+            dispatch({
+                type: GlobalStateActionTypes.SetIsFocus,
+                value: isFocused
+            });
+        })
+    };
+    //Update initialGlobalState after the first render.
     useEffect(() => {
-        window.addEventListener('resize', handleResize);
-        return () => window.removeEventListener('resize', handleResize)
+        updateWindowSize();
+        updateIsFocus();
+    }, []);
+
+    //Listen to window events and update GlobalStates.
+    useEffect(() => {
+        window.addEventListener('resize', updateWindowSize);
+        window.addEventListener('focus', updateIsFocus);
+        window.addEventListener('blur', updateIsFocus);
+        return () => {
+            window.removeEventListener('resize', updateWindowSize);
+            window.removeEventListener('focus', updateIsFocus);
+            window.removeEventListener('blur', updateIsFocus);
+        }
     });
     return (
-        <div id='app-body' style={{width: '100%', height: windowSize.height, overflow: 'hidden'}}>
+        <div id='app-body' style={{width: '100%', height: state.window.size.height, overflow: 'hidden'}}>
             <div id='background-container' style={{position: 'absolute', top: 0, left: 0, zIndex: -1, height: '100%', width: '100%'}}>
                 <Background />
             </div>

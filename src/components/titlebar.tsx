@@ -2,24 +2,13 @@ import { appWindow } from '@tauri-apps/api/window'
 
 import styles from './titlebar.module.css'
 
-import { useEffect, useState } from 'react'
+import { useContext, useEffect } from 'react'
+import { GlobalStateContext } from './hocs/state/context'
 
 const Titlebar: React.FC = () => {
-    let [isMaximized, setIsMaximized] = useState(false)
-    let [isFocused, setIsFocused] = useState(true)
-    useEffect(() => {
-        appWindow.isMaximized().then(value => setIsMaximized(value));
-        const setFocus = () => setIsFocused(true);
-        const setBlur = () => setIsFocused(false);
-        window.addEventListener('focus', setFocus);
-        window.addEventListener('blur', setBlur);
-        return () => {
-            window.removeEventListener('focus', setFocus);
-            window.removeEventListener('blur', setBlur);
-        }
-    })
+    const {state} = useContext(GlobalStateContext);
     return (
-        <div id={styles.titlebar} style={isFocused ? {opacity: 1} : {opacity: .5}} data-tauri-drag-region>
+        <div id={styles.titlebar} style={state.window.isFocused ? {opacity: 1} : {opacity: .5}} data-tauri-drag-region>
             {/* Back button */}
             <div className={styles.button}>
                 <svg xmlns="http://www.w3.org/2000/svg" width="48" height="36" viewBox="0 0 48 36">
@@ -48,9 +37,9 @@ const Titlebar: React.FC = () => {
             <div
             className={styles.button}
             onClick={() => appWindow.toggleMaximize()}>
-                {isMaximized ? <>
+                {state.window.isMaximized ? <>
                     <svg width="48.000000" height="36.000000" viewBox="0 0 48 36" fill="none" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink">
-                        <path d="M22 13L29 13L29 21L27 21L27 23L19 23L19 15L21 15L21 13L22 13ZM28 14L22 14L22 15L27 15L27 20L28 20L28 14ZM22 16L20 16L20 22L26 22L26 16L22 16Z" fill-rule="evenodd" fill="currentColor"/>
+                        <path d="M22 13L29 13L29 21L27 21L27 23L19 23L19 15L21 15L21 13L22 13ZM28 14L22 14L22 15L27 15L27 20L28 20L28 14ZM22 16L20 16L20 22L26 22L26 16L22 16Z" fillRule="evenodd" fill="currentColor"/>
                     </svg>
                 </> : <>
                     <svg xmlns="http://www.w3.org/2000/svg" width="48" height="36" viewBox="0 0 48 36">

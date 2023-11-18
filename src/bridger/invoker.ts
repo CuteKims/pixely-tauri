@@ -18,6 +18,11 @@ class BackendInvoker {
             .catch(error => {
                 throw new Error(error)
             })
+            //This will unwrap the Result<T, E> from Rust backend.
+            //If the backend returns OK(), .then() will be executed.
+            //If it is Err(), .catch() will catch it and throw an error.
+
+            //Can we ask Microsoft to add ? and Result<T, E> into TypeScript?
     }
 }
 
