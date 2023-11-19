@@ -62,7 +62,7 @@ function App() {
             <div id='titlebar-container' style={{position: 'absolute', top: 0, left: 0, zIndex: 100, width: '100%'}}>
                 <Titlebar />
             </div>
-            <div id='modal-container' style={{position: 'absolute', top: 0, left: 0, zIndex: 99, height: 'auto', width: 'auto'}}>
+            <div id='modal-container' style={{position: 'absolute', top: 0, left: 0, zIndex: 99, height: '100%', width: '100%', pointerEvents: 'none'}}>
                 <Menu />
             </div>
             <div id='app-container' style={{}}>

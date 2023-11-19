@@ -1,15 +1,18 @@
 #titlebar {
     height: 36px;
     width: 100%;
-    background-color: var(--default-ui-color);
-    backdrop-filter: blur(10px) brightness(115%);
+    backdrop-filter: blur(10px) var(--default-ui-brightness);
     box-shadow: var(--default-box-shadow);
     display: flex;
-    transition: background-color .5s, opacity .3s;
+    transition: .2s
+}
+
+.titlebar {
+    background-color: var(--default-ui-color);
 }
 
 .titlebar-blur {
-    pointer-events: none;
+    background-color: var(--default-activate-color);
 }
 
 .button {
