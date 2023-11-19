@@ -3,10 +3,16 @@ import { appWindow } from '@tauri-apps/api/window'
 import styles from './titlebar.module.css'
 
 import { useContext, useEffect } from 'react'
-import { GlobalStateContext } from './hocs/state/context'
+import { GlobalStateActionTypes, GlobalStateContext } from './hocs/state/context'
 
 const Titlebar: React.FC = () => {
-    const {state} = useContext(GlobalStateContext);
+    const {state, dispatch} = useContext(GlobalStateContext);
+    const openMenu = () => {
+        dispatch({
+            type: GlobalStateActionTypes.SetMenuFlag,
+            value: true,
+        })
+    }
     return (
         <div id={styles.titlebar} className={state.window.isFocused ? styles.titlebar : styles['titlebar-blur']} data-tauri-drag-region>
             {/* Back button */}
@@ -16,7 +22,7 @@ const Titlebar: React.FC = () => {
                 </svg>
             </div>
             {/* Menu button */}
-            <div className={styles.button}>
+            <div className={styles.button} onClick={openMenu}>
                 <svg xmlns="http://www.w3.org/2000/svg" width="48" height="36" viewBox="0 0 48 36">
                     <rect width="14" height="1" transform="translate(17 13)" fill="currentColor"/>
                     <rect width="14" height="1" transform="translate(17 18)" fill="currentColor"/>
