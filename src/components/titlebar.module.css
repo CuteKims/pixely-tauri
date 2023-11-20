@@ -1,7 +1,7 @@
 #titlebar {
     height: 36px;
     width: 100%;
-    backdrop-filter: blur(10px) var(--default-ui-brightness);
+    backdrop-filter: blur(20px) var(--default-ui-brightness);
     box-shadow: var(--default-box-shadow);
     display: flex;
     transition: .2s

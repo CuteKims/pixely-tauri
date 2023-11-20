@@ -2,13 +2,14 @@ import { useEffect, useState, createContext, useReducer, ProviderProps, useConte
 
 import { GlobalStateActionTypes, GlobalStateContext } from './components/hocs/state/context';
 
-import bgimage from './assets/bgimage/wallpaper14.jpg';
+import bgimage from './assets/bgimage/wallpaper13.jpg';
 
 import Titlebar from './components/titlebar';
-import Menu from './components/models/menu';
+import Sidebar from './components/models/sidebar';
 
-import AppLauncher from './components/apps/launcher';
+import Launcher from './components/apps/launcher';
 import { appWindow } from '@tauri-apps/api/window';
+import Settings from './components/apps/settings';
 
 
 
@@ -63,10 +64,10 @@ function App() {
                 <Titlebar />
             </div>
             <div id='modal-container' style={{position: 'absolute', top: 0, left: 0, zIndex: 99, height: '100%', width: '100%', pointerEvents: 'none'}}>
-                <Menu />
+                <Sidebar />
             </div>
-            <div id='app-container' style={{}}>
-                <AppLauncher />
+            <div id='app-container' style={{height: '100%', width: '100%'}}>
+                <Settings />
             </div>
         </div>
     )

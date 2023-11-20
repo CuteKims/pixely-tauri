@@ -1,6 +1,6 @@
 import styles from './launcher.module.css'
 
-const AppLauncher: React.FC = () => {
+const Launcher: React.FC = () => {
     return (
         <>
             <div id={styles.drawer} style={{}}>
@@ -29,4 +29,4 @@ const Tile: React.FC<{}> = () => {
     )
 }
 
-export default AppLauncher;
+export default Launcher;
