@@ -1,7 +1,6 @@
 :root {
     --default-ui-color: rgba(255,255,255,.5);
     --default-font-color: #161616;
-    --default-font-weight: 500;
     --default-ui-brightness: brightness(115%);
     --default-hover-color: rgba(0,0,0,.1);
     --default-activate-color: rgba(0,0,0,.2);
@@ -26,7 +25,7 @@ body, #root {
 p {
     margin: auto;
     color: var(--default-font-color);
-    font-weight: var(--default-font-weight);
+    font-weight: lighter;
     font-size: 15px;
     transition: color .3s;
 }
@@ -35,7 +34,6 @@ p {
     :root {
         --default-ui-color: rgba(0,0,0,.5);
         --default-font-color: #fff;
-        --default-font-weight: 100;
         --default-ui-brightness: brightness(85%);
         --default-hover-color: rgba(255,255,255,.1);
         --default-activate-color: rgba(255,255,255,.2);

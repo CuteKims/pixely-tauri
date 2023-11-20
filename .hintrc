@@ -13,7 +13,9 @@
       "default",
       {
         "ignore": [
-          "backdrop-filter"
+          "backdrop-filter",
+          "user-select",
+          "-webkit-text-size-adjust"
         ]
       }
     ]

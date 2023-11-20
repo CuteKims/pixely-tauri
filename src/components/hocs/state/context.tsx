@@ -1,6 +1,6 @@
 import { createContext, useReducer } from "react"
 
-type GlobalState = {
+export type GlobalState = {
     window: {
         size: {
             height: number,
@@ -13,16 +13,16 @@ type GlobalState = {
         menu: boolean,
         exit: boolean,
     },
-    appStateStack: AppState[],
+    pageStack: Page[],
 }
 
-type GlobalStateContextType = {
+export type GlobalStateContext = {
     state: GlobalState,
     dispatch: React.Dispatch<GlobalStateAction>
 }
 
-type AppState = {
-    name: String,
+export type Page = {
+    page: string,
 }
 
 type GlobalStateAction = {
@@ -36,8 +36,8 @@ export enum GlobalStateActionTypes {
     SetIsFocus,
     SetIsMaximized,
     SetWindowSize,
-    PopAppStateStack,
-    PushAppStateStack,
+    PopPageStack,
+    PushPageStack,
 }
 
 const initialGlobalState: GlobalState = {
@@ -53,7 +53,7 @@ const initialGlobalState: GlobalState = {
         menu: true,
         exit: false,
     },
-    appStateStack: [],
+    pageStack: [{page: 'launcher'}],
 }
 
 const globalStateReducer = (state: GlobalState, action: GlobalStateAction): GlobalState => {
@@ -103,11 +103,17 @@ const globalStateReducer = (state: GlobalState, action: GlobalStateAction): Glob
                 }
             }
         };
+        case GlobalStateActionTypes.PushPageStack: {
+            return {
+                ...state,
+                pageStack: [...state.pageStack, action.value]
+            }
+        }
         default: return state
     };
 }
 
-export const GlobalStateContext = createContext<GlobalStateContextType>({
+export const globalStateContext = createContext<GlobalStateContext>({
     state: initialGlobalState,
     dispatch: () => console.log("Hey! Looks like you're sending state dispatches to THE VOID!"),
     //Those two lines of code above theoretically will never be execuated. If not, then it's a bug.
@@ -118,8 +124,8 @@ export const GlobalStateContext = createContext<GlobalStateContextType>({
 export const GlobalStateProvider: React.FC<{children?: React.ReactNode}> = ({children}) => {
     const [state, dispatch] = useReducer(globalStateReducer, initialGlobalState);
     return (
-        <GlobalStateContext.Provider value={{state, dispatch}}>
+        <globalStateContext.Provider value={{state, dispatch}}>
             {children}
-        </GlobalStateContext.Provider>
+        </globalStateContext.Provider>
     )
 }

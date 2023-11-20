@@ -12,7 +12,7 @@ const Settings: React.FC = () => {
                     <SidemenuButton />
                 </div>
                 <div id={styles['page-container']}>
-                    <Page />
+                    <SettingsPage />
                 </div>
             </div>
         </>
@@ -29,7 +29,7 @@ const SidemenuButton: React.FC = () => {
     )
 }
 
-const Page: React.FC = () => {
+const SettingsPage: React.FC = () => {
     return (
         <div className={styles.page}>
             <div className={styles['setting-component']}>

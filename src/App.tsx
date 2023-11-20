@@ -1,20 +1,22 @@
 import { useEffect, useState, createContext, useReducer, ProviderProps, useContext } from 'react';
 
-import { GlobalStateActionTypes, GlobalStateContext } from './components/hocs/state/context';
+import { GlobalStateActionTypes, globalStateContext } from './components/hocs/state/context';
 
-import bgimage from './assets/bgimage/wallpaper13.jpg';
+import bgimage from './assets/bgimage/wallpaper14.jpg';
 
 import Titlebar from './components/titlebar';
-import Sidebar from './components/models/sidebar';
+import Sidebar from './components/modals/sidebar';
 
-import Launcher from './components/apps/launcher';
+import Launcher from './components/pages/launcher/launcher';
 import { appWindow } from '@tauri-apps/api/window';
-import Settings from './components/apps/settings';
+import Settings from './components/pages/settings/settings';
+import pagesMap from './components/pages/pages';
+import { motion, AnimatePresence } from 'framer-motion';
 
 
 
 function App() {
-    const {state, dispatch} = useContext(GlobalStateContext);
+    const {state, dispatch} = useContext(globalStateContext);
     const updateWindowSize = () => {
         dispatch({
             type: GlobalStateActionTypes.SetWindowSize,
@@ -55,6 +57,8 @@ function App() {
             window.removeEventListener('blur', updateIsFocus);
         }
     });
+
+    const CurrentPage = pagesMap[state.pageStack.slice(-1)[0].page].component;
     return (
         <div id='app-body' style={{width: '100%', height: state.window.size.height, overflow: 'hidden'}}>
             <div id='background-container' style={{position: 'absolute', top: 0, left: 0, zIndex: -1, height: '100%', width: '100%'}}>
@@ -63,12 +67,17 @@ function App() {
             <div id='titlebar-container' style={{position: 'absolute', top: 0, left: 0, zIndex: 100, width: '100%'}}>
                 <Titlebar />
             </div>
-            <div id='modal-container' style={{position: 'absolute', top: 0, left: 0, zIndex: 99, height: '100%', width: '100%', pointerEvents: 'none'}}>
+            <div id='modals-container' style={{position: 'absolute', top: 0, left: 0, zIndex: 99, height: '100%', width: '100%', pointerEvents: 'none'}}>
                 <Sidebar />
             </div>
-            <div id='app-container' style={{height: '100%', width: '100%'}}>
-                <Settings />
-            </div>
+            <AnimatePresence mode='wait'>
+                <motion.div
+                id='page-container'
+                key={state.pageStack.length}
+                style={{height: '100%', width: '100%'}}>
+                    <CurrentPage />
+                </motion.div>
+            </AnimatePresence>
         </div>
     )
 }
