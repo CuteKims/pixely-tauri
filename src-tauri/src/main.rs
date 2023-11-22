@@ -20,7 +20,6 @@ async fn rasterizer_bridger(request: String) -> Result<bridger::models::Return, 
 
 #[tokio::main]
 async fn main() {
-    println!("Hello, World!");
     tauri::Builder::default()
         .setup(|app| {
             let window = app.get_window("main").unwrap();

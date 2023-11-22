@@ -25,7 +25,6 @@ body, #root {
 p {
     margin: auto;
     color: var(--default-font-color);
-    font-weight: lighter;
     font-size: 15px;
     transition: color .3s;
 }
@@ -42,4 +41,20 @@ p {
 
 ::-webkit-scrollbar {
     display: none;
+}
+
+.page {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    animation: .5s cubic-bezier(0,.8,.2,1) forwards page-intro;
+}
+
+@keyframes page-intro {
+    0% {
+        transform: translateY(36px);
+    }
+    100% {
+        transform: translateY(0px);
+    }
 }

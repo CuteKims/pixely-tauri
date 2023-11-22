@@ -40,26 +40,5 @@
     flex-direction: column;
     justify-content: center;
     transition: .5s;
-    animation: .5s cubic-bezier(0,.8,.2,1) .2s forwards button-container-intro;
-}
-
-.sidebar-button {
-    height: 40px;
-    width: 100%;
-    transition: cubic-bezier(0,.8,.2,1) .5s;
-}
-
-.sidebar-button p {
-    margin: 10px 0px 0px 16px;
-    transform: translateX(0px);
-    transition: cubic-bezier(0,.8,.2,1) .5s;
-}
-
-.sidebar-button:hover {
-    background-color: var(--default-hover-color);
-}
-
-.sidebar-button:hover p {
-    margin: 10px 0px 0px 16px;
-    transform: translateX(8px);
+    animation: .5s cubic-bezier(0,0,0,1) .2s forwards button-container-intro;
 }

@@ -1,17 +1,18 @@
 import { invoke } from "@tauri-apps/api/tauri";
+import TaskResponseParser, { ParsedTaskResponse, RawTaskResponse } from "./parser";
 
-class BackendInvoker {
+export default class BackendInvoker {
     task: Task;
 
     constructor(task: Task) {
         this.task = task;
     }
 
-    async invoke(): Promise<ParsedTaskResponse> {
-        let promise = invoke('rasterizer_bridger', { request: JSON.stringify(this.task) }) as Promise<string>;
+    async invoke(): Promise<void | ParsedTaskResponse<InstantTaskHeaders>> {
+        let promise = invoke('rasterizer_bridger', { request: JSON.stringify(this.task) }) as Promise<RawTaskResponse>;
         return promise.then(result => {
-                try { 
-                    let parser = new TaskResponseParser(result);
+                try {
+                    let parser = new TaskResponseParser(this.task, result);
                     return parser.parse(); }
                 catch (error: any) { throw new Error(error) }
             })
@@ -26,38 +27,34 @@ class BackendInvoker {
     }
 }
 
-enum TaskType {
-    Get = "Get",
-    Dispatch = "Dispatch",
+export enum InstantTaskHeaders {
+    InstancesInstalled = 'InstancesInstalled',
+    JavasInstalled = 'JavasInstalled',
+    VersionManifest = 'VersionManifest',
+    Undefined = 'Undefined',
 }
 
-enum InstantTaskHeaders {
-    InstancesInstalled,
-    JavasInstalled,
-    VersionManifest,
-}
-
-enum AsyncTaskHeaders {
+export enum AsyncTaskHeaders {
     InstallJava,
     InstallInstance,
 }
 
-type Task = {
-    type: 
-    InstantTask | AsyncTask
+export type Task = InstantTask | AsyncTask
 
+export function isAsyncTask(task: Task): task is AsyncTask {
+    return (<AsyncTask>task).Async !== undefined
 }
 
 type InstantTask = {
-    requestHeader: InstantTaskHeaders,
-    requestBody: String,
+    Instant: {
+        requestHeader: InstantTaskHeaders,
+        requestBody: String,
+    }
 }
 
 type AsyncTask = {
-    requestHeader: AsyncTaskHeaders,
-    requestBody: String,
-}
-
-type Result = {
-
+    Async: {
+        requestHeader: AsyncTaskHeaders,
+        requestBody: String,
+    }
 }

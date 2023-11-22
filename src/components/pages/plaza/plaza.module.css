@@ -41,16 +41,3 @@
     width: 100%;
     overflow-y: scroll;
 }
-
-.page {
-    height: auto;
-    width: 100%;
-    padding: 72px 0px 36px 0px;
-}
-
-.setting-component {
-    height: 56px;
-    width: auto;
-    margin: 0px 36px 1px 36px;
-    background-color: var(--default-ui-color);
-}

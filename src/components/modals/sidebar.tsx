@@ -1,8 +1,9 @@
 import { useContext } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import styles from './sidebar.module.css'
-import { GlobalState, GlobalStateActionTypes, globalStateContext, GlobalStateContext, Page } from '../hocs/state/context'
+import { GlobalState, GlobalStateActionTypes, globalStateContext, GlobalStateContext, Page } from '../hocs/context'
 import pagesMap from '../pages/pages';
+import { SideButton } from '../shared/button';
 
 const Sidebar: React.FC = () => {
     let context = useContext(globalStateContext);
@@ -39,20 +40,24 @@ const Sidebar: React.FC = () => {
 }
 
 const SidebarButtonContainer: React.FC<{props: {context: GlobalStateContext}}> = ({props}) => {
-    const dispatchPage = (value: Page) => {
+    const dispatchPage = (pageKey: string) => {
         props.context.dispatch({
             type: GlobalStateActionTypes.PushPageStack,
-            value,
+            value: {
+                page: pageKey,
+                subpage: [],
+            }
         })
     }
     return (
         <>
             <div id={styles['sidebar-button-container']}>
-                {Object.keys(pagesMap).map((page) => (
-                    <SidebarButton props={{
-                        page,
-                        friendlyName: pagesMap[page].friendlyName,
-                        state: props.context.state,
+                {Object.keys(pagesMap).map((key) => (
+                    <SideButton key={key} props={{
+                        pageKey: key,
+                        friendlyName: pagesMap[key].friendlyName,
+                        display: pagesMap[key].display,
+                        isSelected: props.context.state.pageStack.slice(-1)[0].page == key,
                         dispatchPage,
                     }} />
                 ))}
@@ -61,18 +66,6 @@ const SidebarButtonContainer: React.FC<{props: {context: GlobalStateContext}}> =
     )
 }
 
-const SidebarButton: React.FC<{props: {
-    page: string,
-    friendlyName: string,
-    state: GlobalState,
-    dispatchPage: (args: Page) => void}}> = ({props}) => {
-    return (
-        <>
-            <div className={styles['sidebar-button']} onClick={() => props.dispatchPage({page: props.page})}>
-                <p>{props.friendlyName}</p>
-            </div>
-        </>
-    )
-}
+
 
 export default Sidebar;

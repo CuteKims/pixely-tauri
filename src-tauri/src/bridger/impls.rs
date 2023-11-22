@@ -2,8 +2,8 @@ use async_trait::async_trait;
 
 use crate::bridger::models;
 
-pub mod dispatch;
-pub mod get;
+pub mod r#async;
+pub mod instant;
 
 impl models::Task {
     pub async fn dispatch(&self) -> Result<models::Return, String> {

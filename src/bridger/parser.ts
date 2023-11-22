@@ -1,32 +1,73 @@
-class TaskResponseParser {
-    rawTaskResponse: string;
+import { InstantTaskHeaders, Task, isAsyncTask } from "./invoker";
 
-    constructor(rawTaskResponse: string) {
+export default class TaskResponseParser {
+    task: Task;
+    rawTaskResponse: RawTaskResponse;
+
+    constructor(task: Task, rawTaskResponse: RawTaskResponse) {
+        this.task = task,
         this.rawTaskResponse = rawTaskResponse;
-    }
+    };
 
-    parse(): ParsedTaskResponse {
+    parse(): ParsedTaskResponse<InstantTaskHeaders> | void {
         try {
-            return JSON.parse(this.rawTaskResponse);
+            if (isAsyncTask(this.task)) {
+                create_a_listener_or_sth_idk((<AsyncTaskId>this.rawTaskResponse).AsyncTaskId); //To be implemented. If invoker invoked an async task, an listener is required to track the task progress.
+            } else {
+                let parsedResponseBody: ResponseBodyTypes[InstantTaskHeaders];
+                let deserializedResponse = JSON.parse((<InstantResponse>this.rawTaskResponse).InstantResponse)
+                switch (this.task.Instant.requestHeader) {
+                    case InstantTaskHeaders.VersionManifest: {
+                        parsedResponseBody = deserializedResponse.versions as VersionManifest
+                        break;
+                    };
+                    default: {
+                        parsedResponseBody = null
+                        break;
+                    }
+                }
+                return {                        
+                    header: this.task.Instant.requestHeader,
+                    body: parsedResponseBody,
+                };
+            }
         } catch (error: any) {
             throw new Error(error)
         }
     }
 }
 
-type ParsedTaskResponse = {
-    header: TaskResponseHeader,
-    body: InstancesInstalled
+function create_a_listener_or_sth_idk(id: number) {
+    console.log(id)
 }
 
-enum TaskResponseHeader {
-    InstancesInstalled,
-    JavasInstalled,
+export type RawTaskResponse = InstantResponse | AsyncTaskId
+
+type InstantResponse = {
+    InstantResponse: string
+}
+
+type AsyncTaskId = {
+    AsyncTaskId: number
+}
+
+export type ParsedTaskResponse<T extends InstantTaskHeaders> = {
+    header: T,
+    body: ResponseBodyTypes[T]
+}
+
+type ResponseBodyTypes = {
+    [InstantTaskHeaders.VersionManifest]: VersionManifest,
+    [InstantTaskHeaders.InstancesInstalled]: InstancesInstalled,
+    [InstantTaskHeaders.JavasInstalled]: string,
+    [InstantTaskHeaders.Undefined]: null,
 }
 
 type InstancesInstalled = {
     instances: MinecraftInstance[],
 }
+
+type VersionManifest = ManifestVersion[]
 
 type MinecraftInstance = {
     name: string,
@@ -37,9 +78,18 @@ type MinecraftInstance = {
 
 type InstanceVersion = {
     id: String,
-    type: InstanceVersionType,
+    type: VersionType,
     releaseTime: String,
-    complianceLevel: boolean
+}
+
+type ManifestVersion = {
+    id: string,
+    type: VersionType,
+    url: string,
+    time: string,
+    releaseTime: string,
+    sha1: string,
+    compliancelevel: number,
 }
 
 enum InstanceModificationType {
@@ -52,7 +102,7 @@ enum InstanceModificationType {
     Optifine = "Optifine",
 }
 
-enum InstanceVersionType {
+enum VersionType {
     release = "release",
     snapshot = "snapshot",
     oldBeta = "old_beta",

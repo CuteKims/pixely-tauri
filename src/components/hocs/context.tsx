@@ -23,6 +23,8 @@ export type GlobalStateContext = {
 
 export type Page = {
     page: string,
+    internalState?: any,
+    subpage: Page[],
 }
 
 type GlobalStateAction = {
@@ -53,7 +55,7 @@ const initialGlobalState: GlobalState = {
         menu: true,
         exit: false,
     },
-    pageStack: [{page: 'launcher'}],
+    pageStack: [{page: 'launcher', subpage: []}],
 }
 
 const globalStateReducer = (state: GlobalState, action: GlobalStateAction): GlobalState => {
@@ -104,10 +106,24 @@ const globalStateReducer = (state: GlobalState, action: GlobalStateAction): Glob
             }
         };
         case GlobalStateActionTypes.PushPageStack: {
-            return {
+            let returnValue: GlobalState;
+            //比对入栈页面和堆栈最后一个页面
+            if(action.value.page == state.pageStack.slice(-1)[0].page && action.value.subpage.length == 0) returnValue = state;
+            else returnValue = {
                 ...state,
                 pageStack: [...state.pageStack, action.value]
-            }
+            };
+            console.log(returnValue);
+            return returnValue
+        };
+        case GlobalStateActionTypes.PopPageStack: {
+            let returnValue: GlobalState;
+            if (state.pageStack.length > 1) returnValue = {
+                ...state,
+                pageStack: state.pageStack.slice(0,-1)
+            }; else returnValue = state;
+            console.log(returnValue);
+            return returnValue
         }
         default: return state
     };

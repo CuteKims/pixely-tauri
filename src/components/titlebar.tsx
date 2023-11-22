@@ -3,7 +3,8 @@ import { appWindow } from '@tauri-apps/api/window'
 import styles from './titlebar.module.css'
 
 import { useContext, useEffect } from 'react'
-import { GlobalStateActionTypes, globalStateContext } from './hocs/state/context'
+import { GlobalState, GlobalStateActionTypes, globalStateContext } from './hocs/context'
+import pagesMap from './pages/pages'
 
 const Titlebar: React.FC = () => {
     const {state, dispatch} = useContext(globalStateContext);
@@ -13,10 +14,16 @@ const Titlebar: React.FC = () => {
             value: true,
         })
     }
+    const back = () => {
+        dispatch({
+            type: GlobalStateActionTypes.PopPageStack,
+            value: null,
+        })
+    }
     return (
         <div id={styles.titlebar} className={state.window.isFocused ? styles.titlebar : styles['titlebar-blur']} data-tauri-drag-region>
             {/* Back button */}
-            <div className={styles.button}>
+            <div className={styles.button} onClick={back}>
                 <svg xmlns="http://www.w3.org/2000/svg" width="48" height="36" viewBox="0 0 48 36">
                     <path d="M-1019-1177.653l.707-.707,0,0,4.643-4.643.707.707-4.143,4.144h12.792v1h-12.793l4.146,4.146-.706.707Z" transform="translate(1035.29 1196.149)" fill="currentColor"/>
                 </svg>
@@ -35,7 +42,7 @@ const Titlebar: React.FC = () => {
                     <rect width="14" height="1" transform="translate(17 18)" fill="currentColor"/>
                 </svg>
             </div>
-            <p style={{marginLeft: '10px'}} data-tauri-drag-region>启动台</p>
+            <Title state={state}/>
             {/* Minimize button */}
             <div
             className={styles.button}
@@ -68,6 +75,14 @@ const Titlebar: React.FC = () => {
                 </svg>
             </div>
         </div>
+    )
+}
+
+const Title: React.FC<{state: GlobalState}> = ({state}) => {
+    return (
+        <>
+            <p style={{marginLeft: '10px'}} data-tauri-drag-region>{pagesMap[state.pageStack.slice(-1)[0].page].friendlyName}</p>
+        </>
     )
 }
 

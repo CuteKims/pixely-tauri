@@ -1,0 +1,42 @@
+.side-button {
+    height: 40px;
+    width: 100%;
+    transition: cubic-bezier(0,.8,.2,1) .5s;
+}
+
+.side-button p {
+    margin: 10px 0px 0px 16px;
+    transform: translateX(0px);
+    transition: cubic-bezier(0,.8,.2,1) .5s;
+}
+
+.side-button:hover {
+    background-color: var(--default-hover-color);
+}
+
+.side-button:hover p {
+    margin: 10px 0px 0px 16px;
+    transform: translateX(8px);
+}
+
+.side-button-selected {
+    height: 40px;
+    width: 100%;
+    background-color: var(--default-activate-color);
+    transition: cubic-bezier(0,.8,.2,1) .5s;
+}
+
+.side-button-selected p {
+    margin: 10px 0px 0px 16px;
+    transform: translateX(8px);
+    transition: cubic-bezier(0,.8,.2,1) .5s;
+}
+
+.side-button-selected:hover {
+    background-color: var(--default-activate-color);
+}
+
+.side-button-selected:hover p {
+    margin: 10px 0px 0px 16px;
+    transform: translateX(8px);
+}

@@ -1,18 +1,15 @@
-import { useEffect, useState, createContext, useReducer, ProviderProps, useContext } from 'react';
+import { useEffect, useContext } from 'react';
 
-import { GlobalStateActionTypes, globalStateContext } from './components/hocs/state/context';
+import { GlobalStateActionTypes, globalStateContext } from './components/hocs/context';
 
-import bgimage from './assets/bgimage/wallpaper14.jpg';
+import bgimage from './assets/bgimage/wallpaper3.jpg';
 
 import Titlebar from './components/titlebar';
 import Sidebar from './components/modals/sidebar';
 
-import Launcher from './components/pages/launcher/launcher';
 import { appWindow } from '@tauri-apps/api/window';
-import Settings from './components/pages/settings/settings';
 import pagesMap from './components/pages/pages';
-import { motion, AnimatePresence } from 'framer-motion';
-
+import { TransitionGroup, CSSTransition } from 'react-transition-group';
 
 
 function App() {
@@ -70,14 +67,11 @@ function App() {
             <div id='modals-container' style={{position: 'absolute', top: 0, left: 0, zIndex: 99, height: '100%', width: '100%', pointerEvents: 'none'}}>
                 <Sidebar />
             </div>
-            <AnimatePresence mode='wait'>
-                <motion.div
-                id='page-container'
-                key={state.pageStack.length}
-                style={{height: '100%', width: '100%'}}>
+            <div id='page-container' style={{height: '100%', width: '100%'}}>
+                <div key={state.pageStack.slice(-1)[0].page} className='page'>
                     <CurrentPage />
-                </motion.div>
-            </AnimatePresence>
+                </div>
+            </div>
         </div>
     )
 }

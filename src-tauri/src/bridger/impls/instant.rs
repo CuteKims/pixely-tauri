@@ -10,7 +10,7 @@ impl impls::ExecuteTask for models::InstantTask {
             models::InstantTaskHeaders::JavasInstalled => todo!(),
             models::InstantTaskHeaders::VersionManifest => handle_get_response(&self.request_body),
         }.await?;
-        Ok(models::Return::Value(result))
+        Ok(models::Return::InstantResponse(result))
     }
 }
 
