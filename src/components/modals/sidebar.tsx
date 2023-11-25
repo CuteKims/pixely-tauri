@@ -40,7 +40,7 @@ const Sidebar: React.FC = () => {
 }
 
 const SidebarButtonContainer: React.FC<{props: {context: GlobalStateContext}}> = ({props}) => {
-    const dispatchPage = (pageKey: string) => {
+    const buttonCallback = (pageKey: string) => {
         props.context.dispatch({
             type: GlobalStateActionTypes.PushPageStack,
             value: {
@@ -58,7 +58,7 @@ const SidebarButtonContainer: React.FC<{props: {context: GlobalStateContext}}> =
                         friendlyName: pagesMap[key].friendlyName,
                         display: pagesMap[key].display,
                         isSelected: props.context.state.pageStack.slice(-1)[0].page == key,
-                        dispatchPage,
+                        callback: buttonCallback,
                     }} />
                 ))}
             </div>

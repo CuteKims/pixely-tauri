@@ -9,12 +9,14 @@ export default class BackendInvoker {
     }
 
     async invoke(): Promise<void | ParsedTaskResponse<InstantTaskHeaders>> {
-        let promise = invoke('rasterizer_bridger', { request: JSON.stringify(this.task) }) as Promise<RawTaskResponse>;
+        let promise = invoke('rasterizer_bridger', { task: JSON.stringify(this.task) }) as Promise<RawTaskResponse>;
         return promise.then(result => {
                 try {
                     let parser = new TaskResponseParser(this.task, result);
-                    return parser.parse(); }
-                catch (error: any) { throw new Error(error) }
+                    return parser.parse()
+                } catch (error: any) {
+                    throw new Error(error)
+                }
             })
             .catch(error => {
                 throw new Error(error)
@@ -31,7 +33,6 @@ export enum InstantTaskHeaders {
     InstancesInstalled = 'InstancesInstalled',
     JavasInstalled = 'JavasInstalled',
     VersionManifest = 'VersionManifest',
-    Undefined = 'Undefined',
 }
 
 export enum AsyncTaskHeaders {
@@ -39,22 +40,43 @@ export enum AsyncTaskHeaders {
     InstallInstance,
 }
 
-export type Task = InstantTask | AsyncTask
+export type Task = InstantTask<InstantTaskHeaders> | AsyncTask<AsyncTaskHeaders>
 
-export function isAsyncTask(task: Task): task is AsyncTask {
-    return (<AsyncTask>task).Async !== undefined
-}
-
-type InstantTask = {
+type InstantTask<T extends InstantTaskHeaders> = {
     Instant: {
-        requestHeader: InstantTaskHeaders,
-        requestBody: String,
+        taskHeader: T,
+        taskBody: InstantTaskBodyTypes[T],
     }
 }
 
-type AsyncTask = {
+type AsyncTask<T extends AsyncTaskHeaders> = {
     Async: {
-        requestHeader: AsyncTaskHeaders,
-        requestBody: String,
+        taskHeader: T,
+        taskBody: AsyncTaskBodyTypes[T],
     }
+}
+
+type InstantTaskBodyTypes = {
+    [InstantTaskHeaders.VersionManifest]: string,
+    [InstantTaskHeaders.InstancesInstalled]: string,
+    [InstantTaskHeaders.JavasInstalled]: null
+}
+
+type AsyncTaskBodyTypes = {
+    [AsyncTaskHeaders.InstallInstance]: InstallInstance,
+    [AsyncTaskHeaders.InstallJava]: InstallJava,
+}
+
+export function isAsyncTask(task: Task): task is AsyncTask<AsyncTaskHeaders> {
+    return (<AsyncTask<AsyncTaskHeaders>>task).Async !== undefined
+}
+
+type InstallInstance = {
+    instanceName: string,
+    instanceIcon: string,
+    jsonUrl: string,
+}
+
+type InstallJava = {
+    installerUrl: string,
 }

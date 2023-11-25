@@ -19,7 +19,7 @@ const Settings: React.FC = () => {
         }]
     }
 
-    const dispatchPage = (pageKey: string) => {
+    const buttonCallback = (pageKey: string) => {
         dispatch({
             type: GlobalStateActionTypes.PushPageStack,
             value: {
@@ -39,11 +39,11 @@ const Settings: React.FC = () => {
                             friendlyName: pagesMap.settings.subpages[key].friendlyName,
                             display: pagesMap.settings.subpages[key].display,
                             isSelected: state.pageStack.slice(-1)[0].subpage[0].page == key,
-                            dispatchPage,
+                            callback: buttonCallback,
                         }} />
                     ))}
                 </div>
-                <div id={styles['page-container']}>
+                <div id='subpage-container' key={state.pageStack.slice(-1)[0].subpage.slice(-1)[0].page}>
                     <SettingsPage />
                 </div>
             </div>

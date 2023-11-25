@@ -16,18 +16,17 @@ export default class TaskResponseParser {
             } else {
                 let parsedResponseBody: ResponseBodyTypes[InstantTaskHeaders];
                 let deserializedResponse = JSON.parse((<InstantResponse>this.rawTaskResponse).InstantResponse)
-                switch (this.task.Instant.requestHeader) {
+                switch (this.task.Instant.taskHeader) {
                     case InstantTaskHeaders.VersionManifest: {
                         parsedResponseBody = deserializedResponse.versions as VersionManifest
                         break;
                     };
                     default: {
-                        parsedResponseBody = null
-                        break;
+                        throw new Error('Unable to parse task response.')
                     }
                 }
                 return {                        
-                    header: this.task.Instant.requestHeader,
+                    header: this.task.Instant.taskHeader,
                     body: parsedResponseBody,
                 };
             }
@@ -60,14 +59,13 @@ type ResponseBodyTypes = {
     [InstantTaskHeaders.VersionManifest]: VersionManifest,
     [InstantTaskHeaders.InstancesInstalled]: InstancesInstalled,
     [InstantTaskHeaders.JavasInstalled]: string,
-    [InstantTaskHeaders.Undefined]: null,
 }
 
 type InstancesInstalled = {
     instances: MinecraftInstance[],
 }
 
-type VersionManifest = ManifestVersion[]
+export type VersionManifest = ManifestVersion[]
 
 type MinecraftInstance = {
     name: string,
@@ -82,14 +80,14 @@ type InstanceVersion = {
     releaseTime: String,
 }
 
-type ManifestVersion = {
+export type ManifestVersion = {
     id: string,
     type: VersionType,
     url: string,
     time: string,
     releaseTime: string,
     sha1: string,
-    compliancelevel: number,
+    complianceLevel: number,
 }
 
 enum InstanceModificationType {
@@ -102,7 +100,7 @@ enum InstanceModificationType {
     Optifine = "Optifine",
 }
 
-enum VersionType {
+export enum VersionType {
     release = "release",
     snapshot = "snapshot",
     oldBeta = "old_beta",

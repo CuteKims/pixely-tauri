@@ -1,20 +1,25 @@
-use crate::bridger::{models, impls};
+use std::path::Path;
+
+use crate::{bridger::{models, impls}, rasterizer, consts};
 
 use async_trait::async_trait;
 
 #[async_trait]
 impl impls::ExecuteTask for models::InstantTask {
     async fn execute(&self) -> Result<models::Return, String> {
-        let result = match self.request_header {
+        let result = match self.task_header {
             models::InstantTaskHeaders::InstancesInstalled => todo!(),
             models::InstantTaskHeaders::JavasInstalled => todo!(),
-            models::InstantTaskHeaders::VersionManifest => handle_get_response(&self.request_body),
+            models::InstantTaskHeaders::VersionManifest => rasterizer::utils::http_handler::get(&self.task_body),
         }.await?;
         Ok(models::Return::InstantResponse(result))
     }
 }
 
-async fn handle_get_response(target: &str) -> Result<String, String> {
-    let to_string = |error: reqwest::Error| error.to_string();
-    Ok(reqwest::get(target).await.map_err(to_string)?.text().await.map_err(to_string)?)
+
+async fn get_installed_instances() -> () {
+    let core_initializer = rasterizer::models::core::CoreInitializer {
+        client_token: consts::CLIENT_TOKEN,
+        root_path: Path::new("E:/CodenamePixely/Playground/Minecraft"),
+    }.init();
 }

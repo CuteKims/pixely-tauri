@@ -43,14 +43,23 @@ p {
     display: none;
 }
 
-.page {
+#page-container {
     position: absolute;
     height: 100%;
     width: 100%;
-    animation: .5s cubic-bezier(0,.8,.2,1) forwards page-intro;
+    animation: .5s cubic-bezier(0,.8,.2,1) forwards intro;
 }
 
-@keyframes page-intro {
+#subpage-container {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    overflow-y: scroll;
+    animation: .5s cubic-bezier(0,.8,.2,1) forwards intro;
+}
+
+@keyframes intro {
     0% {
         transform: translateY(36px);
     }

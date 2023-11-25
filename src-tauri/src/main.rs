@@ -11,8 +11,8 @@ use serde_json;
 use std;
 
 #[tauri::command]
-async fn rasterizer_bridger(request: String) -> Result<bridger::models::Return, String> {
-    let task: bridger::models::Task = serde_json::from_str(&request)
+async fn rasterizer_bridger(task: String) -> Result<bridger::models::Return, String> {
+    let task: bridger::models::Task = serde_json::from_str(&task)
         .map_err(|err| err.to_string())?;
     let result = task.dispatch().await?;
     Ok(result)

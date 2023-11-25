@@ -11,5 +11,5 @@ pub struct CoreInitializer<'a> {
 pub struct LauncherCore<'a> {
     pub client_token: &'a str,
     pub root_path: &'a Path,
-    pub locator: locator::VersionLocator<'a>
+    pub locator: locator::InstanceLocator<'a>
 }

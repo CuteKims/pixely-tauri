@@ -1,9 +1,9 @@
-use crate::rasterizer::models::core::{ locator::VersionLocator, CoreInitializer, LauncherCore };
-mod locator;
+use crate::rasterizer::models::core::{ locator::InstanceLocator, CoreInitializer, LauncherCore };
+pub mod locator;
 
 impl<'a> CoreInitializer<'a> {
     pub fn init(&self) -> LauncherCore {
-        let locator = VersionLocator {
+        let locator = InstanceLocator {
             root_path: self.root_path
         };
         let core = LauncherCore {

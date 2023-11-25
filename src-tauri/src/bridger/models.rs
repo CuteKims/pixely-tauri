@@ -9,15 +9,15 @@ pub enum Task {
 #[derive(serde::Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct InstantTask {
-    pub request_header: InstantTaskHeaders,
-    pub request_body: String
+    pub task_header: InstantTaskHeaders,
+    pub task_body: String
 }
 
 #[derive(serde::Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct AsyncTask {
-    pub request_header: AsyncTaskHeaders,
-    pub request_body: String
+    pub task_header: AsyncTaskHeaders,
+    pub task_body: String
 }
 
 #[derive(serde::Deserialize)]

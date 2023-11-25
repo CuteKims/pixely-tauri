@@ -6,9 +6,10 @@ export const SideButton: React.FC<{props: {
     friendlyName: string,
     display: boolean,
     isSelected: boolean,
-    dispatchPage: (args: string) => void}}> = ({props}) => {
+    callback: (args: string) => void
+}}> = ({props}) => {
     if(props.display) return (
-        <div className={props.isSelected ? styles['side-button-selected'] : styles['side-button']} onClick={() => props.dispatchPage(props.pageKey)}>
+        <div className={props.isSelected ? styles['side-button-selected'] : styles['side-button']} onClick={() => props.callback(props.pageKey)}>
             <p>{props.friendlyName}</p>
         </div>
     )
