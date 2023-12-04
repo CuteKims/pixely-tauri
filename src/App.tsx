@@ -9,8 +9,6 @@ import Sidebar from './components/modals/sidebar';
 
 import { appWindow } from '@tauri-apps/api/window';
 import pagesMap from './components/pages/pages';
-import { TransitionGroup, CSSTransition } from 'react-transition-group';
-
 
 function App() {
     const {state, dispatch} = useContext(globalStateContext);
