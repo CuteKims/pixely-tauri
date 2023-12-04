@@ -17,13 +17,7 @@ const Launcher: React.FC = () => {
 const Tile: React.FC<{}> = () => {
     return (
         <>
-            <div className={styles['tile-wrapper']}>
-                <div className={styles['tile-layer1']}>
-                    
-                </div>
-                <div className={styles['tile-layer2']}>
-
-                </div>
+            <div className={styles.tile}>
             </div>
         </>
     )

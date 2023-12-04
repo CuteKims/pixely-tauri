@@ -14,18 +14,18 @@ export default class BackendInvoker {
                 try {
                     let parser = new TaskResponseParser(this.task, result);
                     return parser.parse()
-                } catch (error: any) {
-                    throw new Error(error)
+                } catch (error) {
+                    throw error
                 }
             })
             .catch(error => {
-                throw new Error(error)
+                throw 'Error from BackendInvoker: ' + error
             })
             //This will unwrap the Result<T, E> from Rust backend.
             //If the backend returns OK(), .then() will be executed.
             //If it is Err(), .catch() will catch it and throw an error.
 
-            //Can we ask Microsoft to add ? and Result<T, E> into TypeScript?
+            //Could we ask Microsoft to add ? and Result<T, E> into TypeScript?
     }
 }
 

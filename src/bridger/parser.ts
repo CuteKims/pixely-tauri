@@ -18,11 +18,14 @@ export default class TaskResponseParser {
                 let deserializedResponse = JSON.parse((<InstantResponse>this.rawTaskResponse).InstantResponse)
                 switch (this.task.Instant.taskHeader) {
                     case InstantTaskHeaders.VersionManifest: {
-                        parsedResponseBody = deserializedResponse.versions as VersionManifest
-                        break;
+                        parsedResponseBody = deserializedResponse.versions as VersionManifest;
+                        break
                     };
+                    case InstantTaskHeaders.InstancesInstalled: {
+                        console.log(deserializedResponse);
+                    }
                     default: {
-                        throw new Error('Unable to parse task response.')
+                        throw 'Error from TaskResponseParser: Unable to parse task response.'
                     }
                 }
                 return {                        
@@ -31,7 +34,7 @@ export default class TaskResponseParser {
                 };
             }
         } catch (error: any) {
-            throw new Error(error)
+            throw error
         }
     }
 }
@@ -71,13 +74,16 @@ type MinecraftInstance = {
     name: string,
     version: InstanceVersion,
     modification: InstanceModificationType[],
-    path: string,
+    instancePath: string,
+    iconPath: string,
 }
 
 type InstanceVersion = {
-    id: String,
+    id: string,
+    minecraftArguments: string,
+    releaseTime: string,
     type: VersionType,
-    releaseTime: String,
+    clientVersion: string,
 }
 
 export type ManifestVersion = {

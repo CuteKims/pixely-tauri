@@ -5,6 +5,7 @@ import styles from './titlebar.module.css'
 import { useContext, useEffect } from 'react'
 import { GlobalState, GlobalStateActionTypes, globalStateContext } from './hocs/context'
 import pagesMap from './pages/pages'
+import BackendInvoker, { InstantTaskHeaders } from '../bridger/invoker'
 
 const Titlebar: React.FC = () => {
     const {state, dispatch} = useContext(globalStateContext);
@@ -12,14 +13,28 @@ const Titlebar: React.FC = () => {
         dispatch({
             type: GlobalStateActionTypes.SetMenuFlag,
             value: true,
-        })
-    }
+        });
+    };
     const back = () => {
         dispatch({
             type: GlobalStateActionTypes.PopPageStack,
             value: null,
-        })
-    }
+        });
+    };
+
+    const testFunc = () => {
+        new BackendInvoker({
+            Instant: {
+                taskHeader: InstantTaskHeaders.InstancesInstalled,
+                taskBody: ''
+            }
+        }).invoke().then(result => {
+            console.log(result);
+        }).catch(error => {
+            console.error(error);
+        });
+    };
+
     return (
         <div id={styles.titlebar} className={state.window.isFocused ? styles.titlebar : styles['titlebar-blur']} data-tauri-drag-region>
             {/* Back button */}
@@ -37,7 +52,7 @@ const Titlebar: React.FC = () => {
                 </svg>
             </div>
             {/* Test button */}
-            <div className={styles.button} onClick={() => console.log(state)}>
+            <div className={styles.button} onClick={testFunc}>
                 <svg xmlns="http://www.w3.org/2000/svg" width="48" height="36" viewBox="0 0 48 36">
                     <rect width="14" height="1" transform="translate(17 18)" fill="currentColor"/>
                 </svg>

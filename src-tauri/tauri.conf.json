@@ -77,8 +77,8 @@
         "title": "Pixely",
         "width": 960,
         "height": 540,
-        "minWidth": 800,
-        "minHeight": 480
+        "minWidth": 640,
+        "minHeight": 400
       }
     ]
   }
