@@ -40,6 +40,7 @@ export enum GlobalStateActionTypes {
     SetWindowSize,
     PopPageStack,
     PushPageStack,
+    ReplacePageStack,
 }
 
 const initialGlobalState: GlobalState = {
@@ -52,7 +53,7 @@ const initialGlobalState: GlobalState = {
         isMaximized: false,
     },
     flags: {
-        menu: true,
+        menu: false,
         exit: false,
     },
     pageStack: [{page: 'launcher', subpage: []}],
@@ -113,16 +114,24 @@ const globalStateReducer = (state: GlobalState, action: GlobalStateAction): Glob
                 ...state,
                 pageStack: [...state.pageStack, action.value]
             };
-            console.log(returnValue);
             return returnValue
         };
         case GlobalStateActionTypes.PopPageStack: {
-            let returnValue: GlobalState;
-            if (state.pageStack.length > 1) returnValue = {
+            if (!(state.pageStack.length > 1)) {
+                return globalStateReducer(state, action={type: GlobalStateActionTypes.SetMenuFlag, value: true})
+            };
+
+            return {
                 ...state,
                 pageStack: state.pageStack.slice(0,-1)
-            }; else returnValue = state;
-            console.log(returnValue);
+            }
+        };
+        case GlobalStateActionTypes.ReplacePageStack: {
+            let returnValue: GlobalState;
+            if(action.value.page == state.pageStack.slice(-1)[0].page && action.value.subpage.length == 0) return state;
+
+            returnValue = globalStateReducer(state, action={type: GlobalStateActionTypes.PopPageStack, value: null});
+            returnValue.pageStack.push(action.value);
             return returnValue
         }
         default: return state

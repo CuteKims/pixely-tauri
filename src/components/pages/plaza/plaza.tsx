@@ -107,7 +107,7 @@ const Minecraft: React.FC = () => {
                     switch (data.state) {
                         case 'loading': return <FallbackComponent />
                         case 'error': return <p>{(data.data as Error).name + ': ' + (data.data as Error).message}</p>
-                        case 'ok': return (data.data as VersionManifest).map(version => <ComponentManifestVersion key={version.id} props={{version, callback}}/>)
+                        case 'ok': return (data.data as VersionManifest).versions.map(version => <ComponentManifestVersion key={version.id} props={{version, callback}}/>)
                     }
                 })()}
             </div>
@@ -121,26 +121,28 @@ const ComponentManifestVersion: React.FC<{props: {
 }}> = ({props}) => {
     return (
         <div className={styles['component-manifest-version']} onClick={() => props.callback(props.version)}>
-            <img src={(() => {
-                switch (props.version.type) {
-                    case VersionType.snapshot: return iconDirt;
-                    case VersionType.release: return iconGrass;
-                    default: return iconStone;
-                }
-            })()}/>
-            <div className={styles['title-container']}>
-                <p>{props.version.id}</p>
-                <p className={styles.subtitle}>{(() => {
-                    let type: string;
+            <div className={styles.bgcolor}>
+                <img src={(() => {
                     switch (props.version.type) {
-                        case VersionType.snapshot: type = '快照'; break;
-                        case VersionType.release: type = '正式版'; break;
-                        case VersionType.oldAlpha: type = '早期版本'; break;
-                        case VersionType.oldBeta: type = '早期版本'; break;
+                        case VersionType.snapshot: return iconDirt;
+                        case VersionType.release: return iconGrass;
+                        default: return iconStone;
                     }
-                    let date: Date = new Date(props.version.releaseTime);
-                    return type + ' ' + date.getFullYear() + '-' + date.getMonth().toString().padStart(2, '0') + '-' + date.getDay().toString().padStart(2, '0') + ' ' + date.getHours() + ':' + date.getMinutes().toString().padStart(2, '0')
-                })()}</p>
+                })()}/>
+                <div className={styles['title-container']}>
+                    <p>{props.version.id}</p>
+                    <p className={styles.subtitle}>{(() => {
+                        let type: string;
+                        switch (props.version.type) {
+                            case VersionType.snapshot: type = '快照'; break;
+                            case VersionType.release: type = '正式版'; break;
+                            case VersionType.oldAlpha: type = '早期版本'; break;
+                            case VersionType.oldBeta: type = '早期版本'; break;
+                        }
+                        let date: Date = new Date(props.version.releaseTime);
+                        return type + ' ' + date.getFullYear() + '-' + date.getMonth().toString().padStart(2, '0') + '-' + date.getDay().toString().padStart(2, '0') + ' ' + date.getHours() + ':' + date.getMinutes().toString().padStart(2, '0')
+                    })()}</p>
+                </div>
             </div>
         </div>
     )

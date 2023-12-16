@@ -3,7 +3,7 @@
     width: 80%;
     margin-left: 10%;
     box-shadow: var(--default-box-shadow);
-    backdrop-filter: blur(20px) var(--default-ui-brightness);
+    backdrop-filter: blur(30px) var(--default-ui-brightness);
     display: flex;
 }
 

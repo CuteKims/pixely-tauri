@@ -34,7 +34,8 @@ pub enum AsyncTaskHeaders {
 }
 
 #[derive(serde::Serialize)]
+#[derive(Debug)]
 pub enum Return {
     InstantResponse(String),
-    AsyncTaskId(usize)
+    AsyncTaskUuid(String)
 }

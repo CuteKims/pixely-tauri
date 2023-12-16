@@ -3,7 +3,7 @@
     width: 80%;
     margin-left: 10%;
     box-shadow: var(--default-box-shadow);
-    backdrop-filter: blur(20px) var(--default-ui-brightness);
+    backdrop-filter: blur(30px) var(--default-ui-brightness);
     display: flex;
 }
 
@@ -25,8 +25,6 @@
     height: 56px;
     margin: 0px 36px 1px 36px;
     background-color: var(--default-ui-color);
-    display: flex;
-    transition: background-color .5s;
 }
 
 .component-manifest-version img {
@@ -44,14 +42,19 @@
     opacity: .8;
 }
 
-.component-manifest-version:hover {
-    background-color: var(--default-hover-color);
-    transition: background-color .1s;
+.component-manifest-version .bgcolor {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    transition: .1s;
 }
 
-.component-manifest-version:active {
+.component-manifest-version:hover .bgcolor {
+    background-color: var(--default-hover-color);
+}
+
+.component-manifest-version:active .bgcolor {
     background-color: var(--default-activate-color);
-    transition: background-color .1s;
 }
 
 #version-manifest {

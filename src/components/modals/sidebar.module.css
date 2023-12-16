@@ -4,7 +4,7 @@
     width: 160px;
     background-color: var(--default-ui-color);
     box-shadow: var(--default-box-shadow);
-    backdrop-filter: blur(20px);
+    backdrop-filter: blur(30px);
     transition: background-color .5s;
     pointer-events: all;
 }

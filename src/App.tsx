@@ -2,13 +2,14 @@ import { useEffect, useContext } from 'react';
 
 import { GlobalStateActionTypes, globalStateContext } from './components/hocs/context';
 
-import bgimage from './assets/bgimage/wallpaper6.jpg';
+import bgimage from './assets/bgimage/wallpaper14.jpg';
 
 import Titlebar from './components/titlebar';
 import Sidebar from './components/modals/sidebar';
 
 import { appWindow } from '@tauri-apps/api/window';
 import pagesMap from './components/pages/pages';
+import NotificationBanner from './components/modals/notification';
 
 function App() {
     const {state, dispatch} = useContext(globalStateContext);
@@ -64,6 +65,7 @@ function App() {
             </div>
             <div id='modals-container' style={{position: 'absolute', top: 0, left: 0, zIndex: 99, height: '100%', width: '100%', pointerEvents: 'none'}}>
                 <Sidebar />
+                <NotificationBanner />
             </div>
             <div key={state.pageStack.slice(-1)[0].page} id='page-container'>
                 <CurrentPage />

@@ -1,10 +1,9 @@
-use std::path::Path;
-
 #[derive(serde::Serialize, serde::Deserialize)]
-pub struct MinecraftInstance<'a, InstanceModificationType> {
+#[serde(rename_all = "camelCase")]
+pub struct MinecraftInstance<'a> {
     pub name: &'a str,
-    pub version: &'a InstanceVersion<'a>,
-    pub modification: Vec<&'a InstanceModificationType>,
+    pub version: InstanceVersion<'a>,
+    pub modification: Vec<InstanceModificationType>,
     pub instance_path: &'a str,
     pub icon_path: &'a str,
 }
@@ -12,7 +11,6 @@ pub struct MinecraftInstance<'a, InstanceModificationType> {
 #[derive(serde::Serialize, serde::Deserialize)]
 pub struct InstanceVersion<'a> {
     pub id: &'a str,
-    pub minecraft_arguments: &'a str,
     pub release_time: &'a str,
     pub r#type: VersionType,
     pub client_version: &'a str,
@@ -27,6 +25,7 @@ pub enum VersionType {
     OldAlpha
 }
 
+#[derive(serde::Serialize, serde::Deserialize)]
 pub enum InstanceModificationType {
     Forge,
     Fabric,

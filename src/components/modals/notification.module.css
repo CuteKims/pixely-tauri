@@ -1,0 +1,10 @@
+.banner {
+    position: absolute;
+    top: 60px;
+    right: 0px;
+    box-shadow: var(--default-box-shadow);
+    backdrop-filter: blur(10px);
+    background-color: var(--default-ui-color);
+    height: 72px;
+    width: 256px;
+}

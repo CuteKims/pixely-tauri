@@ -23,16 +23,17 @@ const Titlebar: React.FC = () => {
     };
 
     const testFunc = () => {
-        new BackendInvoker({
-            Instant: {
-                taskHeader: InstantTaskHeaders.InstancesInstalled,
-                taskBody: ''
-            }
-        }).invoke().then(result => {
-            console.log(result);
-        }).catch(error => {
-            console.error(error);
-        });
+        // new BackendInvoker({
+        //     Instant: {
+        //         taskHeader: InstantTaskHeaders.InstancesInstalled,
+        //         taskBody: ''
+        //     }
+        // }).invoke().then(result => {
+        //     console.log(result);
+        // }).catch(error => {
+        //     console.error(error);
+        // });
+        console.log(state.pageStack)
     };
 
     return (
@@ -96,7 +97,7 @@ const Titlebar: React.FC = () => {
 const Title: React.FC<{state: GlobalState}> = ({state}) => {
     return (
         <>
-            <p style={{marginLeft: '10px'}} data-tauri-drag-region>{pagesMap[state.pageStack.slice(-1)[0].page].friendlyName}</p>
+            <p className={styles.title} data-tauri-drag-region>{pagesMap[state.pageStack.slice(-1)[0].page].friendlyName}</p>
         </>
     )
 }

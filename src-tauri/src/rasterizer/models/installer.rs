@@ -1,3 +1,5 @@
 pub struct InstanceInstaller<'a> {
-    pub version_json_url: &'a str
+    instance_name: &'a str,
+    instance_icon: &'a str,
+    version_id: &'a str,
 }

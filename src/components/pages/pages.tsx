@@ -43,6 +43,4 @@ const pagesMap: PageMap = {
     },
 }
 
-
-
 export default pagesMap;

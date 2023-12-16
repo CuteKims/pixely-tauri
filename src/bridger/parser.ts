@@ -14,23 +14,10 @@ export default class TaskResponseParser {
             if (isAsyncTask(this.task)) {
                 create_a_listener_or_sth_idk((<AsyncTaskId>this.rawTaskResponse).AsyncTaskId); //To be implemented. If invoker invoked an async task, an listener is required to track the task progress.
             } else {
-                let parsedResponseBody: ResponseBodyTypes[InstantTaskHeaders];
-                let deserializedResponse = JSON.parse((<InstantResponse>this.rawTaskResponse).InstantResponse)
-                switch (this.task.Instant.taskHeader) {
-                    case InstantTaskHeaders.VersionManifest: {
-                        parsedResponseBody = deserializedResponse.versions as VersionManifest;
-                        break
-                    };
-                    case InstantTaskHeaders.InstancesInstalled: {
-                        console.log(deserializedResponse);
-                    }
-                    default: {
-                        throw 'Error from TaskResponseParser: Unable to parse task response.'
-                    }
-                }
+                let deserializedResponse = JSON.parse((<InstantResponse>this.rawTaskResponse).InstantResponse);
                 return {                        
                     header: this.task.Instant.taskHeader,
-                    body: parsedResponseBody,
+                    body: deserializedResponse,
                 };
             }
         } catch (error: any) {
@@ -60,17 +47,19 @@ export type ParsedTaskResponse<T extends InstantTaskHeaders> = {
 
 type ResponseBodyTypes = {
     [InstantTaskHeaders.VersionManifest]: VersionManifest,
-    [InstantTaskHeaders.InstancesInstalled]: InstancesInstalled,
+    [InstantTaskHeaders.InstancesInstalled]: MinecraftInstance[],
     [InstantTaskHeaders.JavasInstalled]: string,
 }
 
-type InstancesInstalled = {
-    instances: MinecraftInstance[],
+export type VersionManifest = {
+    latest: {
+        release: string,
+        snapshot: string,
+    },
+    versions: ManifestVersion[]
 }
 
-export type VersionManifest = ManifestVersion[]
-
-type MinecraftInstance = {
+export type MinecraftInstance = {
     name: string,
     version: InstanceVersion,
     modification: InstanceModificationType[],

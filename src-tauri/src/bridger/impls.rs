@@ -6,7 +6,7 @@ pub mod r#async;
 pub mod instant;
 
 impl models::Task {
-    pub async fn dispatch(&self) -> Result<models::Return, String> {
+    pub async fn dispatch(&self) -> Result<models::Return, Box<dyn std::error::Error>> {
         match &self {
             models::Task::Instant(task) => {
                 task.execute().await
@@ -20,5 +20,5 @@ impl models::Task {
 
 #[async_trait]
 pub trait ExecuteTask {
-    async fn execute(&self) -> Result<models::Return, String>;
+    async fn execute(&self) -> Result<models::Return, Box<dyn std::error::Error>>;
 }
