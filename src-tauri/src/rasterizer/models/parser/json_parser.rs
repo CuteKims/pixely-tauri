@@ -1,6 +1,6 @@
 use std::collections::HashMap;
-use serde_derive::Deserialize;
-use serde_derive::Serialize;
+use serde::{Serialize, Deserialize};
+use super::super::downloader::LibraryIndex;
 
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
@@ -13,8 +13,7 @@ pub struct InstanceJson {
     pub main_class: String,
 
     //for installation:
-    pub asset_index: FileDownloadIndex,
-    pub assets: String,
+    pub asset_index: AssetIndex,
     pub downloads: Downloads,
     pub libraries: Vec<Library>,
 
@@ -31,12 +30,11 @@ pub struct InstanceJson {
 
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
-pub struct FileDownloadIndex {
-    pub id: Option<String>,
-    pub path: Option<String>,
+pub struct AssetIndex {
+    pub id: String,
     pub sha1: String,
-    pub size: i64,
-    pub total_size: Option<i64>,
+    pub size: i32,
+    pub total_size: i32,
     pub url: String,
 }
 
@@ -109,10 +107,17 @@ pub enum ArgumentValue {
 
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 pub struct Downloads {
-    pub client: FileDownloadIndex,
-    pub server: FileDownloadIndex,
-    pub client_mappings: Option<FileDownloadIndex>,
-    pub server_mappings: Option<FileDownloadIndex>,
+    pub client: LibraryIndex,
+    pub server: LibraryIndex,
+    pub client_mappings: Option<LibraryIndex>,
+    pub server_mappings: Option<LibraryIndex>,
+}
+
+#[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
+pub struct JarIndex {
+    pub sha1: String,
+    pub size: i32,
+    pub url: String,
 }
 
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
@@ -136,18 +141,26 @@ pub struct Library {
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct LibraryDownload {
-    pub artifact: Option<FileDownloadIndex>,
+    pub artifact: Option<LibraryIndex>,
     pub classifiers: Option<LibraryDownloadClassifier>,
 }
 
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 #[serde(rename_all = "kebab-case")]
 pub struct LibraryDownloadClassifier {
-    pub javadoc: Option<FileDownloadIndex>,
-    pub natives_osx: Option<FileDownloadIndex>,
-    pub sources: Option<FileDownloadIndex>,
-    pub natives_linux: Option<FileDownloadIndex>,
-    pub natives_windows: Option<FileDownloadIndex>,
+    pub javadoc: Option<LibraryIndex>,
+    pub natives_osx: Option<LibraryIndex>,
+    pub sources: Option<LibraryIndex>,
+    pub natives_linux: Option<LibraryIndex>,
+    pub natives_windows: Option<LibraryIndex>,
+}
+
+#[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
+pub struct LibraryIndex {
+    path: String,
+    sha1: String,
+    size: i32,
+    url: String
 }
 
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
@@ -170,7 +183,7 @@ pub struct Logging {
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 pub struct Client {
     pub argument: String,
-    pub file: FileDownloadIndex,
+    pub file: LibraryIndex,
     #[serde(rename = "type")]
     pub type_field: String,
 }

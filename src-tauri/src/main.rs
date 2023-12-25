@@ -3,7 +3,7 @@
 
 mod rasterizer;
 mod bridger;
-mod consts;
+mod statics;
 
 use tauri::Manager;
 use window_shadows;

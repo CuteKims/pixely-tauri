@@ -1,6 +1,6 @@
 use std::path::Path;
 
-use crate::{bridger::{models, impls}, rasterizer, consts};
+use crate::{bridger::{models, impls}, rasterizer, statics};
 
 use async_trait::async_trait;
 
@@ -19,7 +19,7 @@ impl impls::ExecuteTask for models::InstantTask {
 
 async fn get_installed_instances() -> Result<String, Box<dyn std::error::Error>> {
     let core_initializer = rasterizer::models::core::CoreInitializer {
-        client_token: consts::CLIENT_TOKEN,
+        client_token: statics::CLIENT_TOKEN,
         root_path: Path::new("E:/CodenamePixely/Playground/Minecraft"),
     };
     let core = core_initializer.init();
