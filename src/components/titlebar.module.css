@@ -1,19 +1,16 @@
 #titlebar {
     height: 35px;
     width: 100%;
-    backdrop-filter: blur(10px) var(--default-ui-brightness);
+    background-color: var(--default-ui-color);
+    backdrop-filter: blur(10px) brightness(115%);
     box-shadow: var(--default-box-shadow);
     border-bottom: solid 1px rgba(255, 255, 255, .2);
     display: flex;
-    transition: .2s
-}
-
-.titlebar {
-    background-color: var(--default-ui-color);
+    transition: background-color .5s, opacity .3s;
 }
 
 .titlebar-blur {
-    background-color: var(--default-activate-color);
+    pointer-events: none;
 }
 
 .button {

@@ -37,7 +37,7 @@ const Titlebar: React.FC = () => {
     };
 
     return (
-        <div id={styles.titlebar} className={state.window.isFocused ? styles.titlebar : styles['titlebar-blur']} data-tauri-drag-region>
+        <div id={styles.titlebar} style={state.window.isFocused ? {opacity: 1} : {opacity: .5}} data-tauri-drag-region>
             {/* Back button */}
             <div className={styles.button} onClick={back}>
                 <svg xmlns="http://www.w3.org/2000/svg" width="48" height="36" viewBox="0 0 48 36">

@@ -1,48 +1,35 @@
-use std::path::Path;
+use std::path::PathBuf;
 
-use super::parser::json_parser::{JarIndex, AssetIndex};
+use crate::rasterizer::utils::crossplat::OsInfo;
 
 pub struct Downloader {
     files: Vec<Box<DownloadIndex>>,
     thread_number: i32,
 }
 
-
-pub trait Downloadable {
-    fn get_index(&self) -> DownloadIndex;
+pub trait InstanceResource {
+    fn get_index(&self, instance_id: String, source: DownloadSource, os_info: OsInfo) -> Result<Vec<DownloadIndex>, Box<dyn std::error::Error>>;
 }
 
+pub enum DownloadSource {
+    BMCLAPI,
+    MCBBS,
+    DEFAULT,
+}
+
+#[derive(Clone, Debug)]
 pub struct DownloadIndex {
-    pub index_type: DownloadableFileType,
-    pub path: Path,
+    pub resource_type: InstanceResourceType,
+    pub path: PathBuf,
     pub sha1: Option<String>,
     pub size: Option<i32>,
+    pub url: String
 }
 
-pub enum DownloadableFileType {
-    Hashmap,
-    GameJar,
-}
-
-impl Downloadable for DownloadIndex {
-    fn get_index(&self) -> DownloadIndex {
-        self
-    }
-}
-
-impl Downloadable for JarIndex {
-    fn get_index(&self) -> DownloadIndex {
-        return DownloadIndex {
-            index_type: DownloadableFileType::GameJar,
-            path: Path::new("/versions/1.12.2/"),
-            sha1: Option::Some(self.sha1),
-            size: Option::Some(self.size),
-        }
-    }
-}
-
-impl Downloadable for AssetIndex {
-    fn get_index(&self) -> DownloadIndex {
-        
-    }
+#[derive(Clone, Debug)]
+pub enum InstanceResourceType {
+    AssetsMap,
+    InstanceJar,
+    Asset,
+    LibraryJar,
 }

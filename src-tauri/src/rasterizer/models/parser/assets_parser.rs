@@ -1,6 +1,6 @@
 use std::collections::HashMap;
 
-use serde_derive::{Serialize, Deserialize};
+use serde::{Serialize, Deserialize};
 
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
@@ -18,6 +18,6 @@ pub struct AssetObjects {
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct AssetObject {
-    hash: String,
-    size: i32,
+    pub hash: String,
+    pub size: i32,
 }
