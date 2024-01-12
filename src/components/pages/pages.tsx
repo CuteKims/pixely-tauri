@@ -4,6 +4,7 @@ import Plaza from "./plaza/plaza";
 
 import { subpagesMap as plazaSubpagesMap } from "./plaza/plaza";
 import { subpagesMap as settingsSubpagesMap } from "./settings/settings";
+import { Playground } from "./playground/playground";
 
 export type SubpageMap = {
     [key: string]: {
@@ -41,6 +42,12 @@ const pagesMap: PageMap = {
         display: true,
         subpages: plazaSubpagesMap
     },
+    'playground': {
+        component: Playground,
+        friendlyName: 'Playground',
+        display: true,
+        subpages: {},
+    }
 }
 
 export default pagesMap;

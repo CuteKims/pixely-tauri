@@ -7,10 +7,10 @@ use async_trait::async_trait;
 #[async_trait]
 impl impls::ExecuteTask for models::InstantTask {
     async fn execute(&self) -> Result<models::Return, Box<dyn std::error::Error>> {
-        let result = match self.task_header {
-            models::InstantTaskHeaders::InstancesInstalled => get_installed_instances().await,
-            models::InstantTaskHeaders::JavasInstalled => todo!(),
-            models::InstantTaskHeaders::VersionManifest => rasterizer::utils::http_handler::get(&self.task_body).await,
+        let result = match self {
+            models::InstantTask::InstancesInstalled(_) => get_installed_instances().await,
+            models::InstantTask::JavasInstalled => todo!(),
+            models::InstantTask::VersionManifest(url) => rasterizer::utils::http_handler::get(url.to_string()).await,
         }?;
         Ok(models::Return::InstantResponse(result))
     }

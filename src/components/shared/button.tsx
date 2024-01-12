@@ -1,4 +1,3 @@
-import { GlobalState } from "../hocs/context"
 import styles from './button.module.css'
 
 export const SideButton: React.FC<{props: {

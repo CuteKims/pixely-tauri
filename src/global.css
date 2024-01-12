@@ -1,9 +1,10 @@
 :root {
-    --default-ui-color: rgba(255, 255, 255, 0.75);
+    --default-ui-color: rgba(255, 255, 255, .5);
     --default-font-color: #080808;
-    --default-ui-brightness: brightness(100%);
+    --default-ui-brightness: brightness(150%) contrast(75%) saturate(125%);
     --default-hover-color: rgba(0,0,0,.1);
     --default-activate-color: rgba(0,0,0,.2);
+    
 
     --default-box-shadow: 0px 4px 20px rgba(0,0,0,.2), 0px 4px 36px rgba(0,0,0,.2);
 
@@ -27,14 +28,15 @@ p {
     margin: auto;
     color: var(--default-font-color);
     font-size: 15px;
-    transition: color .3s;
-    text-shadow: 0px 1px 4px var(--default-ui-color);
+    transition: .5s;
+    text-shadow: 0px 1px 3px var(--default-ui-color);
 }
 
 @media (prefers-color-scheme: dark) {
     :root {
-        --default-ui-color: rgba(0,0,0,.75);
+        --default-ui-color: rgba(0,0,0,.5);
         --default-font-color: #fff;
+        --default-ui-brightness: brightness(75%);
         --default-hover-color: rgba(255,255,255,.1);
         --default-activate-color: rgba(255,255,255,.2);
     }
@@ -46,18 +48,16 @@ p {
 
 #page-container {
     position: absolute;
-    height: 100%;
     width: 100%;
-    animation: .5s cubic-bezier(0,.8,.2,1) forwards intro;
+    animation: .5s cubic-bezier(0,.8,.2,1) intro;
+    transition: .5s cubic-bezier(0,.8,.2,1);
 }
 
-#subpage-container {
-    height: 100%;
-    width: 100%;
+#subpage {
     display: flex;
     flex-direction: column;
-    overflow-y: scroll;
     animation: .5s cubic-bezier(0,.8,.2,1) forwards intro;
+    padding: 36px;
 }
 
 @keyframes intro {

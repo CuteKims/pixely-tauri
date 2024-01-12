@@ -6,9 +6,9 @@ use uuid::Uuid;
 #[async_trait]
 impl impls::ExecuteTask for models::AsyncTask {
     async fn execute(&self) -> Result<models::Return, Box<dyn std::error::Error>> {
-        let result = match self.task_header {
-            models::AsyncTaskHeaders::InstallInstance => install(),
-            models::AsyncTaskHeaders::InstallJava => todo!(),
+        let result = match self {
+            models::AsyncTask::InstallInstance(installer) => install(),
+            models::AsyncTask::InstallJava => todo!(),
         }?;
         Ok(models::Return::AsyncTaskUuid(result.to_string()))
     }

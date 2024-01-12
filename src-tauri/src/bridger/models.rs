@@ -1,5 +1,7 @@
 use serde;
 
+use crate::rasterizer::models::installer::InstanceInstaller;
+
 #[derive(serde::Deserialize)]
 pub enum Task {
     Instant(InstantTask),
@@ -7,29 +9,15 @@ pub enum Task {
 }
 
 #[derive(serde::Deserialize)]
-#[serde(rename_all = "camelCase")]
-pub struct InstantTask {
-    pub task_header: InstantTaskHeaders,
-    pub task_body: String
-}
-
-#[derive(serde::Deserialize)]
-#[serde(rename_all = "camelCase")]
-pub struct AsyncTask {
-    pub task_header: AsyncTaskHeaders,
-    pub task_body: String
-}
-
-#[derive(serde::Deserialize)]
-pub enum InstantTaskHeaders {
-    InstancesInstalled,
+pub enum InstantTask {
+    InstancesInstalled(String),
     JavasInstalled,
-    VersionManifest,
+    VersionManifest(String),
 }
 
 #[derive(serde::Deserialize)]
-pub enum AsyncTaskHeaders {
-    InstallInstance,
+pub enum AsyncTask {
+    InstallInstance(InstanceInstaller),
     InstallJava,
 }
 

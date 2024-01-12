@@ -1,5 +1,5 @@
 import { invoke } from "@tauri-apps/api/tauri";
-import TaskResponseParser, { ParsedTaskResponse, RawTaskResponse } from "./parser";
+import BackendResponseParser, { ParsedTaskResponse, RawTaskResponse } from "./parser";
 
 export default class BackendInvoker {
     task: Task;
@@ -11,21 +11,17 @@ export default class BackendInvoker {
     async invoke(): Promise<void | ParsedTaskResponse<InstantTaskHeaders>> {
         let promise = invoke('rasterizer_bridger', { task: JSON.stringify(this.task) }) as Promise<RawTaskResponse>;
         return promise.then(result => {
-                try {
-                    let parser = new TaskResponseParser(this.task, result);
-                    return parser.parse()
-                } catch (error) {
-                    throw error
-                }
-            })
-            .catch(error => {
-                throw 'Error from BackendInvoker: ' + error
-            })
-            //This will unwrap the Result<T, E> from Rust backend.
-            //If the backend returns OK(), .then() will be executed.
-            //If it is Err(), .catch() will catch it and throw an error.
-
-            //Could we ask Microsoft to add ? and Result<T, E> into TypeScript?
+            console.log(result);    
+            try {
+                let parser = new BackendResponseParser(this.task, result);
+                return parser.parse()
+            } catch (error) {
+                throw error
+            }
+        })
+        .catch(error => {
+            throw 'Error from BackendInvoker: ' + error
+        })
     }
 }
 
@@ -36,23 +32,21 @@ export enum InstantTaskHeaders {
 }
 
 export enum AsyncTaskHeaders {
-    InstallJava,
-    InstallInstance,
+    InstallJava = 'InstallJava',
+    InstallInstance = 'InstallInstance',
 }
 
 export type Task = InstantTask<InstantTaskHeaders> | AsyncTask<AsyncTaskHeaders>
 
 type InstantTask<T extends InstantTaskHeaders> = {
     Instant: {
-        taskHeader: T,
-        taskBody: InstantTaskBodyTypes[T],
+        [key: string]: InstantTaskBodyTypes[T],
     }
 }
 
 type AsyncTask<T extends AsyncTaskHeaders> = {
     Async: {
-        taskHeader: T,
-        taskBody: AsyncTaskBodyTypes[T],
+        [key: string]: AsyncTaskBodyTypes[T],
     }
 }
 
@@ -73,8 +67,8 @@ export function isAsyncTask(task: Task): task is AsyncTask<AsyncTaskHeaders> {
 
 type InstallInstance = {
     instanceName: string,
-    instanceIcon: string,
-    jsonUrl: string,
+    instanceId: string,
+    clientJsonUrl: string,
 }
 
 type InstallJava = {

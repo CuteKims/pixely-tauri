@@ -32,8 +32,8 @@ pub struct InstanceJson {
 pub struct AssetIndex {
     pub id: String,
     pub sha1: String,
-    pub size: i32,
-    pub total_size: i32,
+    pub size: usize,
+    pub total_size: usize,
     pub url: String,
 }
 
@@ -122,7 +122,7 @@ pub struct Downloads {
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 pub struct InstanceExecutableJar {
     pub sha1: String,
-    pub size: i32,
+    pub size: usize,
     pub url: String,
 }
 
@@ -154,7 +154,7 @@ pub struct LibraryDownload {
 pub struct LibraryDownloadIndex {
     pub path: String,
     pub sha1: String,
-    pub size: i32,
+    pub size: usize,
     pub url: String
 }
 
@@ -187,6 +187,6 @@ pub struct Client {
 pub struct ClientLoggingXml {
     id: String,
     sha1: String,
-    size: i32,
+    size: usize,
     url: String,
 }

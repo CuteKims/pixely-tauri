@@ -1,21 +1,17 @@
-import { useContext, useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import styles from './launcher.module.css'
 import { MinecraftInstance, ParsedTaskResponse } from '../../../bridger/parser'
 import BackendInvoker, { InstantTaskHeaders } from '../../../bridger/invoker'
 import { convertFileSrc } from '@tauri-apps/api/tauri'
 import { motion } from 'framer-motion'
-import { SubpageMap } from '../pages'
-import { globalStateContext } from '../../hocs/context'
 
 const Launcher: React.FC = () => {
-    const {state} = useContext(globalStateContext);
     const [instanceArray, setInstanceArray] = useState<{state: 'loading' | 'ok' | 'error', data: null | MinecraftInstance[] | Error}>({state: 'loading', data: null});
     const [pointer, setPointer] = useState(0)
     useEffect(() => {
         new BackendInvoker({
             Instant: {
-                taskHeader: InstantTaskHeaders.InstancesInstalled,
-                taskBody: 'wtf'
+                InstancesInstalled: 'Hello'
             }
         }).invoke().then(result => {
             setInstanceArray({
@@ -44,7 +40,7 @@ const Launcher: React.FC = () => {
                     {(() => {
                         switch (instanceArray.state) {
                             case 'loading': return <></>
-                            case 'error': return <p>error</p>
+                            case 'error': return <p>{instanceArray.data}</p>
                             case 'ok': {
                                 return (instanceArray.data as MinecraftInstance[]).map((element, index) => <Tile key={index} props={{position: index, iconPath: element.iconPath, name: element.name, pointer, setPointer}}/>)
                             }
@@ -67,7 +63,7 @@ const Tile: React.FC<{props: {
     const infoboxWidth = getCharsWidth(props.name, {size: 22, family: "'Segoe UI', 'Microsoft YaHei'"}) + 32
     return (
         <>
-            <motion.div className={styles.tile}>
+            <motion.div className={`$container ${styles.tile}`}>
                 <div className={styles['image-container']}>
                     <img src={convertFileSrc(props.iconPath)} />
                 </div>

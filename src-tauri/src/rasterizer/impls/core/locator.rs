@@ -1,5 +1,3 @@
-use std::path::Path;
-
 use crate::rasterizer::models::core::{locator::InstanceLocator, minecraft_instance::{MinecraftInstance, InstanceModificationType, InstanceVersion, VersionType}};
 
 impl InstanceLocator<'_> {

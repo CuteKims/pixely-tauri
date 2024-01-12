@@ -2,24 +2,31 @@ import { appWindow } from '@tauri-apps/api/window'
 
 import styles from './titlebar.module.css'
 
-import { useContext, useEffect } from 'react'
+import { useContext } from 'react'
 import { GlobalState, GlobalStateActionTypes, globalStateContext } from './hocs/context'
 import pagesMap from './pages/pages'
-import BackendInvoker, { InstantTaskHeaders } from '../bridger/invoker'
 
 const Titlebar: React.FC = () => {
     const {state, dispatch} = useContext(globalStateContext);
     const openMenu = () => {
         dispatch({
             type: GlobalStateActionTypes.SetMenuFlag,
-            value: true,
+            value: state.flags.menu ? false : true,
         });
     };
     const back = () => {
-        dispatch({
-            type: GlobalStateActionTypes.PopPageStack,
-            value: null,
-        });
+        if (state.flags.menu) {
+            dispatch({
+                type: GlobalStateActionTypes.SetMenuFlag,
+                value: false
+            })
+        } else {
+            dispatch({
+                type: GlobalStateActionTypes.PopPageStack,
+                value: null,
+            });
+        }
+        
     };
 
     const testFunc = () => {
@@ -33,7 +40,10 @@ const Titlebar: React.FC = () => {
         // }).catch(error => {
         //     console.error(error);
         // });
-        console.log(state.pageStack)
+        dispatch({
+            type: GlobalStateActionTypes.PushPageStack,
+            value: {page: 'launcher', subpage: []}
+        })
     };
 
     return (
@@ -53,11 +63,11 @@ const Titlebar: React.FC = () => {
                 </svg>
             </div>
             {/* Test button */}
-            <div className={styles.button} onClick={testFunc}>
+            {/* <div className={styles.button} onClick={testFunc}>
                 <svg xmlns="http://www.w3.org/2000/svg" width="48" height="36" viewBox="0 0 48 36">
                     <rect width="14" height="1" transform="translate(17 18)" fill="currentColor"/>
                 </svg>
-            </div>
+            </div> */}
             <Title state={state}/>
             {/* Minimize button */}
             <div

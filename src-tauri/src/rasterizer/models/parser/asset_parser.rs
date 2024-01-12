@@ -19,5 +19,5 @@ pub struct AssetObjects {
 #[serde(rename_all = "camelCase")]
 pub struct AssetObject {
     pub hash: String,
-    pub size: i32,
+    pub size: usize,
 }

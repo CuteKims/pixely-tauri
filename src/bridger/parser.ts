@@ -1,6 +1,6 @@
 import { InstantTaskHeaders, Task, isAsyncTask } from "./invoker";
 
-export default class TaskResponseParser {
+export default class BackendResponseParser {
     task: Task;
     rawTaskResponse: RawTaskResponse;
 
@@ -15,13 +15,13 @@ export default class TaskResponseParser {
                 create_a_listener_or_sth_idk((<AsyncTaskId>this.rawTaskResponse).AsyncTaskId); //To be implemented. If invoker invoked an async task, an listener is required to track the task progress.
             } else {
                 let deserializedResponse = JSON.parse((<InstantResponse>this.rawTaskResponse).InstantResponse);
-                return {                        
+                return {
                     header: this.task.Instant.taskHeader,
                     body: deserializedResponse,
                 };
             }
         } catch (error: any) {
-            throw error
+            throw "Error when parsing RawResponse: " + error
         }
     }
 }
@@ -56,7 +56,7 @@ export type VersionManifest = {
         release: string,
         snapshot: string,
     },
-    versions: ManifestVersion[]
+    versions: ManifestVersion[];
 }
 
 export type MinecraftInstance = {

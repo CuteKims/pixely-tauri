@@ -8,7 +8,7 @@ mod statics;
 use tauri::Manager;
 use window_shadows;
 use serde_json;
-use std::{self, error::Error};
+use std::{self};
 
 #[tauri::command]
 async fn rasterizer_bridger(task: String) -> Result<bridger::models::Return, String> {

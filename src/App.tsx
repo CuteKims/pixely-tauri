@@ -5,11 +5,13 @@ import { GlobalStateActionTypes, globalStateContext } from './components/hocs/co
 import bgimage from './assets/bgimage/wallpaper6.jpg';
 
 import Titlebar from './components/titlebar';
-import Sidebar from './components/modals/sidebar';
 
 import { appWindow } from '@tauri-apps/api/window';
 import pagesMap from './components/pages/pages';
 import NotificationBanner from './components/modals/notification';
+import ActionCenter from './components/modals/actioncenter';
+
+import styles from './App.module.css'
 
 function App() {
     const {state, dispatch} = useContext(globalStateContext);
@@ -37,12 +39,12 @@ function App() {
         })
     };
     //Update initialGlobalState after the first render.
-    useEffect(() => {
-        updateWindowSize();
-        updateIsFocus();
-    }, []);
+    // useEffect(() => {
+    //     updateWindowSize();
+    //     updateIsFocus();
+    // }, []);
 
-    //Listen to window events and update GlobalStates.
+    // Listen to window events and update GlobalStates.
     useEffect(() => {
         window.addEventListener('resize', updateWindowSize);
         window.addEventListener('focus', updateIsFocus);
@@ -57,28 +59,20 @@ function App() {
     const CurrentPage = pagesMap[state.pageStack.slice(-1)[0].page].component;
     return (
         <div id='app-body' style={{width: '100%', height: state.window.size.height, overflow: 'hidden'}}>
-            <div id='background-container' style={{position: 'absolute', top: 0, left: 0, zIndex: -1, height: '100%', width: '100%'}}>
-                <Background />
+            <div id={styles['background-container']} style={{transform: state.flags.menu ? 'scale(1) translateY(0px)' : 'scale(1.2) translateY(36px)'}}>
+                <img src={bgimage} style={{height: '100%', width: '100%', objectFit: 'cover'}}/>
             </div>
             <div id='titlebar-container' style={{position: 'absolute', top: 0, left: 0, zIndex: 100, width: '100%'}}>
                 <Titlebar />
             </div>
             <div id='modals-container' style={{position: 'absolute', top: 0, left: 0, zIndex: 99, height: '100%', width: '100%', pointerEvents: 'none'}}>
-                <Sidebar />
-                <NotificationBanner />
+                <ActionCenter />
+                {/*<NotificationBanner />*/}
             </div>
-            <div key={state.pageStack.slice(-1)[0].page} id='page-container'>
+            <div key={state.pageStack.slice(-1)[0].page} id='page-container' style={state.flags.menu ? {transform: 'scale(.9)', height: '112%', top: '-6%'} : {transform: 'scale(1)', height: '100%', top: '0%'}}>
                 <CurrentPage />
             </div>
         </div>
-    )
-}
-
-
-
-function Background() {
-    return (
-        <img src={bgimage} style={{height: '100%', width: '100%', objectFit: 'cover'}}/>
     )
 }
 

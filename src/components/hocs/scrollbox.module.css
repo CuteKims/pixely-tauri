@@ -1,0 +1,25 @@
+#scrollbar-track {
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    margin: 36px 0px 0px 0px;
+    padding: 0px 4px;
+    display: flex;
+    justify-content: center;
+    background-color: rgba(0, 0, 0, 0);
+    transition: .5s cubic-bezier(0,.9,.1,1);
+}
+
+#scrollbar-track:hover {
+    padding: 0px 2px;
+}
+
+#scrollbar-track:hover #scrollbar-slider {
+    width: 12px;
+}
+
+#scrollbar-slider {
+    background-color: rgba(255, 255, 255, .75);
+    width: 2px;
+    transition: .5s cubic-bezier(0,.9,.1,1)
+}

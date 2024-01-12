@@ -130,8 +130,10 @@ const globalStateReducer = (state: GlobalState, action: GlobalStateAction): Glob
             let returnValue: GlobalState;
             if(action.value.page == state.pageStack.slice(-1)[0].page && action.value.subpage.length == 0) return state;
 
-            returnValue = globalStateReducer(state, action={type: GlobalStateActionTypes.PopPageStack, value: null});
-            returnValue.pageStack.push(action.value);
+            returnValue = {
+                ...state,
+                pageStack: state.pageStack.splice(state.pageStack.length - 1, 1, action.value)
+            };
             return returnValue
         }
         default: return state
