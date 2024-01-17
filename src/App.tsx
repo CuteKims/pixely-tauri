@@ -2,7 +2,7 @@ import { useEffect, useContext } from 'react';
 
 import { GlobalStateActionTypes, globalStateContext } from './components/hocs/context';
 
-import bgimage from './assets/bgimage/wallpaper6.jpg';
+import bgimage from './assets/bgimage/wallpaper2.jpg';
 
 import Titlebar from './components/titlebar';
 
@@ -59,7 +59,7 @@ function App() {
     const CurrentPage = pagesMap[state.pageStack.slice(-1)[0].page].component;
     return (
         <div id='app-body' style={{width: '100%', height: state.window.size.height, overflow: 'hidden'}}>
-            <div id={styles['background-container']} style={{transform: state.flags.menu ? 'scale(1) translateY(0px)' : 'scale(1.2) translateY(36px)'}}>
+            <div id={styles['background-container']} style={{transform: state.modals.menu ? 'scale(1) translateY(0px)' : 'scale(1.2) translateY(36px)'}}>
                 <img src={bgimage} style={{height: '100%', width: '100%', objectFit: 'cover'}}/>
             </div>
             <div id='titlebar-container' style={{position: 'absolute', top: 0, left: 0, zIndex: 100, width: '100%'}}>
@@ -67,9 +67,9 @@ function App() {
             </div>
             <div id='modals-container' style={{position: 'absolute', top: 0, left: 0, zIndex: 99, height: '100%', width: '100%', pointerEvents: 'none'}}>
                 <ActionCenter />
-                {/*<NotificationBanner />*/}
+                <NotificationBanner />
             </div>
-            <div key={state.pageStack.slice(-1)[0].page} id='page-container' style={state.flags.menu ? {transform: 'scale(.9)', height: '112%', top: '-6%'} : {transform: 'scale(1)', height: '100%', top: '0%'}}>
+            <div key={state.pageStack.slice(-1)[0].page} id='page-container' style={state.modals.menu ? {transform: 'scale(.9)', height: '112%', top: '-6%'} : {transform: 'scale(1)', height: '100%', top: '0%'}}>
                 <CurrentPage />
             </div>
         </div>

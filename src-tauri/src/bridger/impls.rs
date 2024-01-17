@@ -6,13 +6,13 @@ pub mod r#async;
 pub mod instant;
 
 impl models::Task {
-    pub async fn dispatch(&self) -> Result<models::Return, Box<dyn std::error::Error>> {
+    pub async fn dispatch(&self, window: tauri::Window) -> Result<models::Return, Box<dyn std::error::Error>> {
         match &self {
             models::Task::Instant(task) => {
-                task.execute().await
+                task.execute(window).await
             },
             models::Task::Async(task) => {
-                task.execute().await
+                task.execute(window).await
             }
         }
     }
@@ -20,5 +20,5 @@ impl models::Task {
 
 #[async_trait]
 pub trait ExecuteTask {
-    async fn execute(&self) -> Result<models::Return, Box<dyn std::error::Error>>;
+    async fn execute(&self, window: tauri::Window) -> Result<models::Return, Box<dyn std::error::Error>>;
 }

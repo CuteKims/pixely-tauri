@@ -18,10 +18,10 @@ const ActionCenter: React.FC = () => {
         <>
             {/* use components from framer-motion to avoid visual artifacts. */}
             <AnimatePresence>
-                {context.state.flags.menu && (
+                {context.state.modals.menu && (
                     <motion.div
                     id={styles['actioncenter-background']}
-                    style={{pointerEvents: context.state.flags.menu ? 'all' : 'none'}}
+                    style={{pointerEvents: context.state.modals.menu ? 'all' : 'none'}}
                     initial={{backdropFilter: 'blur(0px)'}}
                     animate={{backdropFilter: 'blur(20px)'}}
                     exit={{backdropFilter: 'blur(0px)'}}
@@ -32,10 +32,10 @@ const ActionCenter: React.FC = () => {
             <Transition
             props={{
                 id: styles.container,
-                in: context.state.flags.menu,
+                in: context.state.modals.menu,
                 styles: {
                     entered: {opacity: 1, transform: 'scale(1) translateY(0px)', filter: 'blur(0px)'},
-                    exited: {opacity: 0, transform: 'scale(1.1) translateY(36px)', filter: 'blur(10px)'}
+                    exited: {opacity: 0, transform: 'scale(1.1) translateY(0px)', filter: 'blur(10px)'}
                 },
                 timeout: {
                     enter: 100,

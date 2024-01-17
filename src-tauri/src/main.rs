@@ -5,20 +5,25 @@ mod rasterizer;
 mod bridger;
 mod statics;
 
-use tauri::Manager;
+use tauri::{Manager, Window};
 use window_shadows;
 use serde_json;
-use std::{self};
+use std::{self, thread, sync::mpsc};
 
 #[tauri::command]
-async fn rasterizer_bridger(task: String) -> Result<bridger::models::Return, String> {
+async fn rasterizer_bridger(task: String, window: Window) -> Result<bridger::models::Return, String> {
     println!("{:#?}", task);
     let task: bridger::models::Task = serde_json::from_str(&task)
         .map_err(|err| err.to_string())?;
-    let result = task.dispatch().await.map_err(|error: Box<dyn std::error::Error>| error.to_string())?;
+    let result = task.dispatch(window).await.map_err(|error: Box<dyn std::error::Error>| error.to_string())?;
     println!("{:#?}", result);
     Ok(result)
 }
+
+pub struct Notification {
+    
+}
+
 
 #[tokio::main]
 async fn main() {

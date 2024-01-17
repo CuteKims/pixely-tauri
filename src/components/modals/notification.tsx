@@ -4,7 +4,7 @@ const NotificationBanner: React.FC = () => {
     return (
         <>
             <div className={styles.banner}>
-
+                
             </div>
         </>
     )

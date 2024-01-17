@@ -1,19 +1,19 @@
 import styles from './scrollbox.module.css'
 
-import { useEffect, useRef, useState } from "react"
+import { BaseSyntheticEvent, SyntheticEvent, useEffect, useRef, useState } from "react"
 
 export const ScrollBox: React.FC<{children: React.ReactNode}> = ({children}) => {
     let containerRef = useRef<HTMLDivElement>(null);
     let childrenRef = useRef<HTMLDivElement>(null);
-    let [height, setHeight] = useState({scroll: -1, client: -1})
-    let [currentPos, setCurrentPos] = useState(0)
+    let [elementHeights, setElementHeights] = useState({scroll: -1, client: -1})
+    let [scrollTop, setScrollTop] = useState(0)
     useEffect(() => {
         if (childrenRef.current == undefined || containerRef.current == undefined) return;
         const element = childrenRef.current;
         const observer = new ResizeObserver((entries) => {
         for (let entry of entries) {
             let height = {scroll: entry.contentRect.height + 36, client: (containerRef.current as HTMLDivElement).clientHeight};
-            setHeight(height);
+            setElementHeights(height);
         }
         });
         observer.observe(element);
@@ -21,13 +21,32 @@ export const ScrollBox: React.FC<{children: React.ReactNode}> = ({children}) => 
     }, [])
     function updatePos() {
         if(containerRef.current) {
-            setCurrentPos(containerRef.current.scrollTop);
+            setScrollTop(containerRef.current.scrollTop);
         }
     }
     function getSliderHeight() {
-        if (height.client / height.scroll >= 1) return height.client - 36
-        return (height.client / height.scroll) * (height.client - 36)
+        if (elementHeights.client / elementHeights.scroll >= 1) return elementHeights.client - 36
+        return (elementHeights.client / elementHeights.scroll) * (elementHeights.client - 36)
     }
+
+    function onTrackMouseDown(event: React.MouseEvent<HTMLDivElement, MouseEvent>) {
+        let sliderTop = (scrollTop / elementHeights.scroll) * (elementHeights.client - 36) + 36
+        if(event.clientY < sliderTop) {
+            containerRef.current?.scrollTo({
+                top: containerRef.current.scrollTop - (elementHeights.client * 0.67),
+                left: 0,
+                behavior: 'smooth'
+            })
+        } else if(event.clientY > sliderTop + getSliderHeight()) {
+            containerRef.current?.scrollTo({
+                top: containerRef.current.scrollTop + (elementHeights.client * 0.67),
+                left: 0,
+                behavior: 'smooth'
+            })
+        }
+        
+    }
+
     return (
         <>
             <div style={{width: '100%', display: 'flex'}} onScrollCapture={updatePos}>
@@ -38,8 +57,8 @@ export const ScrollBox: React.FC<{children: React.ReactNode}> = ({children}) => 
                 </div>
                 {(() => {
                     return (
-                        <div id={styles['scrollbar-track']} style={{height: height.client - 36, opacity: height.client / height.scroll >= 1 ? '0' : '1'}}>
-                            <div id={styles['scrollbar-slider']} style={{height: getSliderHeight(), transform: 'translateY(' + (currentPos / height.scroll) * (height.client - 36) + 'px)'}}/>
+                        <div id={styles['scrollbar-track']} style={{height: elementHeights.client - 36, opacity: elementHeights.client / elementHeights.scroll >= 1 ? '0' : '1'}} onMouseDown={(event) => onTrackMouseDown(event)}>
+                            <div id={styles['scrollbar-slider']} style={{height: getSliderHeight(), transform: 'translateY(' + (scrollTop / elementHeights.scroll) * (elementHeights.client - 36) + 'px)'}}/>
                         </div>
                     )
                 })()}

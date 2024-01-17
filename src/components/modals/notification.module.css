@@ -1,10 +1,16 @@
 .banner {
     position: absolute;
     top: 60px;
-    right: 0px;
+    right: 24px;
     box-shadow: var(--default-box-shadow);
     backdrop-filter: blur(10px);
     background-color: var(--default-ui-color);
-    height: 72px;
-    width: 256px;
+    height: 80px;
+    width: 280px;
+    pointer-events: all;
+    transition: .5s cubic-bezier(0,.8,.2,1);
+}
+
+.banner:active {
+    transform: scale(.9);
 }

@@ -10,9 +10,9 @@ const Launcher: React.FC = () => {
     const [pointer, setPointer] = useState(0)
     useEffect(() => {
         new BackendInvoker({
-            Instant: {
-                InstancesInstalled: 'Hello'
-            }
+            type: 'instant',
+            header: InstantTaskHeaders.InstancesInstalled,
+            body: null,
         }).invoke().then(result => {
             setInstanceArray({
                 state: 'ok',

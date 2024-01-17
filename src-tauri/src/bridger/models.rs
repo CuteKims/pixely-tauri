@@ -1,8 +1,10 @@
 use serde;
+use tauri::window;
 
 use crate::rasterizer::models::installer::InstanceInstaller;
 
 #[derive(serde::Deserialize)]
+#[serde(rename_all = "camelCase")]
 pub enum Task {
     Instant(InstantTask),
     Async(AsyncTask)
@@ -10,7 +12,8 @@ pub enum Task {
 
 #[derive(serde::Deserialize)]
 pub enum InstantTask {
-    InstancesInstalled(String),
+    TestCaller,
+    InstancesInstalled,
     JavasInstalled,
     VersionManifest(String),
 }

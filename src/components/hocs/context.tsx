@@ -9,9 +9,9 @@ export type GlobalState = {
         isFocused: boolean,
         isMaximized: boolean,
     }
-    flags: {
+    modals: {
         menu: boolean,
-        exit: boolean,
+        image: string | null,
     },
     pageStack: Page[],
 }
@@ -52,9 +52,9 @@ const initialGlobalState: GlobalState = {
         isFocused: true,
         isMaximized: false,
     },
-    flags: {
+    modals: {
         menu: false,
-        exit: false,
+        image: null,
     },
     pageStack: [{page: 'launcher', subpage: []}],
 }
@@ -64,20 +64,11 @@ const globalStateReducer = (state: GlobalState, action: GlobalStateAction): Glob
         case GlobalStateActionTypes.SetMenuFlag: {
             return {
                 ...state,
-                flags: {
-                    ...state.flags,
+                modals: {
+                    ...state.modals,
                     menu: action.value
                 },
             };
-        };
-        case GlobalStateActionTypes.SetExitFlag: {
-            return {
-                ...state,
-                flags: {
-                    ...state.flags,
-                    exit: action.value
-                }
-            }
         };
         case GlobalStateActionTypes.SetIsFocus: {
             return {

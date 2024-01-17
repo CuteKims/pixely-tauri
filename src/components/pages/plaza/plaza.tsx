@@ -73,9 +73,9 @@ const PageVersionManifest: React.FC = () => {
     const [filter, setFilter] = useState<string>('');
     useEffect(() => {
         new BackendInvoker({
-            Instant: {
-                VersionManifest: 'https://bmclapi2.bangbang93.com/mc/game/version_manifest_v2.json'
-            }
+            type: 'instant',
+            header: InstantTaskHeaders.VersionManifest,
+            body: 'https://bmclapi2.bangbang93.com/mc/game/version_manifest_v2.json',
         }).invoke().then(result => {
             setTimeout(() => {
                 setData({

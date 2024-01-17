@@ -3,14 +3,15 @@ import App from "./App";
 import "./global.css";
 import { GlobalStateProvider } from "./components/hocs/context";
 import BackendInvoker, { AsyncTaskHeaders, Task } from "./bridger/invoker";
+import { listen } from "@tauri-apps/api/event";
 
 let task: Task = {
-    Async: {
-        InstallInstance: {
-            instanceName: 'itsatest',
-            instanceId: 'itsatest',
-            clientJsonUrl: 'https://piston-meta.mojang.com/v1/packages/e462f7cb66825ebc4b22f83011a027212c41cc73/1.20.4.json'
-        },
+    type: 'async',
+    header: AsyncTaskHeaders.InstallInstance,
+    body: {
+        instanceName: 'itsatest',
+        instanceId: 'itsatest',
+        clientJsonUrl: 'https://piston-meta.mojang.com/v1/packages/e462f7cb66825ebc4b22f83011a027212c41cc73/1.20.4.json'
     }
 }
 
@@ -21,6 +22,10 @@ invoker.invoke().then(result => {
     console.log(result)
 }).catch(error => {
     console.error(error)
+})
+
+const unlisten = listen('test', (event) => {
+    console.log('Got Event from backend!')
 })
 
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(

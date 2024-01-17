@@ -1,4 +1,4 @@
-import { InstantTaskHeaders, Task, isAsyncTask } from "./invoker";
+import { InstantTaskHeaders, Task } from "./invoker";
 
 export default class BackendResponseParser {
     task: Task;
@@ -11,16 +11,19 @@ export default class BackendResponseParser {
 
     parse(): ParsedTaskResponse<InstantTaskHeaders> | void {
         try {
-            if (isAsyncTask(this.task)) {
-                create_a_listener_or_sth_idk((<AsyncTaskId>this.rawTaskResponse).AsyncTaskId); //To be implemented. If invoker invoked an async task, an listener is required to track the task progress.
-            } else {
-                let deserializedResponse = JSON.parse((<InstantResponse>this.rawTaskResponse).InstantResponse);
-                return {
-                    header: this.task.Instant.taskHeader,
-                    body: deserializedResponse,
-                };
+            switch(this.task.type) {
+                case 'async':
+                    create_a_listener_or_sth_idk((<AsyncTaskId>this.rawTaskResponse).AsyncTaskId); //To be implemented. If invoker invoked an async task, an listener is required to track the task progress.
+                    return
+                case 'instant':
+                    let deserializedResponse = JSON.parse((<InstantResponse>this.rawTaskResponse).InstantResponse);
+                    return {
+                        header: this.task.header,
+                        body: deserializedResponse,
+                    };
             }
-        } catch (error: any) {
+        }
+        catch (error: any) {
             throw "Error when parsing RawResponse: " + error
         }
     }
@@ -49,6 +52,7 @@ type ResponseBodyTypes = {
     [InstantTaskHeaders.VersionManifest]: VersionManifest,
     [InstantTaskHeaders.InstancesInstalled]: MinecraftInstance[],
     [InstantTaskHeaders.JavasInstalled]: string,
+    [InstantTaskHeaders.TestCaller]: string,
 }
 
 export type VersionManifest = {

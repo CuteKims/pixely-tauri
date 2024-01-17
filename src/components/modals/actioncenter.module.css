@@ -21,10 +21,12 @@
 }
 
 #container {
+    display: flex;
     pointer-events: all;
     height: 100%;
     width: 100%;
     transition: .5s cubic-bezier(0,.75,.25,1);
+    transform-origin: top;
 }
 
 #topbar {
