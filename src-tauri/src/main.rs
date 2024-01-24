@@ -30,6 +30,12 @@ async fn main() {
     tauri::Builder::default()
         .setup(|app| {
             let window = app.get_window("main").unwrap();
+            // window.with_webview(|webview| {
+            //     #[cfg(windows)]
+            //     unsafe {
+            //         webview.controller().CoreWebView2()?
+            //     }
+            // });
             window_shadows::set_shadow(&window, true).unwrap();
             Ok(())
         })
