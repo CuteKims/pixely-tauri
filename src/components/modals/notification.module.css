@@ -1,14 +1,31 @@
-.banner {
+#banner-container {
     position: absolute;
-    top: 60px;
-    right: 24px;
+    height: 100%;
+    top: 0px;
+    right: 0px;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    padding-top: 66px;
+    padding-right: 30px;
+}
+
+.banner {
+    display: flex;
+    margin-bottom: 12px;
     box-shadow: var(--default-box-shadow);
     backdrop-filter: blur(10px);
     background-color: var(--default-ui-color);
-    height: 80px;
-    width: 280px;
+    height: 72px;
     pointer-events: all;
-    transition: .5s cubic-bezier(0,.8,.2,1);
+}
+
+.banner-actioncenter {
+    display: flex;
+    margin-bottom: 1px;
+    background-color: var(--default-ui-color);
+    height: 72px;
+    pointer-events: all;
 }
 
 .banner:active {

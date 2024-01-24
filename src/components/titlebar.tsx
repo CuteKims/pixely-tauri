@@ -3,9 +3,10 @@ import { appWindow } from '@tauri-apps/api/window'
 import styles from './titlebar.module.css'
 
 import { useContext } from 'react'
-import { GlobalState, GlobalStateActionTypes, globalStateContext } from './hocs/context'
+import { GlobalState, PageStackActions, WindowStateActions, globalStateContext } from './hocs/context'
 import pagesMap from './pages/pages'
 import BackendInvoker, { AsyncTaskHeaders, InstantTaskHeaders, TaskTypes } from '../bridger/invoker'
+import { NotificationChannels } from '../bridger/notif'
 
 const TitlebarButton:  React.FC<{children: React.ReactNode, props: {
     position: 'flex-start' | 'flex-end'
@@ -23,19 +24,22 @@ const Titlebar: React.FC = () => {
     const {state, dispatch} = useContext(globalStateContext);
     const openMenu = () => {
         dispatch({
-            type: GlobalStateActionTypes.SetMenuFlag,
+            category: 'window_state',
+            type: WindowStateActions.SetMenu,
             value: state.modals.menu ? false : true,
         });
     };
     const back = () => {
         if (state.modals.menu) {
             dispatch({
-                type: GlobalStateActionTypes.SetMenuFlag,
+                category: 'window_state',
+                type: WindowStateActions.SetMenu,
                 value: false
             })
         } else {
             dispatch({
-                type: GlobalStateActionTypes.PopPageStack,
+                category: 'page_stack',
+                type: PageStackActions.Pop,
                 value: null,
             });
         }
@@ -43,19 +47,28 @@ const Titlebar: React.FC = () => {
     };
 
     const testFunc = () => {
-        new BackendInvoker({
-            type: 'instant',
-            header: InstantTaskHeaders.TestCaller,
-            body: null
-        }).invoke().then(result => {
-            console.log(result);
-        }).catch(error => {
-            console.error(error);
-        });
-        // dispatch({
-        //     type: GlobalStateActionTypes.PushPageStack,
-        //     value: {page: 'launcher', subpage: []}
-        // })
+        // new BackendInvoker({
+        //     type: 'instant',
+        //     header: InstantTaskHeaders.TestCaller,
+        //     body: null
+        // }).invoke().then(result => {
+        //     console.log(result);
+        // }).catch(error => {
+        //     console.error(error);
+        // });
+        dispatch({
+            category: 'window_state',
+            type: WindowStateActions.PushNotif,
+            value: {
+                timestamp: Date.now(),
+                uuid: Date.now(),
+                channel: NotificationChannels.Test,
+                payload: {
+                    string: 'Hello!'
+                }
+            }
+        })
+        // console.log(state)
     };
 
     return (
@@ -120,7 +133,7 @@ const Titlebar: React.FC = () => {
 const Title: React.FC<{state: GlobalState}> = ({state}) => {
     return (
         <>
-            <p className={styles.title} data-tauri-drag-region>{pagesMap[state.pageStack.slice(-1)[0].page].friendlyName}</p>
+            <p className={styles.title} data-tauri-drag-region>{pagesMap[state.pageStack.slice(-1)[0].pageKey].friendlyName}</p>
         </>
     )
 }

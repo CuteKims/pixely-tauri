@@ -8,9 +8,9 @@ use async_trait::async_trait;
 impl impls::ExecuteTask for models::InstantTask {
     async fn execute(&self, window: tauri::Window) -> Result<models::Return, Box<dyn std::error::Error>> {
         let result = match self {
-            models::InstantTask::InstancesInstalled => get_installed_instances().await,
-            models::InstantTask::JavasInstalled => todo!(),
-            models::InstantTask::VersionManifest(url) => rasterizer::utils::http_handler::get(url.to_string()).await,
+            models::InstantTask::GetInstancesInstalled => get_installed_instances().await,
+            models::InstantTask::GetJavasInstalled => todo!(),
+            models::InstantTask::GetVersionManifest(url) => rasterizer::utils::http_handler::get(url.to_string()).await,
             models::InstantTask::TestCaller => {
                 let i = AssetIndex { id: "todo!()".to_string(), sha1: "todo!()".to_string(), size: 1, total_size: 1, url: "todo!()".to_string() };
                 window.emit("test", i)?;

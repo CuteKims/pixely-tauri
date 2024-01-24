@@ -49,7 +49,7 @@ export const ScrollBox: React.FC<{children: React.ReactNode}> = ({children}) => 
 
     return (
         <>
-            <div style={{width: '100%', display: 'flex'}} onScrollCapture={updatePos}>
+            <div style={{width: '100%', height: '100%', display: 'flex', overflowX: 'visible'}} onScrollCapture={updatePos}>
                 <div id='scroll-box' ref={containerRef} style={{overflowY: 'scroll', flexGrow: 1, padding: '36px 0px 0px 0px'}}>
                     <div ref={childrenRef}>
                         {children}

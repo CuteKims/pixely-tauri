@@ -13,9 +13,9 @@ pub enum Task {
 #[derive(serde::Deserialize)]
 pub enum InstantTask {
     TestCaller,
-    InstancesInstalled,
-    JavasInstalled,
-    VersionManifest(String),
+    GetInstancesInstalled,
+    GetJavasInstalled,
+    GetVersionManifest(String),
 }
 
 #[derive(serde::Deserialize)]

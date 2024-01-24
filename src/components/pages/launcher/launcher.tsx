@@ -11,7 +11,7 @@ const Launcher: React.FC = () => {
     useEffect(() => {
         new BackendInvoker({
             type: 'instant',
-            header: InstantTaskHeaders.InstancesInstalled,
+            header: InstantTaskHeaders.GetInstancesInstalled,
             body: null,
         }).invoke().then(result => {
             setInstanceArray({
@@ -35,8 +35,8 @@ const Launcher: React.FC = () => {
     }
     return (
         <>
-            <motion.div id={styles.drawer} onWheel={(prop) => handleScroll(prop)}>
-                <div id={styles['tile-container']}>
+            <div id={styles.drawer} onWheel={(prop) => handleScroll(prop)}>
+                <div id={styles['tile-container']}  style={{transform: 'translateX(-' + pointer * 116 + 'px)'}}>
                     {(() => {
                         switch (instanceArray.state) {
                             case 'loading': return <></>
@@ -47,7 +47,7 @@ const Launcher: React.FC = () => {
                         }
                     })()}
                 </div>
-            </motion.div>
+            </div>
         </>
     )
 }

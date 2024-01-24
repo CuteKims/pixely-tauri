@@ -1,33 +1,26 @@
 import styles from './settings.module.css'
 import pagesMap, { SubpageMap } from '../pages'
 import { SideButton } from '../../shared/button'
-import { globalStateContext, GlobalStateActionTypes } from '../../hocs/context'
-import { useContext } from 'react'
+import { PageStackActions, globalStateContext } from '../../hocs/context'
+import { useContext, useEffect, useState } from 'react'
 
 const Settings: React.FC = () => {
     let {state, dispatch} = useContext(globalStateContext);
 
-    //fallback
-    if(state.pageStack.slice(-1)[0].subpage.length == 0) state = {
-        ...state,
-        pageStack: [...state.pageStack.slice(0,-1), {
-            ...state.pageStack.slice(-1)[0],
-            subpage: [{
-                page: 'settings.user',
-                subpage: [],
-            }]
-        }]
-    }
+    let subpageKey = state.pageStack.slice(-1)[0].subpage?.pageKey;
+    if(subpageKey == undefined) subpageKey = 'settings.user'
+
+    let SubpageComponent = subpagesMap[subpageKey].component;
 
     const buttonCallback = (pageKey: string) => {
         dispatch({
-            type: GlobalStateActionTypes.PushPageStack,
+            category: 'page_stack',
+            type: PageStackActions.SetSubpage,
             value: {
-                ...state.pageStack.slice(-1)[0],
-                subpage: [{page: pageKey, subpage: []}]
+                pageKey
             }
-        })
-    }
+        });
+    };
 
     return (
         <>
@@ -38,13 +31,13 @@ const Settings: React.FC = () => {
                             pageKey: key,
                             friendlyName: pagesMap.settings.subpages[key].friendlyName,
                             display: pagesMap.settings.subpages[key].display,
-                            isSelected: state.pageStack.slice(-1)[0].subpage[0].page == key,
+                            isSelected: subpageKey == key,
                             callback: buttonCallback,
                         }} />
                     ))}
                 </div>
-                <div id='subpage-container' key={state.pageStack.slice(-1)[0].subpage.slice(-1)[0].page}>
-                    <SettingsPage />
+                <div id='subpage-container' key={subpageKey}>
+                    <SubpageComponent />
                 </div>
             </div>
         </>

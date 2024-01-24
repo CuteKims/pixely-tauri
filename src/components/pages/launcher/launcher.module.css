@@ -4,18 +4,19 @@
 }
 
 #tile-container {
-    padding: 30px;
-    padding-top: 66px;
+    padding: 36px;
+    padding-top: 72px;
     display: flex;
+    gap: 16px;
     overflow-x: scroll;
     overflow-y: hidden;
+    transition: .5s cubic-bezier(0,.8,.2,1);
 }
 
 .tile {
     height: 98px;
     box-shadow: var(--default-box-shadow);
     backdrop-filter: blur(10px);
-    margin-right: 16px;
     border: solid 1px rgba(255, 255, 255, .2);
     display: flex;
 }

@@ -1,6 +1,6 @@
 import { useContext } from 'react';
 import styles from './actioncenter.module.css'
-import { GlobalStateActionTypes, globalStateContext, GlobalStateContext } from '../hocs/context'
+import { globalStateContext, GlobalStateContext, PageStackActions, WindowStateActions } from '../hocs/context'
 import pagesMap from '../pages/pages';
 import { SideButton } from '../shared/button';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -10,8 +10,9 @@ const ActionCenter: React.FC = () => {
     let context = useContext(globalStateContext);
     const closeMenu = () => {
         context.dispatch({
-            type: GlobalStateActionTypes.SetMenuFlag,
-            value: false,
+            category: 'window_state',
+            type: WindowStateActions.SetMenu,
+            value: false
         })
     };
     return (
@@ -34,19 +35,22 @@ const ActionCenter: React.FC = () => {
                 id: styles.container,
                 in: context.state.modals.menu,
                 styles: {
-                    entered: {opacity: 1, transform: 'scale(1) translateY(0px)', filter: 'blur(0px)'},
-                    exited: {opacity: 0, transform: 'scale(1.1) translateY(0px)', filter: 'blur(10px)'}
+                    entered: {opacity: 1, transform: 'translateY(0px)', filter: 'blur(0px)', pointerEvents: 'all'},
+                    exited: {opacity: 0, transform: 'translateY(72px)', filter: 'blur(10px)', pointerEvents: 'none'}
                 },
                 timeout: {
-                    enter: 100,
+                    enter: 10,
                     exit: 500
                 },
                 unmountAfterExit: true,
                 onClick: closeMenu
             }}>
                 <p id={styles.title}>操作中心</p>
-                <p id={styles.subtitle}>没有通知也没有进行中的任务，因为功能还没实现</p>
-                <SidebarButtonContainer props={{context}}/>
+                <p id={styles.subtitle}>{(() => {
+                    if(context.state.notifArray.length == 0) return '没有通知'
+                    else return context.state.notifArray.length + '个通知'
+                })()}</p>
+                <SidebarButtons props={{context}}/>
             </Transition>
             
         </>
@@ -54,17 +58,18 @@ const ActionCenter: React.FC = () => {
     )
 }
 
-const SidebarButtonContainer: React.FC<{props: {context: GlobalStateContext}}> = ({props}) => {
+const SidebarButtons: React.FC<{props: {context: GlobalStateContext}}> = ({props}) => {
     const buttonCallback = (pageKey: string) => {
         props.context.dispatch({
-            type: GlobalStateActionTypes.PushPageStack,
+            category: 'page_stack',
+            type: PageStackActions.Push,
             value: {
-                page: pageKey,
-                subpage: [],
+                pageKey: pageKey
             }
         })
         props.context.dispatch({
-            type: GlobalStateActionTypes.SetMenuFlag,
+            category: 'window_state',
+            type: WindowStateActions.SetMenu,
             value: false
         })
     }
@@ -76,7 +81,7 @@ const SidebarButtonContainer: React.FC<{props: {context: GlobalStateContext}}> =
                         pageKey: key,
                         friendlyName: pagesMap[key].friendlyName,
                         display: pagesMap[key].display,
-                        isSelected: props.context.state.pageStack.slice(-1)[0].page == key,
+                        isSelected: props.context.state.pageStack.slice(-1)[0].pageKey == key,
                         callback: buttonCallback,
                     }} />
                 ))}

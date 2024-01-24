@@ -29,7 +29,7 @@ p {
     color: var(--default-font-color);
     font-size: 15px;
     transition: .5s;
-    text-shadow: 0px 1px 3px var(--default-ui-color);
+    text-shadow: 0px 0px 4px rgba(255, 255, 255, 1), 0px 0px 8px rgba(255, 255, 255, 1);
 }
 
 @media (prefers-color-scheme: dark) {
@@ -39,6 +39,13 @@ p {
         --default-ui-brightness: brightness(75%);
         --default-hover-color: rgba(255,255,255,.1);
         --default-activate-color: rgba(255,255,255,.2);
+    }
+    p {
+        margin: auto;
+        color: var(--default-font-color);
+        font-size: 15px;
+        transition: .5s;
+        text-shadow: 0px 1px 3px var(--default-ui-color);
     }
 }
 
@@ -58,6 +65,25 @@ p {
     flex-direction: column;
     animation: .5s cubic-bezier(0,.8,.2,1) forwards intro;
     padding: 36px;
+}
+
+#main-container {
+    transition: .5s cubic-bezier(0,.8,.2,1);
+}
+
+#page-container {
+    height: 100%;
+    width: 100%;
+}
+
+#background-container {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    z-index: -1;
+    height: 100%;
+    width: 100%;
+    transition: .5s cubic-bezier(0,.8,.2,1);
 }
 
 @keyframes intro {

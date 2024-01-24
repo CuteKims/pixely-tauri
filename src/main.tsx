@@ -24,8 +24,9 @@ invoker.invoke().then(result => {
     console.error(error)
 })
 
-const unlisten = listen('test', (event) => {
+const BackendEventListener = listen('test', (event) => {
     console.log('Got Event from backend!')
+    console.log(event)
 })
 
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(

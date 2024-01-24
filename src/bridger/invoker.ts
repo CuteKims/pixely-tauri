@@ -31,9 +31,9 @@ export default class BackendInvoker {
 }
 
 export enum InstantTaskHeaders {
-    InstancesInstalled = 'InstancesInstalled',
-    JavasInstalled = 'JavasInstalled',
-    VersionManifest = 'VersionManifest',
+    GetInstancesInstalled = 'GetInstancesInstalled',
+    GetJavasInstalled = 'GetJavasInstalled',
+    GetVersionManifest = 'GetVersionManifest',
     TestCaller = 'TestCaller'
 }
 
@@ -62,9 +62,9 @@ export enum TaskTypes {
 }
 
 type InstantTaskBodies = {
-    [InstantTaskHeaders.VersionManifest]: string,
-    [InstantTaskHeaders.InstancesInstalled]: string,
-    [InstantTaskHeaders.JavasInstalled]: null
+    [InstantTaskHeaders.GetVersionManifest]: string,
+    [InstantTaskHeaders.GetInstancesInstalled]: string,
+    [InstantTaskHeaders.GetJavasInstalled]: null
     [InstantTaskHeaders.TestCaller]: null
 }
 

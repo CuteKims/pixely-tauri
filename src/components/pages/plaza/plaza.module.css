@@ -24,60 +24,48 @@
     background-color: var(--default-ui-color);
     backdrop-filter: var(--default-ui-brightness);
     box-shadow: 0px 0px 16px rgba(0, 0, 0, .3);
-    transition: .5s;
+    transition: .3s;
 }
 
 #version-manifest {
     display: flex;
     flex-direction: column;
     gap: 1px;
-    box-shadow: 0px 8px 16px rgba(0, 0, 0, .3);
-    animation: .5s cubic-bezier(0,.8,.2,1) forwards intro;
 }
 
-@keyframes intro {
-    0% {
-        transform: translateY(36px);
-    }
-    100% {
-        transform: translateY(0px);
-    }
-}
-
-.component-manifest-version {
+.component-manifest_version {
     height: 56px;
     background-color: var(--default-ui-color);
     backdrop-filter: var(--default-ui-brightness);
-    transition: .5s;
 }
 
-.component-manifest-version img {
+.component-manifest_version img {
     height: 32px;
     margin: 12px;
 }
 
-.component-manifest-version .title-container {
+.component-manifest_version .title_container {
     margin: auto;
     margin-left: 0px;
 }
 
-.component-manifest-version .subtitle {
+.component-manifest_version .subtitle {
     font-size: 12px;
     opacity: .8;
 }
 
-.component-manifest-version .bgcolor {
+.component-manifest_version .bgcolor {
     height: 100%;
     width: 100%;
     display: flex;
     transition: .1s;
 }
 
-.component-manifest-version:hover .bgcolor {
+.component-manifest_version:hover .bgcolor {
     background-color: var(--default-hover-color);
 }
 
-.component-manifest-version:active .bgcolor {
+.component-manifest_version:active .bgcolor {
     background-color: var(--default-activate-color);
 }
 
@@ -89,7 +77,6 @@
     padding-left: 40px;
     background-color: var(--default-ui-color);
     backdrop-filter: var(--default-ui-brightness);
-    box-shadow: 0px 8px 16px rgba(0, 0, 0, .3);
     border: none;
     color: var(--default-font-color);
     font-size: 15px;
@@ -98,6 +85,7 @@
 
 #searchbox:focus {
     outline: none;
+    box-shadow: 0px 8px 16px rgba(0, 0, 0, .3);
     background-color: rgba(255, 255, 255, .8);
 }
 
@@ -105,6 +93,25 @@
     color: var(--default-font-color);
     text-shadow: 0px 1px 4px var(--default-ui-color);
     opacity: .5;
+}
+
+#installer_previewer {
+    height: 64px;
+    justify-self: flex-end;
+    margin-top: auto;
+    margin-bottom: 36px;
+    background-color: var(--default-ui-color);
+    backdrop-filter: var(--default-ui-brightness) blur(10px);
+    box-shadow: var(--default-box-shadow);
+    display: flex;
+    animation: .5s cubic-bezier(0,.8,.2,1) intro;
+}
+
+#installer_previewer img {
+    height: 36px;
+    width: 36px;
+    margin: 14px;
+    filter: drop-shadow(0px 2px 4px rgba(0,0,0,.3));
 }
 
 @media (prefers-color-scheme: dark) {
@@ -116,4 +123,15 @@
 
 input::-webkit-search-cancel-button {
     display: none;
+}
+
+@keyframes intro {
+    0% {
+        opacity: 0;
+        transform: translateY(108px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0px);
+    }
 }

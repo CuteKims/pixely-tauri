@@ -1,43 +1,36 @@
-import { Suspense, useContext, useEffect, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import pagesMap, { SubpageMap } from '../pages'
 import styles from './plaza.module.css'
-import { GlobalStateActionTypes, globalStateContext } from '../../hocs/context'
+import { PageStackActions, globalStateContext } from '../../hocs/context'
 import { SideButton } from '../../shared/button'
 import BackendInvoker, { InstantTaskHeaders } from '../../../bridger/invoker'
 
 import iconDirt from '../../../assets/icons/dirt_block.png'
 import iconGrass from '../../../assets/icons/grass_block.png'
 import iconStone from '../../../assets/icons/stone_block_old.png'
-import { ManifestVersion, MinecraftInstance, ParsedTaskResponse, VersionManifest, VersionType } from '../../../bridger/parser'
+import { ManifestVersion, ParsedTaskResponse, VersionManifest, VersionType } from '../../../bridger/parser'
 import { ScrollBox } from '../../hocs/scrollbox'
+import { motion, AnimatePresence } from 'framer-motion'
+import { IconArrow, IconDownload, IconSearch } from '../../shared/icons'
 
 //MainComponent
 const Plaza: React.FC = () => {
     let {state, dispatch} = useContext(globalStateContext);
 
-    //fallback
-    if(state.pageStack.slice(-1)[0].subpage.length == 0) state = {
-        ...state,
-        pageStack: [...state.pageStack.slice(0,-1), {
-            ...state.pageStack.slice(-1)[0],
-            subpage: [{
-                page: 'plaza.version_manifest',
-                subpage: [],
-            }],
-        }],
-    };
+    let subpageKey = state.pageStack.slice(-1)[0].subpage?.pageKey;
+    if(subpageKey == undefined) subpageKey = 'plaza.version_manifest'
+
+    let SubpageComponent = subpagesMap[subpageKey].component;
 
     const buttonCallback = (pageKey: string) => {
         dispatch({
-            type: GlobalStateActionTypes.PushPageStack,
+            category: 'page_stack',
+            type: PageStackActions.SetSubpage,
             value: {
-                ...state.pageStack.slice(-1)[0],
-                subpage: [{page: pageKey, subpage: []}]
-            },
+                pageKey
+            }
         });
     };
-
-    let Subpage = subpagesMap[state.pageStack.slice(-1)[0].subpage.slice(-1)[0].page].component;
 
     return (
         <>
@@ -49,12 +42,12 @@ const Plaza: React.FC = () => {
                             pageKey: key,
                             friendlyName: pagesMap.plaza.subpages[key].friendlyName,
                             display: pagesMap.plaza.subpages[key].display,
-                            isSelected: state.pageStack.slice(-1)[0].subpage[0].page == key,
+                            isSelected: subpageKey == key,
                             callback: buttonCallback,
                         }} />
                     ))}
                 </div>
-                <Subpage />
+                <SubpageComponent />
             </div>
         </>
     )
@@ -69,12 +62,13 @@ const FallbackComponent: React.FC = () => {
 }
 
 const PageVersionManifest: React.FC = () => {
+    const {state, dispatch} = useContext(globalStateContext)
     const [data, setData] = useState<{state: 'loading' | 'ok' | 'error', data: null | VersionManifest | any}>({state: 'loading', data: null});
     const [filter, setFilter] = useState<string>('');
     useEffect(() => {
         new BackendInvoker({
             type: 'instant',
-            header: InstantTaskHeaders.VersionManifest,
+            header: InstantTaskHeaders.GetVersionManifest,
             body: 'https://bmclapi2.bangbang93.com/mc/game/version_manifest_v2.json',
         }).invoke().then(result => {
             setTimeout(() => {
@@ -89,7 +83,14 @@ const PageVersionManifest: React.FC = () => {
         })
     }, []);
     function callback(version: ManifestVersion) {
-        console.log(version);
+        dispatch({
+            category: 'page_stack',
+            type: PageStackActions.SetSubpage,
+            value: {
+                pageKey: 'plaza.install_preview',
+                internalState: version
+            }
+        });
     };
     return (
         <ScrollBox>
@@ -97,7 +98,7 @@ const PageVersionManifest: React.FC = () => {
                 <div style={{position: 'relative', height: '40px', marginBottom: '18px', display: 'flex'}}>
                     <input type='search' id={styles.searchbox} onChange={(element => {setFilter(element.currentTarget.value)})} placeholder='搜索版本...'/>
                     <div style={{position: 'absolute', top: '11px', left: '12px'}}>
-                        <SearchIcon />
+                        <IconSearch />
                     </div>
                 </div>
                 
@@ -107,7 +108,9 @@ const PageVersionManifest: React.FC = () => {
                         case 'error': return <p>{data.data}</p>;
                         case 'ok': return (
                             <div id={styles['version-manifest']}>
-                                {listFilter((data.data as VersionManifest), filter).map(version => <MinecraftVersion key={version.id} props={{version, callback}}/>)}
+                                <AnimatePresence>
+                                    {listFilter((data.data as VersionManifest), filter).map(version => <MinecraftVersion key={version.id} props={{version, callback}}/>)}
+                                </AnimatePresence>
                             </div>
                         );
                     };
@@ -128,20 +131,20 @@ function listFilter(manifest: VersionManifest, filter: string): ManifestVersion[
     return returnValue
 }
 
-const SearchIcon: React.FC = () => {
-    return (
-        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" style={{color: 'var(--default-font-color)'}}>
-            <path d="M16,14.937l-4.024-4.076A6.773,6.773,0,0,0,8.138.159,6.661,6.661,0,0,0,.634,3.88,6.8,6.8,0,0,0,2.593,12.1a6.625,6.625,0,0,0,8.357-.146l4,4.046ZM6.682,12.009a5.255,5.255,0,1,1,5.2-5.255,5.226,5.226,0,0,1-5.2,5.255Z" transform="translate(0.001 0.005)" fill="currentColor"/>
-        </svg>
-    )
-}
-
 const MinecraftVersion: React.FC<{props: {
     version: ManifestVersion,
     callback: (args: ManifestVersion) => void,
 }}> = ({props}) => {
     return (
-        <div className={styles['component-manifest-version']} onClick={() => props.callback(props.version)}>
+        <motion.div
+        layout
+        initial={{scale: .9, opacity: 0}}
+        animate={{scale: 1, opacity: 1}}
+        exit={{scale: .9, opacity: 0}}
+        transition={{duration: .3, ease: [0,.8,.2,1]}}
+        className={styles['component-manifest_version']} onClick={() => props.callback(props.version)}
+        key={props.version.id}
+        >
             <div className={styles.bgcolor}>
                 <img src={(() => {
                     switch (props.version.type) {
@@ -150,7 +153,7 @@ const MinecraftVersion: React.FC<{props: {
                         default: return iconStone;
                     }
                 })()}/>
-                <div className={styles['title-container']}>
+                <div className={styles['title_container']}>
                     <p>{props.version.id}</p>
                     <p className={styles.subtitle}>{(() => {
                         let type: string;
@@ -175,26 +178,59 @@ const MinecraftVersion: React.FC<{props: {
                     })()}</p>
                 </div>
             </div>
+        </motion.div>
+    )
+}
+
+const PageInstallPreview: React.FC = () => {
+    const {state, dispatch} = useContext(globalStateContext);
+    let version = state.pageStack.slice(-1)[0].subpage?.internalState as ManifestVersion | undefined
+    if(version == undefined) version = {
+        id: 'MISSINGNO.',
+        type: VersionType.oldAlpha,
+        url: 'MISSINGNO.',
+        time: 'MISSINGNO.',
+        releaseTime: 'MISSINGNO.',
+        sha1: 'MISSINGNO.',
+        complianceLevel: 0,
+    }
+    return (
+        <div style={{width: '100%', height: '100%'}}>
+            <ScrollBox>
+                <div id='subpage' style={{paddingBottom: '136px'}}>
+                    <p style={{fontSize: '15px', textShadow: '0px 0px 4px rgba(0, 0, 0, .5), 0px 4px 8px rgba(0, 0, 0, .5)', color: 'white', opacity: .75, marginLeft: '0px'}}>{version.id}</p>
+                    <p style={{fontSize: '24px', textShadow: '0px 0px 4px rgba(0, 0, 0, .5), 0px 4px 8px rgba(0, 0, 0, .5)', color: 'white', marginLeft: '0px'}}>实例创建向导</p>
+                </div>
+            </ScrollBox>
+            <div style={{width: '100%', height: '100%', position: 'relative', top: '-100%', pointerEvents: 'none'}}>
+                <div style={{height: '100%', padding: '0px 36px', display: 'flex', flexDirection: 'column'}}>
+                    <div id={styles['installer_previewer']}>
+                        <img src={(() => {
+                            switch (version.type) {
+                                case VersionType.snapshot: return iconDirt;
+                                case VersionType.release: return iconGrass;
+                                default: return iconStone;
+                            }
+                        })()}/>
+                        <div style={{margin: 'auto', marginLeft: '0px'}}>
+                            <p style={{fontSize: '18px'}}>新实例</p>
+                            <p style={{fontSize: '14px', opacity: .75}}>{version.id}</p>
+                        </div>
+                        <div style={{margin: 'auto', marginRight: '18px', transform: 'scale(.8)'}}>
+                            <IconDownload/>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     )
 }
 
-const PageDownloadPreview: React.FC = () => {
-    // const version: ManifestVersion = {
-    //     id: '1.12.2',
-    //     type: VersionType.release,
-    //     url: 'https://piston-meta.mojang.com/v1/packages/832d95b9f40699d4961394dcf6cf549e65f15dc5/1.12.2.json',
-    //     time: '2023-06-07T11:49:20+00:00',
-    //     releaseTime: '2017-09-18T08:39:46+00:00',
-    //     sha1: '832d95b9f40699d4961394dcf6cf549e65f15dc5',
-    //     complianceLevel: 0,
-    // };
+const Playground: React.FC = () => {
     return (
-        <>
-            <div>
+        <div>
 
-            </div>
-        </>
+        </div>
     )
 }
 
@@ -209,9 +245,14 @@ export const subpagesMap: SubpageMap = {
         friendlyName: '整合包',
         display: true,
     },
-    'plaza.download_preview': {
-        component: PageDownloadPreview,
+    'plaza.install_preview': {
+        component: PageInstallPreview,
         friendlyName: '下载预览',
+        display: false,
+    },
+    'plaza.playgroud': {
+        component: Playground,
+        friendlyName: 'Playground',
         display: true,
     }
 }
