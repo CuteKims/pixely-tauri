@@ -27,7 +27,3 @@
     height: 72px;
     pointer-events: all;
 }
-
-.banner:active {
-    transform: scale(.9);
-}

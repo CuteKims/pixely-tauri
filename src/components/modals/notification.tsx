@@ -44,7 +44,7 @@ const NotificationBanner: React.FC = () => {
                     {state.modals.menu ? (
                         <>
                             <AnimatePresence mode='popLayout'>
-                                {state.notifArray.map((value, key, map) => (
+                                {state.notifArray.map((value, key) => (
                                     <motion.div
                                     layout
                                     key={value.uuid}
@@ -53,17 +53,19 @@ const NotificationBanner: React.FC = () => {
                                     animate={{opacity: 1, scale: 1, translateY: 0}}
                                     exit={{opacity: 0, scale: .9}}
                                     transition={{ease: [0,.8,.2,1], duration: .5}}>
-                                        <div style={{margin: '24px'}}>
-                                            <SVG2/>
+                                        <div style={{margin: '0px', flexGrow: 1, border: 'solid 1px rgba(255, 255, 255, 0)', display: 'flex'}}>
+                                            <div style={{margin: '24px'}}>
+                                                <SVG2/>
+                                            </div>
+                                            <p style={{marginLeft: '0px'}}>NotifUuid: {value.uuid}</p>
                                         </div>
-                                        <p style={{marginLeft: '0px'}}>NotifUuid: {value.uuid}</p>
                                     </motion.div>
                                 ))}
                             </AnimatePresence>
                         </>
                     ) : (
                         <AnimatePresence mode='popLayout'>
-                            {displayArray.map((value, key, map) => (
+                            {displayArray.map((value, key) => (
                                 <motion.div
                                 layout
                                 key={value.uuid}
@@ -72,10 +74,12 @@ const NotificationBanner: React.FC = () => {
                                 animate={{translateY: 0}}
                                 exit={key == 0 ? {translateY: -144} : {opacity: 0, scale: .8}}
                                 transition={{ease: [0,.8,.2,1], duration: .5}}>
-                                    <div style={{margin: '24px'}}>
-                                        <SVG2/>
+                                    <div style={{margin: '0px', flexGrow: 1, border: 'solid 1px rgba(255, 255, 255, .2)', display: 'flex'}}>
+                                        <div style={{margin: '24px'}}>
+                                            <SVG2/>
+                                        </div>
+                                        <p style={{marginLeft: '0px'}}>NotifUuid: {value.uuid}</p>
                                     </div>
-                                    <p style={{marginLeft: '0px'}}>NotifUuid: {value.uuid}</p>
                                 </motion.div>
                             ))}
                         </AnimatePresence>

@@ -2,7 +2,7 @@ import { useEffect, useContext } from 'react';
 
 import { WindowStateActions, globalStateContext } from './components/hocs/context';
 
-import bgimage from './assets/bgimage/wallpaper9.jpg';
+import bgimage from './assets/bgimage/wallpaper6.jpg';
 
 import Titlebar from './components/titlebar';
 

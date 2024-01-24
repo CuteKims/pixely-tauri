@@ -95,25 +95,6 @@
     opacity: .5;
 }
 
-#installer_previewer {
-    height: 64px;
-    justify-self: flex-end;
-    margin-top: auto;
-    margin-bottom: 36px;
-    background-color: var(--default-ui-color);
-    backdrop-filter: var(--default-ui-brightness) blur(10px);
-    box-shadow: var(--default-box-shadow);
-    display: flex;
-    animation: .5s cubic-bezier(0,.8,.2,1) intro;
-}
-
-#installer_previewer img {
-    height: 36px;
-    width: 36px;
-    margin: 14px;
-    filter: drop-shadow(0px 2px 4px rgba(0,0,0,.3));
-}
-
 @media (prefers-color-scheme: dark) {
     #searchbox:focus {
         outline: none;
@@ -123,15 +104,4 @@
 
 input::-webkit-search-cancel-button {
     display: none;
-}
-
-@keyframes intro {
-    0% {
-        opacity: 0;
-        transform: translateY(108px);
-    }
-    100% {
-        opacity: 1;
-        transform: translateY(0px);
-    }
 }

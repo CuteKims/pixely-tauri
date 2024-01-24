@@ -1,0 +1,68 @@
+#installer_previewer {
+    border: solid 1px rgba(255, 255, 255, .2);
+    height: 62px;
+    justify-self: flex-end;
+    margin-top: auto;
+    margin-bottom: 36px;
+    background-color: var(--default-ui-color);
+    backdrop-filter: blur(10px);
+    box-shadow: var(--default-box-shadow);
+    display: flex;
+    animation: .5s cubic-bezier(0,.8,.2,1) intro;
+}
+
+#installer_previewer img {
+    height: 36px;
+    width: 36px;
+    margin: 14px;
+    filter: drop-shadow(0px 2px 4px rgba(0,0,0,.3));
+}
+
+@keyframes intro {
+    0% {
+        opacity: 0;
+        transform: translateY(108px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0px);
+    }
+}
+
+.header {
+    text-shadow: 0px 0px 4px rgba(0, 0, 0, .5), 0px 4px 8px rgba(0, 0, 0, .5);
+    color: white;
+    margin-left: 0px;
+}
+
+.installation_option-container {
+    height: 64px;
+    display: flex;
+}
+
+.installation_option-container .image_container {
+    height: 64px;
+    width: 64px;
+    background-color: rgba(255, 255, 255, .25);
+    display: flex;
+}
+
+@media (prefers-color-scheme: dark) {
+    .installation_option-container .image_container {
+        background-color: rgba(0, 0, 0, .25);
+    }   
+}
+
+.installation_option-container .text_container {
+    flex-grow: 1;
+    background-color: var(--default-ui-color);
+    backdrop-filter: var(--default-ui-brightness);
+    padding: 10px 16px;
+}
+
+.installation_settings-container {
+    height: 56px;
+    background-color: var(--default-ui-color);
+    backdrop-filter: var(--default-ui-brightness);
+    display: flex;
+}

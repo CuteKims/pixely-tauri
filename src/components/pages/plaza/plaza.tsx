@@ -12,6 +12,7 @@ import { ManifestVersion, ParsedTaskResponse, VersionManifest, VersionType } fro
 import { ScrollBox } from '../../hocs/scrollbox'
 import { motion, AnimatePresence } from 'framer-motion'
 import { IconArrow, IconDownload, IconSearch } from '../../shared/icons'
+import SubpageInstaller from './installer/installer'
 
 //MainComponent
 const Plaza: React.FC = () => {
@@ -61,7 +62,7 @@ const FallbackComponent: React.FC = () => {
     )
 }
 
-const PageVersionManifest: React.FC = () => {
+const SubpageVersionManifest: React.FC = () => {
     const {state, dispatch} = useContext(globalStateContext)
     const [data, setData] = useState<{state: 'loading' | 'ok' | 'error', data: null | VersionManifest | any}>({state: 'loading', data: null});
     const [filter, setFilter] = useState<string>('');
@@ -87,7 +88,7 @@ const PageVersionManifest: React.FC = () => {
             category: 'page_stack',
             type: PageStackActions.SetSubpage,
             value: {
-                pageKey: 'plaza.install_preview',
+                pageKey: 'plaza.installer',
                 internalState: version
             }
         });
@@ -182,49 +183,7 @@ const MinecraftVersion: React.FC<{props: {
     )
 }
 
-const PageInstallPreview: React.FC = () => {
-    const {state, dispatch} = useContext(globalStateContext);
-    let version = state.pageStack.slice(-1)[0].subpage?.internalState as ManifestVersion | undefined
-    if(version == undefined) version = {
-        id: 'MISSINGNO.',
-        type: VersionType.oldAlpha,
-        url: 'MISSINGNO.',
-        time: 'MISSINGNO.',
-        releaseTime: 'MISSINGNO.',
-        sha1: 'MISSINGNO.',
-        complianceLevel: 0,
-    }
-    return (
-        <div style={{width: '100%', height: '100%'}}>
-            <ScrollBox>
-                <div id='subpage' style={{paddingBottom: '136px'}}>
-                    <p style={{fontSize: '15px', textShadow: '0px 0px 4px rgba(0, 0, 0, .5), 0px 4px 8px rgba(0, 0, 0, .5)', color: 'white', opacity: .75, marginLeft: '0px'}}>{version.id}</p>
-                    <p style={{fontSize: '24px', textShadow: '0px 0px 4px rgba(0, 0, 0, .5), 0px 4px 8px rgba(0, 0, 0, .5)', color: 'white', marginLeft: '0px'}}>实例创建向导</p>
-                </div>
-            </ScrollBox>
-            <div style={{width: '100%', height: '100%', position: 'relative', top: '-100%', pointerEvents: 'none'}}>
-                <div style={{height: '100%', padding: '0px 36px', display: 'flex', flexDirection: 'column'}}>
-                    <div id={styles['installer_previewer']}>
-                        <img src={(() => {
-                            switch (version.type) {
-                                case VersionType.snapshot: return iconDirt;
-                                case VersionType.release: return iconGrass;
-                                default: return iconStone;
-                            }
-                        })()}/>
-                        <div style={{margin: 'auto', marginLeft: '0px'}}>
-                            <p style={{fontSize: '18px'}}>新实例</p>
-                            <p style={{fontSize: '14px', opacity: .75}}>{version.id}</p>
-                        </div>
-                        <div style={{margin: 'auto', marginRight: '18px', transform: 'scale(.8)'}}>
-                            <IconDownload/>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    )
-}
+
 
 const Playground: React.FC = () => {
     return (
@@ -236,18 +195,18 @@ const Playground: React.FC = () => {
 
 export const subpagesMap: SubpageMap = {
     'plaza.version_manifest': {
-        component: PageVersionManifest,
+        component: SubpageVersionManifest,
         friendlyName: '本体',
         display: true,
     },
     'plaza.modpack': {
-        component: PageVersionManifest,
+        component: SubpageVersionManifest,
         friendlyName: '整合包',
         display: true,
     },
-    'plaza.install_preview': {
-        component: PageInstallPreview,
-        friendlyName: '下载预览',
+    'plaza.installer': {
+        component: SubpageInstaller,
+        friendlyName: '安装',
         display: false,
     },
     'plaza.playgroud': {
