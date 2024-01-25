@@ -17,28 +17,14 @@ import { SubpageVersionManifest } from './version_manifest/version_manifest'
 const Plaza: React.FC = () => {
     let {state, dispatch} = useContext(globalStateContext);
 
-    let subpageKey = state.pageStack.slice(-1)[0].subpage?.pageKey;
+    let subpageKey = state.pageStack.slice(-1)[0].subpage!.pageKey;
 
-    if(subpageKey == undefined) {
-        subpageKey = 'plaza.version_manifest'
-        dispatch({
-            category: 'page_stack',
-            type: PageStackActions.Replace,
-            value: {
-                pageKey: 'plaza',
-                subpage: {
-                    pageKey: 'plaza.version_manifest'
-                }
-            }
-        })
-    }
-
-    let SubpageComponent = subpagesMap[subpageKey].component;
+    let SubpageComponent = subpagesMap.map[subpageKey].component;
 
     const buttonCallback = (pageKey: string) => {
         dispatch({
             category: 'page_stack',
-            type: PageStackActions.SetSubpage,
+            type: PageStackActions.PushSubpage,
             value: {
                 pageKey
             }
@@ -50,11 +36,11 @@ const Plaza: React.FC = () => {
             <div id={styles.background} />
             <div id={styles.container}>
                 <div id={styles.sidemenu}>
-                    {Object.keys(pagesMap['plaza'].subpages).map((key) => (
+                    {Object.keys(subpagesMap.map).map((key) => (
                         <SideButton key={key} props={{
                             pageKey: key,
-                            friendlyName: pagesMap.plaza.subpages[key].friendlyName,
-                            display: pagesMap.plaza.subpages[key].display,
+                            friendlyName: subpagesMap.map[key].friendlyName,
+                            display: subpagesMap.map[key].display,
                             isSelected: subpageKey == key,
                             callback: buttonCallback,
                         }} />
@@ -86,25 +72,28 @@ const Playground: React.FC = () => {
 }
 
 export const subpagesMap: SubpageMap = {
-    'plaza.version_manifest': {
-        component: SubpageVersionManifest,
-        friendlyName: '本体',
-        display: true,
-    },
-    'plaza.modpack': {
-        component: SubpageVersionManifest,
-        friendlyName: '整合包',
-        display: true,
-    },
-    'plaza.installer': {
-        component: SubpageInstaller,
-        friendlyName: '安装',
-        display: false,
-    },
-    'plaza.playgroud': {
-        component: Playground,
-        friendlyName: 'Playground',
-        display: true,
+    default: 'plaza.version_manifest',
+    map: {
+        'plaza.version_manifest': {
+            component: SubpageVersionManifest,
+            friendlyName: '本体',
+            display: true,
+        },
+        'plaza.modpack': {
+            component: SubpageVersionManifest,
+            friendlyName: '整合包',
+            display: true,
+        },
+        'plaza.installer': {
+            component: SubpageInstaller,
+            friendlyName: '安装',
+            display: true,
+        },
+        'plaza.playgroud': {
+            component: Playground,
+            friendlyName: 'Playground',
+            display: true,
+        }
     }
 }
 

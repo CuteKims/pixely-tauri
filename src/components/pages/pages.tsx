@@ -7,11 +7,14 @@ import { subpagesMap as settingsSubpagesMap } from "./settings/settings";
 import { Playground } from "./playground/playground";
 
 export type SubpageMap = {
-    [key: string]: {
-        component: React.ComponentType,
-        friendlyName: string,
-        display: boolean,
-    },
+    default: string
+    map: {
+        [key: string]: {
+            component: React.ComponentType,
+            friendlyName: string,
+            display: boolean,
+        },
+    }
 }
 
 export type PageMap = {
@@ -19,7 +22,7 @@ export type PageMap = {
         component: React.ComponentType,
         friendlyName: string,
         display: boolean,
-        subpages: SubpageMap,
+        subpages?: SubpageMap,
     },
 }
 
@@ -28,7 +31,6 @@ const pagesMap: PageMap = {
         component: Launcher,
         friendlyName: '启动台',
         display: true,
-        subpages: {},
     },
     'settings': {
         component: Settings,
@@ -46,7 +48,6 @@ const pagesMap: PageMap = {
         component: Playground,
         friendlyName: 'Playground',
         display: true,
-        subpages: {},
     }
 }
 

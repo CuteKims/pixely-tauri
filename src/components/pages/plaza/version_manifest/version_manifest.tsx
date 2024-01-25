@@ -60,15 +60,15 @@ export const SubpageVersionManifest: React.FC = () => {
         }
     }, []);
 
-    function callback(version: ManifestVersion, animatePosition: {x: number | undefined, y: number | undefined}) {
+    function callback(version: ManifestVersion, animatePosY: number | undefined) {
         dispatch({
             category: 'page_stack',
-            type: PageStackActions.SetSubpage,
+            type: PageStackActions.PushSubpage,
             value: {
                 pageKey: 'plaza.installer',
                 internalState: {
                     version,
-                    animatePosition,
+                    animatePosY,
                 }
             },
         });
@@ -126,7 +126,7 @@ function listFilter(manifest: VersionManifest, filter: string): ManifestVersion[
 
 const MinecraftVersion: React.FC<{props: {
     version: ManifestVersion,
-    callback: (version: ManifestVersion, animatePosition: {x: number | undefined, y: number | undefined}) => void,
+    callback: (version: ManifestVersion, animatePosY: number | undefined) => void,
 }}> = ({props}) => {
     let ref = useRef<HTMLDivElement | null>(null)
     return (
@@ -136,7 +136,7 @@ const MinecraftVersion: React.FC<{props: {
         animate={{scale: 1, opacity: 1}}
         exit={{scale: .9, opacity: 0}}
         transition={{duration: .3, ease: [0,.8,.2,1]}}
-        className={styles['component-manifest_version']} onClick={() => props.callback(props.version, {x: ref.current?.getBoundingClientRect().x, y: ref.current?.getBoundingClientRect().y})}
+        className={styles['component-manifest_version']} onClick={() => props.callback(props.version, ref.current?.getBoundingClientRect().y)}
         key={props.version.id}
         ref={ref}
         >

@@ -15,59 +15,54 @@ export const loaderOptions: InstallationOptionProps[] = [{
     iconPosition: {
         width: 40,
     },
-    isCompatible: true,
-    callback: function (): { version: string; info: string; }[] {
-        throw new Error("Function not implemented.");
+    callback: async () => {
+        return [{version: '', info: '', url: ''}]
     }
 },
 {
     title: "Fabric",
-    subTitle: "新兴的、现代Minecraft版本流行的轻量级模组加载器",
+    subTitle: "用于现代Minecraft的轻量模组加载器",
     icon: iconFabric,
     iconPosition: {
         height: 36,
     },
-    isCompatible: true,
-    callback: function (): { version: string; info: string; }[] {
-        throw new Error("Function not implemented.");
+    callback: async () => {
+        return [{version: '', info: '', url: ''}]
     }
 },
 {
     title: "NeoForge",
-    subTitle: "由原Forge团队创建的Forge分支版本，与Forge模组兼容",
+    subTitle: "Forge分支，兼容Forge模组",
     icon: iconNeoforge,
     iconPosition: {
         width: 36,
     },
-    isCompatible: true,
-    callback: function (): { version: string; info: string; }[] {
-        throw new Error("Function not implemented.");
+    callback: async () => {
+        return [{version: '', info: '', url: ''}]
     }
 },
 {
     title: "Quilt",
-    subTitle: "Fabric的分支版本，与Fabric模组兼容",
+    subTitle: "Fabric分支，兼容Fabric模组",
     icon: iconQuilt,
     iconPosition: {
         width: 36,
         top: 2,
         left: 2,
     },
-    isCompatible: true,
-    callback: function (): { version: string; info: string; }[] {
-        throw new Error("Function not implemented.");
+    callback: async () => {
+        return [{version: '', info: '', url: ''}]
     }
 },
 {
     title: "LiteLoader",
-    subTitle: "旧版本Minecraft的轻量模组加载器，现已停止维护",
+    subTitle: "旧版本Minecraft的轻量模组API",
     icon: iconLiteloader,
     iconPosition: {
         width: 40,
     },
-    isCompatible: true,
-    callback: function (): { version: string; info: string; }[] {
-        throw new Error("Function not implemented.");
+    callback: async () => {
+        return [{version: '', info: '', url: ''}]
     }
 }]
 
@@ -78,21 +73,19 @@ export const addonOptions: InstallationOptionProps[] = [{
     iconPosition: {
         width: 32,
     },
-    isCompatible: true,
-    callback: function (): { version: string; info: string; }[] {
-        throw new Error("Function not implemented.");
+    callback: async () => {
+        return [{version: '', info: '', url: ''}]
     }
 },
 {
     title: "Fabric API",
-    subTitle: "Fabric的通用前置模组",
+    subTitle: "Fabric通用的前置API模组",
     icon: iconFabric,
     iconPosition: {
         height: 36,
     },
-    isCompatible: true,
-    callback: function (): { version: string; info: string; }[] {
-        throw new Error("Function not implemented.");
+    callback: async () => {
+        return [{version: '', info: '', url: ''}]
     }
 },
 {
@@ -102,8 +95,7 @@ export const addonOptions: InstallationOptionProps[] = [{
     iconPosition: {
         width: 40,
     },
-    isCompatible: true,
-    callback: function (): { version: string; info: string; }[] {
-        throw new Error("Function not implemented.");
+    callback: async () => {
+        return [{version: '', info: '', url: ''}]
     }
 }]

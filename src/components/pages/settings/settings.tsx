@@ -10,12 +10,12 @@ const Settings: React.FC = () => {
     let subpageKey = state.pageStack.slice(-1)[0].subpage?.pageKey;
     if(subpageKey == undefined) subpageKey = 'settings.user'
 
-    let SubpageComponent = subpagesMap[subpageKey].component;
+    let SubpageComponent = subpagesMap.map[subpageKey].component;
 
     const buttonCallback = (pageKey: string) => {
         dispatch({
             category: 'page_stack',
-            type: PageStackActions.SetSubpage,
+            type: PageStackActions.PushSubpage,
             value: {
                 pageKey
             }
@@ -26,11 +26,11 @@ const Settings: React.FC = () => {
         <>
             <div id={styles.background}>
                 <div id={styles.sidemenu}>
-                    {Object.keys(pagesMap['settings'].subpages).map((key) => (
+                    {Object.keys(subpagesMap.map).map((key) => (
                         <SideButton key={key} props={{
                             pageKey: key,
-                            friendlyName: pagesMap.settings.subpages[key].friendlyName,
-                            display: pagesMap.settings.subpages[key].display,
+                            friendlyName: subpagesMap.map[key].friendlyName,
+                            display: subpagesMap.map[key].display,
                             isSelected: subpageKey == key,
                             callback: buttonCallback,
                         }} />
@@ -76,41 +76,44 @@ const SettingsPage: React.FC = () => {
 }
 
 export const subpagesMap: SubpageMap = {
-    'settings.user': {
-        component: SettingsPage,
-        friendlyName: '用户',
-        display: true,
-    },
-    'settings.launch': {
-        component: SettingsPage,
-        friendlyName: '启动',
-        display: true,
-    },
-    'settings.network': {
-        component: SettingsPage,
-        friendlyName: '网络',
-        display: true,
-    },
-    'settings.personalization': {
-        component: SettingsPage,
-        friendlyName: '外观',
-        display: true,
-    },
-    'settings.notification': {
-        component: SettingsPage,
-        friendlyName: '通知',
-        display: true,
-    },
-    'settings.advanced': {
-        component: SettingsPage,
-        friendlyName: '高级',
-        display: true,
-    },
-    'settings.about': {
-        component: SettingsPage,
-        friendlyName: '关于',
-        display: true,
-    },
+    default: 'settings.user',
+    map: {
+        'settings.user': {
+            component: SettingsPage,
+            friendlyName: '用户',
+            display: true,
+        },
+        'settings.launch': {
+            component: SettingsPage,
+            friendlyName: '启动',
+            display: true,
+        },
+        'settings.network': {
+            component: SettingsPage,
+            friendlyName: '网络',
+            display: true,
+        },
+        'settings.personalization': {
+            component: SettingsPage,
+            friendlyName: '外观',
+            display: true,
+        },
+        'settings.notification': {
+            component: SettingsPage,
+            friendlyName: '通知',
+            display: true,
+        },
+        'settings.advanced': {
+            component: SettingsPage,
+            friendlyName: '高级',
+            display: true,
+        },
+        'settings.about': {
+            component: SettingsPage,
+            friendlyName: '关于',
+            display: true,
+        },
+    }
 }
 
 export default Settings;

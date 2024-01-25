@@ -1,5 +1,6 @@
 import { createContext, useReducer } from "react"
 import { Notification, NotificationChannels } from "../../bridger/notif"
+import pagesMap from "../pages/pages"
 
 export type Page = {
     pageKey: string,
@@ -54,7 +55,7 @@ export enum PageStackActions {
     Pop,
     Replace,
     SetInternalState,
-    SetSubpage,
+    PushSubpage,
     SetSubpageInternalState,
 }
 
@@ -79,7 +80,7 @@ type PageStackActionTypes = {
     [PageStackActions.Push]: Page,
     [PageStackActions.Replace]: Page,
     [PageStackActions.SetInternalState]: any,
-    [PageStackActions.SetSubpage]: Subpage,
+    [PageStackActions.PushSubpage]: Subpage,
     [PageStackActions.SetSubpageInternalState]: any,
 }
 
@@ -122,9 +123,11 @@ const pageStackReducer = (state: GlobalState, action: PageStackAction<PageStackA
         case PageStackActions.Push: {
             //Compare between last page and new page.
             if(action.value.pageKey == state.pageStack.slice(-1)[0].pageKey && action.value.subpage == undefined) return state;
+            let page = action.value as Page
+            if(!page.subpage && pagesMap[page.pageKey].subpages) page.subpage = {pageKey: pagesMap[page.pageKey].subpages!.default}
             return {
                 ...state,
-                pageStack: [...state.pageStack, action.value]
+                pageStack: [...state.pageStack, page]
             };
         };
         case PageStackActions.Pop: {
@@ -154,7 +157,7 @@ const pageStackReducer = (state: GlobalState, action: PageStackAction<PageStackA
                 value: newPage
             })
         }
-        case PageStackActions.SetSubpage: {
+        case PageStackActions.PushSubpage: {
             let newPage = {...state.pageStack.slice(-1)[0]};
             newPage.subpage = action.value;
             let returnState = pageStackReducer(state, {

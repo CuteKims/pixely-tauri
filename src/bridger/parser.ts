@@ -49,9 +49,9 @@ export type ParsedTaskResponse<T extends InstantTaskHeaders> = {
 }
 
 type ResponseBodyTypes = {
-    [InstantTaskHeaders.VersionManifest]: VersionManifest,
-    [InstantTaskHeaders.InstancesInstalled]: MinecraftInstance[],
-    [InstantTaskHeaders.JavasInstalled]: string,
+    [InstantTaskHeaders.GetVersionManifest]: VersionManifest,
+    [InstantTaskHeaders.GetInstancesInstalled]: MinecraftInstance[],
+    [InstantTaskHeaders.GetJavasInstalled]: string,
     [InstantTaskHeaders.TestCaller]: string,
 }
 
@@ -66,7 +66,7 @@ export type VersionManifest = {
 export type MinecraftInstance = {
     name: string,
     version: InstanceVersion,
-    modification: InstanceModificationType[],
+    modification: ModLoaders[],
     instancePath: string,
     iconPath: string,
 }
@@ -89,14 +89,13 @@ export type ManifestVersion = {
     complianceLevel: number,
 }
 
-enum InstanceModificationType {
+export enum ModLoaders {
+    Vanilla = "Vanilla",
     Forge = "Forge",
     Fabric = "Fabric",
-    NeoForge = "NeoForge",
-    LiteLoader = "LiteLoader",
+    NeoForge = "Neoforge",
+    LiteLoader = "Liteloader",
     Qulit = "Qulit",
-    Rift = "Rift",
-    Optifine = "Optifine",
 }
 
 export enum VersionType {

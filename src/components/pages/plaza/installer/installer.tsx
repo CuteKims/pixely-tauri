@@ -1,6 +1,6 @@
 import { useContext, useRef } from "react";
-import { globalStateContext } from "../../../hocs/context";
-import { ManifestVersion, VersionType } from "../../../../bridger/parser";
+import { GlobalStateContext, globalStateContext } from "../../../hocs/context";
+import { ManifestVersion, ModLoaders, VersionType } from "../../../../bridger/parser";
 import { ScrollBox } from "../../../hocs/scrollbox";
 import { motion } from "framer-motion";
 import styles from './installer.module.css'
@@ -22,33 +22,61 @@ export type InstallationOptionProps = {
         top?: number,
         left?: number
     },
-    isCompatible: boolean,
-    callback: () => {version: string, info: string}[]
+    callback: () => Promise<{version: string, info: string, url: string}[]>
 }
 
 export type InstallationSettingProps = {
     title: string,
 }
 
+enum Addons {
+    Optifine = 'Optifine',
+    Fabricapi = 'Fabricapi',
+    optifabric = 'Optifabric',
+    liteloaderapi = 'Liteloaderapi'
+}
+
+type AddonVersion = {
+    loadingState: 'loading' | 'ok' | 'error',
+    data?: {version: string, info: string, url: string}[]
+    error?: any,
+}
+
+type InternalState = {
+    version: ManifestVersion,
+    animatePosY?: number,
+    instanceInfo?: InstanceInfo,
+    addonVersions?: {
+        [key: string]: AddonVersion
+    }
+}
+
+type InstanceInfo = {
+    instanceId: string,
+    instanceName: string,
+    instanceIcon: {builtIn: string} | {custom: string}
+    modLoader: {
+        type: ModLoaders,
+        url: string,
+    },
+    addons: {
+        type: Addons,
+        url: string,
+    }[],
+    disablingIsolation: boolean
+}
+
 const SubpageInstaller: React.FC = () => {
     const {state, dispatch} = useContext(globalStateContext);
-    let internalState = state.pageStack.slice(-1)[0].subpage?.internalState as {version: ManifestVersion | undefined, animatePosition: {x: number | undefined, y: number | undefined}}
-    if(internalState.version == undefined) internalState.version = {
-        id: 'MISSINGNO.',
-        type: VersionType.oldAlpha,
-        url: 'MISSINGNO.',
-        time: 'MISSINGNO.',
-        releaseTime: 'MISSINGNO.',
-        sha1: 'MISSINGNO.',
-        complianceLevel: 0,
-    }
+    let internalState = state.pageStack.slice(-1)[0].subpage?.internalState as InternalState | undefined
+
     return (
         <div style={{width: '100%', height: '100%'}}>
             <ScrollBox>
                 <div id='subpage' style={{paddingBottom: '136px', display: 'flex', flexDirection: 'column', gap: '18px'}}>
                     <div>
-                        <p className={styles.header} style={{opacity: .75}}>{internalState.version.id}</p>
-                        <p className={styles.header} style={{fontSize: '24px'}}>创建新实例向导</p>
+                        <p className={styles.header} style={{opacity: .75}}>{internalState?.version.id ?? '.MISSINGNO'}</p>
+                        <p className={styles.header} style={{fontSize: '24px'}}>新实例创建向导</p>
                     </div>
                     <Chapter props={{footer: '这些设置会影响什么？'}}>
                         <InstallationSettings props={{title: '实例名'}}/>
@@ -66,24 +94,24 @@ const SubpageInstaller: React.FC = () => {
                     </Chapter>
                 </div>
             </ScrollBox>
-            <InstallerPreviewer version={internalState.version} animatePosition={internalState.animatePosition}/>
+            <InstallerPreviewer version={internalState?.version} animatePosY={internalState?.animatePosY}/>
         </div>
     )
 }
 
-const InstallerPreviewer: React.FC<{version: ManifestVersion, animatePosition: {x: number | undefined, y: number | undefined}}> = ({version, animatePosition}) => {
-    const transition = {ease: [.2,0,.2,1], duration: .5 + (Math.abs(((window.innerHeight - 94) - (animatePosition.y ?? 0))) * .0005)}
+const InstallerPreviewer: React.FC<{version: ManifestVersion | undefined, animatePosY: number | undefined}> = ({version, animatePosY}) => {
+    const transition = {ease: [0,.8,.2,1], duration: .5 + (Math.abs(((window.innerHeight - 94) - (animatePosY ?? 0))) * .00025)}
     return (
         <div style={{width: '100%', height: '100%', position: 'relative', top: '-100%', pointerEvents: 'none'}}>
             <div style={{height: '100%', padding: '0px 36px', display: 'flex', flexDirection: 'column'}}>
                 <motion.div
                 id={styles['installer_previewer']}
-                initial={{translateY: -((window.innerHeight - 94) - (animatePosition.y ?? 0)), height: 56}}
+                initial={{translateY: -((window.innerHeight - 94) - (animatePosY ?? 0)), height: 56}}
                 animate={{translateY: 0, height: 64}}
                 transition={transition}>
                     <motion.img
                     src={(() => {
-                        switch (version.type) {
+                        switch (version?.type) {
                             case VersionType.snapshot: return iconDirt;
                             case VersionType.release: return iconGrass;
                             default: return iconStone;
@@ -104,7 +132,7 @@ const InstallerPreviewer: React.FC<{version: ManifestVersion, animatePosition: {
                         initial={{fontSize: '15px', opacity: 1, translateY: -21}}
                         animate={{fontSize: '14px', opacity: .75, translateY: 0}}
                         transition={transition}>
-                            {version.id}
+                            {version?.id ?? '.MISSINGNO'}
                         </motion.p>
                         <motion.p
                         style={{position: 'absolute', bottom: '11px', fontSize: '12px', transformOrigin: 'left'}}
@@ -112,14 +140,12 @@ const InstallerPreviewer: React.FC<{version: ManifestVersion, animatePosition: {
                         animate={{opacity: 0, translateY: 14, scale: .5}}
                         transition={transition}>
                             {(() => {
-                                let type: string;
-                                switch (version.type) {
+                                let type: string = '早期版本';
+                                switch (version?.type) {
                                     case VersionType.snapshot: type = '快照'; break;
                                     case VersionType.release: type = '正式版'; break;
-                                    case VersionType.oldAlpha: type = '早期版本'; break;
-                                    case VersionType.oldBeta: type = '早期版本'; break;
                                 }
-                                let date: Date = new Date(version.releaseTime);
+                                let date: Date = new Date(version?.releaseTime ?? '2006-03-03T00:00:00+08:00');
                                 return type
                                 + ' '
                                 + date.getFullYear()
@@ -151,6 +177,9 @@ const InstallationSettings: React.FC<{props: InstallationSettingProps}> = ({prop
 
 
 const InstallationOption: React.FC<{props: InstallationOptionProps}> = ({props}) => {
+    const {state, dispatch} = useContext(globalStateContext);
+    let internalState = state.pageStack.slice(-1)[0].subpage?.internalState as InternalState | undefined
+
     return (
         <div className={styles['installation_option-container']}>
             <div className={styles['image_container']}>
@@ -174,7 +203,7 @@ const Chapter: React.FC<{children: React.ReactNode, props: {
                 <div style={{display: 'flex', flexDirection: 'column', gap: '1px'}}>
                     {children}
                 </div>
-            {(() => {if(props.footer) return <p className={styles.header} style={{marginTop: '4px', fontSize: '12px', textAlign: 'right', opacity: .75}}>{props.footer}</p>})()}
+            {(() => {if(props.footer) return <p className={styles.header} style={{marginTop: '4px', fontSize: '12px', textAlign: 'right', opacity: .75, cursor: 'help'}}>{props.footer}</p>})()}
         </div>
     )
 }
