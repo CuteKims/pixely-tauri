@@ -142,7 +142,7 @@ const pageStackReducer = (state: GlobalState, action: PageStackAction<PageStackA
             if(action.value.page == state.pageStack.slice(-1)[0].pageKey && action.value.subpage.length == 0) return state;
             return {
                 ...state,
-                pageStack: state.pageStack.splice(state.pageStack.length - 1, 1, action.value)
+                pageStack: [...state.pageStack.slice(0, -1), action.value]
             }
         }
         case PageStackActions.SetInternalState: {
@@ -150,7 +150,7 @@ const pageStackReducer = (state: GlobalState, action: PageStackAction<PageStackA
             newPage.internalState = action.value;
             return pageStackReducer(state, {
                 category: 'page_stack',
-                type: PageStackActions.Push,
+                type: PageStackActions.Replace,
                 value: newPage
             })
         }
@@ -173,7 +173,7 @@ const pageStackReducer = (state: GlobalState, action: PageStackAction<PageStackA
             }
             return pageStackReducer(state, {
                 category: 'page_stack',
-                type: PageStackActions.Push,
+                type: PageStackActions.Replace,
                 value: newPage
             })
         }

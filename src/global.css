@@ -28,7 +28,6 @@ p {
     margin: auto;
     color: var(--default-font-color);
     font-size: 15px;
-    transition: .5s;
     text-shadow: 0px 0px 4px rgba(255, 255, 255, 1), 0px 0px 8px rgba(255, 255, 255, 1);
 }
 
@@ -44,7 +43,6 @@ p {
         margin: auto;
         color: var(--default-font-color);
         font-size: 15px;
-        transition: .5s;
         text-shadow: 0px 1px 3px var(--default-ui-color);
     }
 }
@@ -63,7 +61,7 @@ p {
 #subpage {
     display: flex;
     flex-direction: column;
-    animation: .5s cubic-bezier(0,.8,.2,1) forwards intro;
+    animation: .5s cubic-bezier(0,.8,.2,1) forwards subpage-intro;
     padding: 36px;
 }
 
@@ -89,6 +87,15 @@ p {
 @keyframes intro {
     0% {
         transform: translateY(36px);
+    }
+    100% {
+        transform: translateY(0px);
+    }
+}   
+
+@keyframes subpage-intro {
+    0% {
+        transform: translateY(72px);
     }
     100% {
         transform: translateY(0px);

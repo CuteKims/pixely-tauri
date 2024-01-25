@@ -8,8 +8,7 @@
     padding-top: 72px;
     display: flex;
     gap: 16px;
-    overflow-x: scroll;
-    overflow-y: hidden;
+    overflow-y: visible;
     transition: .5s cubic-bezier(0,.8,.2,1);
 }
 

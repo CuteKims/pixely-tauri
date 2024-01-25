@@ -8,25 +8,11 @@
     backdrop-filter: blur(10px);
     box-shadow: var(--default-box-shadow);
     display: flex;
-    animation: .5s cubic-bezier(0,.8,.2,1) intro;
 }
 
 #installer_previewer img {
-    height: 36px;
-    width: 36px;
     margin: 14px;
     filter: drop-shadow(0px 2px 4px rgba(0,0,0,.3));
-}
-
-@keyframes intro {
-    0% {
-        opacity: 0;
-        transform: translateY(108px);
-    }
-    100% {
-        opacity: 1;
-        transform: translateY(0px);
-    }
 }
 
 .header {
@@ -57,7 +43,7 @@
     flex-grow: 1;
     background-color: var(--default-ui-color);
     backdrop-filter: var(--default-ui-brightness);
-    padding: 10px 16px;
+    padding: 11px 16px;
 }
 
 .installation_settings-container {

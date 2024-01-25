@@ -40,7 +40,7 @@ const NotificationBanner: React.FC = () => {
     return (
         <div id='notifbanner-scrollbox-container' style={{height: '100%', width: '340px', position: 'absolute', right: '0px', top: '0px'}}>
             <ScrollBox>
-                <div id='notifbanner-container' style={{padding: '36px', paddingTop: state.modals.menu ? '36px' : '0px'}}>
+                <div id='notifbanner-container' style={{padding: '36px', paddingTop: state.modals.menu ? '37px' : '0px', marginTop: '-1px'}}>
                     {state.modals.menu ? (
                         <>
                             <AnimatePresence mode='popLayout'>

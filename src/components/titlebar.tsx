@@ -56,19 +56,19 @@ const Titlebar: React.FC = () => {
         // }).catch(error => {
         //     console.error(error);
         // });
-        dispatch({
-            category: 'window_state',
-            type: WindowStateActions.PushNotif,
-            value: {
-                timestamp: Date.now(),
-                uuid: Date.now(),
-                channel: NotificationChannels.Test,
-                payload: {
-                    string: 'Hello!'
-                }
-            }
-        })
-        // console.log(state)
+        // dispatch({
+        //     category: 'window_state',
+        //     type: WindowStateActions.PushNotif,
+        //     value: {
+        //         timestamp: Date.now(),
+        //         uuid: Date.now(),
+        //         channel: NotificationChannels.Test,
+        //         payload: {
+        //             string: 'Hello!'
+        //         }
+        //     }
+        // })
+        console.log(state)
     };
 
     return (
