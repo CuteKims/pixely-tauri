@@ -1,4 +1,5 @@
-import { InstantTaskHeaders, Task } from "./invoker";
+import { InstantTaskHeaders, ModLoaders, VersionType } from "../enums";
+import { Task } from "./invoker";
 
 export default class BackendResponseParser {
     task: Task;
@@ -87,20 +88,4 @@ export type ManifestVersion = {
     releaseTime: string,
     sha1: string,
     complianceLevel: number,
-}
-
-export enum ModLoaders {
-    Vanilla = "Vanilla",
-    Forge = "Forge",
-    Fabric = "Fabric",
-    NeoForge = "Neoforge",
-    LiteLoader = "Liteloader",
-    Qulit = "Qulit",
-}
-
-export enum VersionType {
-    release = "release",
-    snapshot = "snapshot",
-    oldBeta = "old_beta",
-    oldAlpha = "old_alpha",
 }

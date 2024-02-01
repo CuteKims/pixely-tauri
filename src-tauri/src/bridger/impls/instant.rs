@@ -17,6 +17,7 @@ impl impls::ExecuteTask for models::InstantTask {
                 Ok("Test".to_string())
             }
         }?;
+        // Err("This is a test error.".into())
         Ok(models::Return::InstantResponse(result))
     }
 }

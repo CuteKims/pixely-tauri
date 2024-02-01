@@ -1,13 +1,12 @@
-import { useContext, useEffect, useRef, useState } from 'react'
+// @ts-nocheck
+import { useEffect, useRef, useState } from 'react'
 import styles from './notification.module.css'
-import { globalStateContext } from '../hocs/context'
-import { Notification, NotificationChannels } from '../../bridger/notif'
+import { Notification } from '../../types/notif'
 import { motion, AnimatePresence } from 'framer-motion'
-import { ScrollBox } from '../hocs/scrollbox'
+import { ScrollBox } from '../hocs/ScrollBox'
+import { NotificationChannels } from '../../enums'
 
 const NotificationBanner: React.FC = () => {
-
-    const {state, dispatch} = useContext(globalStateContext)
 
     const localArray = useRef<Notification<NotificationChannels>[]>(state.notifArray)
     const [displayArray, setDisplayArray] = useState<Notification<NotificationChannels>[]>([])

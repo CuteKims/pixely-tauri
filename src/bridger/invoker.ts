@@ -1,5 +1,6 @@
 import { invoke } from "@tauri-apps/api/tauri";
 import BackendResponseParser, { ParsedTaskResponse, RawTaskResponse } from "./parser";
+import { InstantTaskHeaders, AsyncTaskHeaders } from "../enums";
 
 export default class BackendInvoker {
     task: Task;
@@ -30,18 +31,6 @@ export default class BackendInvoker {
     }
 }
 
-export enum InstantTaskHeaders {
-    GetInstancesInstalled = 'GetInstancesInstalled',
-    GetJavasInstalled = 'GetJavasInstalled',
-    GetVersionManifest = 'GetVersionManifest',
-    TestCaller = 'TestCaller'
-}
-
-export enum AsyncTaskHeaders {
-    InstallJava = 'InstallJava',
-    InstallInstance = 'InstallInstance',
-}
-
 export type Task = InstantTask<InstantTaskHeaders> | AsyncTask<AsyncTaskHeaders>
 
 type InstantTask<T extends InstantTaskHeaders> = {
@@ -56,10 +45,7 @@ type AsyncTask<T extends AsyncTaskHeaders> = {
     body: AsyncTaskBodies[T]
 }
 
-export enum TaskTypes {
-    Instant,
-    Async,
-}
+
 
 type InstantTaskBodies = {
     [InstantTaskHeaders.GetVersionManifest]: string,
