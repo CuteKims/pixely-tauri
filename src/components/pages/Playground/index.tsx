@@ -20,7 +20,7 @@ function callback(id: string) {
 } // !!! TODO: Move GET operation to the backend because JS sucks.
 
 const Playground: React.FC = () => {
-    let array = [1,2,3,4,5,6]
+    let array = [1,2,3,4,5,6,7,8,9,1,2,3,4,5,6,7,8,9]
     return (
         <PageContainer>
             <div style={{height: 200, width: 400, margin: 72, backgroundColor: 'rgba(255, 255, 255, .2)', position: 'relative'}}>

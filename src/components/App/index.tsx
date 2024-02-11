@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-import bgimage from '../../assets/bgimage/wallpaper9.jpg'
+import bgimage from '../../assets/bgimage/wallpaper14.jpg'
 
 import { PageStackState, pageStackContext, pageStackContextWrapper } from './contextWrappers/page_stack';
 

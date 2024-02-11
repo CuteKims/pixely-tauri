@@ -2,10 +2,14 @@ import styles from './ScrollBox.module.css'
 
 import { forwardRef, useEffect, useImperativeHandle, useRef, useState } from "react"
 import { motion } from 'framer-motion';
+import { IconArrow } from '../../shared/icons';
 
+type ScrollboxProps = {
+    children: React.ReactNode,
+    fullHeight?: boolean,
+}
 
-
-export const ScrollBox = forwardRef<HTMLDivElement, {children: React.ReactNode, fullHeight?: boolean}>(({children, fullHeight}, ref) => {
+export const ScrollBox = forwardRef<HTMLDivElement, ScrollboxProps>(({children, fullHeight}, ref) => {
     let containerRef = useRef<HTMLDivElement>(null);
     let childrenRef = useRef<HTMLDivElement>(null);
     let sliderRef = useRef<HTMLDivElement>(null);
@@ -52,12 +56,11 @@ export const ScrollBox = forwardRef<HTMLDivElement, {children: React.ReactNode, 
                 behavior: 'smooth'
             })
         }
-        
     }
 
     return (
         <>
-            <div style={{width: '100%', height: '100%', display: 'flex', overflowX: 'visible'}} onScrollCapture={() => setScrollTop(containerRef.current?.scrollTop ?? 0)}>
+            <div style={{position: 'relative', width: '100%', height: '100%', display: 'flex', overflowX: 'visible'}} onScrollCapture={() => setScrollTop(containerRef.current?.scrollTop ?? 0)}>
                 <div id='scroll-box' ref={containerRef} style={{overflowY: 'scroll', flexGrow: 1, padding: fullHeight ? '0px' : '36px 0px 0px 0px'}}>
                     <div ref={childrenRef}>
                         {children}
@@ -90,6 +93,19 @@ export const ScrollBox = forwardRef<HTMLDivElement, {children: React.ReactNode, 
                         })
                     }}/>
                 </motion.div>
+                <div style={{position: 'absolute', width: '100%', height: '100%', pointerEvents: 'none', display: 'flex', justifyContent: 'center', overflow: 'hidden'}}>
+                    <div
+                    id={styles['back-to-top-button']}
+                    style={{top: (scrollTop > window.innerHeight ? 0 : -80) + (fullHeight ? 0 : 35)}}
+                    onClick={() => containerRef.current?.scrollTo({top: 0, left: 0, behavior: 'smooth'})}>
+                        <div style={{margin: '6px 10px'}}>
+                            <IconArrow direction='up'/>
+                        </div>
+                        <div style={{height: '100%', display: 'flex'}}>
+                            <p>Back to top</p>
+                        </div>
+                    </div>
+                </div>
             </div>
         </>
     )

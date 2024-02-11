@@ -8,7 +8,7 @@ const SUBPAGES_MAP_SETTINGS: SubpageMap = {
     map: {
         'settings.user': {
             component: SettingsPage,
-            friendlyName: '用户',
+            friendlyName: '用户账户',
             display: true,
         },
         'settings.launch': {
@@ -23,7 +23,7 @@ const SUBPAGES_MAP_SETTINGS: SubpageMap = {
         },
         'settings.personalization': {
             component: SettingsPage,
-            friendlyName: '外观',
+            friendlyName: '个性化',
             display: true,
         },
         'settings.notification': {
