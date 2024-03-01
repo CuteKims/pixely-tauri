@@ -4,7 +4,7 @@ import { SubpageMap } from '../../../types/consts'
 import { RadioButton } from '../menubutton'
 
 import styles from './sidemenu.module.css'
-import { pageStackContext } from '../../App/contextWrappers/page_stack';
+import { pageStackContext } from '../../App/contextWrapper/page_stack';
 
 const Sidemenu: React.FC<{subpagesMap: SubpageMap}> = ({subpagesMap}) => {
     let context = useContext(pageStackContext);

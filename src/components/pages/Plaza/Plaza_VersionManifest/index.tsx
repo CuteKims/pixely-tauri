@@ -3,7 +3,7 @@ import { useContext, useEffect, useRef } from "react";
 import BackendInvoker from "../../../../bridger/invoker";
 import { VersionManifest, ParsedTaskResponse, ManifestVersion } from "../../../../bridger/parser";
 import { ScrollBox } from "../../../hocs/ScrollBox";
-import { IconSearch } from "../../../shared/icons";
+import { IconArrow, IconSearch } from "../../../shared/icons";
 import { FallbackComponent } from "..";
 
 import styles from "./Plaza_VersionManifest.module.css"
@@ -12,7 +12,7 @@ import iconDirt from '../../../../assets/icons/dirt_block.png'
 import iconGrass from '../../../../assets/icons/grass_block.png'
 import iconStone from '../../../../assets/icons/stone_block_old.png'
 import { InstantTaskHeaders, VersionType } from "../../../../enums";
-import { pageStackContext } from "../../../App/contextWrappers/page_stack";
+import { pageStackContext } from "../../../App/contextWrapper/page_stack";
 
 import { plaza_installer_INITIAL_STATE } from "../Plaza_Installer";
 import { Subpage } from "../../../shared/page";
@@ -29,8 +29,32 @@ export const plaza_versionManifest_INITIAL_STATE: InternalState = {
     filter: ''
 }
 
+const SearchBox: React.FC<{callback: (arg: string) => void, value: string, float?: boolean} > = ({callback, value, float}) => {
+    return (
+        <div 
+            style={float ? 
+                {flexGrow: 1, position: 'relative', height: '40px', display: 'flex', backdropFilter: 'blur(10px)', border: 'solid 1px rgba(255, 255, 255, .2)', boxShadow: '0px 8px 16px rgba(0, 0, 0, .3)', pointerEvents: 'all'} :
+                {flexGrow: 1, position: 'relative', height: '40px', display: 'flex'}
+            }
+        >
+            <input
+                type='search'
+                id={styles.searchbox}
+                onChange={(element => callback(element.currentTarget.value))}
+                placeholder={'搜索版本...'}
+                value={value}
+                autoComplete="off"
+            />
+            <div style={{position: 'absolute', top: '11px', left: '12px'}}>
+                <IconSearch />
+            </div>
+        </div>
+    )
+}
+
 const SubpageVersionManifest: React.FC = () => {
     const pageStackContextValue = useContext(pageStackContext)!
+    const scrollBoxRef = useRef<HTMLDivElement>(null)
     let internalState: InternalState = pageStackContextValue.getLastSubpageInternalState()
     console.log('reloaded')
     useEffect(() => {
@@ -38,7 +62,7 @@ const SubpageVersionManifest: React.FC = () => {
             new BackendInvoker({
                 type: 'instant',
                 header: InstantTaskHeaders.GetVersionManifest,
-                body: 'https://bmclapi2.bangbang93.com/mc/game/version_manifest_v2.json',
+                body: 'https://piston-meta.mojang.com/mc/game/version_manifest_v2.json',
             }).invoke().then(result => {
                 setTimeout(() => {
                     pageStackContextValue.setLastSubpageInternalState(() => ({
@@ -74,28 +98,34 @@ const SubpageVersionManifest: React.FC = () => {
     }
 
     return (
-        <ScrollBox>
-            <Subpage>
-                <div style={{position: 'relative', height: '40px', marginBottom: '18px', display: 'flex'}}>
-                    <input type='search' id={styles.searchbox} onChange={(element => {setFilter(element.currentTarget.value)})} placeholder={'搜索版本...'} value={internalState?.filter ?? ''} autoComplete="off"/>
-                    <div style={{position: 'absolute', top: '11px', left: '12px'}}>
-                        <IconSearch />
+        <ScrollBox
+            ref={scrollBoxRef}
+            float={
+                <div style={{display: 'flex', gap: '18px'}}>
+                    <SearchBox callback={setFilter} value={internalState.filter} float/>
+                    <div id={styles['back-to-top']} onClick={() => scrollBoxRef.current?.scrollTo({top: 0, behavior: 'smooth'})}>
+                        <div>
+                            <IconArrow direction='up'/>
+                        </div>
                     </div>
                 </div>
-                
-                {(() => {
-                    switch (internalState.loadingState) {
-                        case 'loading': return <FallbackComponent />;
-                        case 'error': return <p>{internalState.error}</p>;
-                        case 'ok': return (
-                            <div id={styles['version-manifest']}>
-                                <AnimatePresence>
+            }
+        >
+            <Subpage>
+                <div style={{display: 'flex', flexDirection: 'column', gap: '18px'}}>
+                    <SearchBox callback={setFilter} value={internalState.filter}/>
+                    {(() => {
+                        switch (internalState.loadingState) {
+                            case 'loading': return <FallbackComponent />;
+                            case 'error': return <p>{internalState.error}</p>;
+                            case 'ok': return (
+                                <div id={styles['version-manifest']}>
                                     {listFilter((internalState?.data as VersionManifest), internalState.filter).map(version => <MinecraftVersion key={version.id} props={{version, callback}}/>)}
-                                </AnimatePresence>
-                            </div>
-                        );
-                    };
-                })()}
+                                </div>
+                            );
+                        };
+                    })()}
+                </div>
             </Subpage>
         </ScrollBox>
     )
@@ -115,15 +145,10 @@ const MinecraftVersion: React.FC<{props: {
 }}> = ({props}) => {
     let ref = useRef<HTMLDivElement | null>(null)
     return (
-        <motion.div
-        layout
-        initial={{scale: .9, opacity: 0}}
-        animate={{scale: 1, opacity: 1}}
-        exit={{scale: .9, opacity: 0}}
-        transition={{duration: .3, ease: [0,.8,.2,1]}}
-        className={styles['component-manifest_version']} onClick={() => props.callback(props.version, ref.current?.getBoundingClientRect().y)}
-        key={props.version.id}
-        ref={ref}
+        <div
+            className={styles['component-manifest_version']} onClick={() => props.callback(props.version, ref.current?.getBoundingClientRect().y)}
+            key={props.version.id}
+            ref={ref}
         >
             <div className={styles.bgcolor}>
                 <img src={(() => {
@@ -158,7 +183,7 @@ const MinecraftVersion: React.FC<{props: {
                     })()}</p>
                 </div>
             </div>
-        </motion.div>
+        </div>
     )
 }
 

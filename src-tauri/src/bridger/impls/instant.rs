@@ -5,8 +5,8 @@ use crate::{bridger::{models, impls}, rasterizer::{self, models::parser::json_pa
 use async_trait::async_trait;
 
 #[async_trait]
-impl impls::ExecuteTask for models::InstantTask {
-    async fn execute(&self, window: tauri::Window) -> Result<models::Return, Box<dyn std::error::Error>> {
+impl impls::ExecutableTask for models::InstantTask {
+    async fn execute(&self, window: tauri::Window) -> Result<String, Box<dyn std::error::Error>> {
         let result = match self {
             models::InstantTask::GetInstancesInstalled => get_installed_instances().await,
             models::InstantTask::GetJavasInstalled => todo!(),
@@ -18,7 +18,7 @@ impl impls::ExecuteTask for models::InstantTask {
             }
         }?;
         // Err("This is a test error.".into())
-        Ok(models::Return::InstantResponse(result))
+        Ok(result)
     }
 }
 

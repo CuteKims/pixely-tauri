@@ -10,7 +10,7 @@ import iconStone from '../../../../assets/icons/stone_block_old.png'
 
 import { addonOptions, loaderOptions } from "./consts";
 import { Addons, ModLoaders, VersionType } from "../../../../enums";
-import { pageStackContext } from "../../../App/contextWrappers/page_stack";
+import { pageStackContext } from "../../../App/contextWrapper/page_stack";
 import { Subpage } from "../../../shared/page";
 
 export type InstallationOptionProps = {
@@ -93,14 +93,14 @@ const Plaza_Installer: React.FC = () => {
     const scrollBoxRef = useRef<HTMLDivElement>(null)
 
     const pageStackContextValue = useContext(pageStackContext)
-    let internalState = pageStackContextValue?.getLastSubpageInternalState()
+    let internalState = pageStackContextValue?.getLastSubpageInternalState() as InternalState
 
     return (
         <div style={{width: '100%', height: '100%'}}>
             <ScrollBox ref={scrollBoxRef}>
                 <Subpage style={{paddingBottom: '136px', gap: '18px'}}>
                     <div>
-                        <p className={styles.header} style={{opacity: .75}}>{internalState?.version?.id ?? '.MISSINGNO'}</p>
+                        <p className={styles.header} style={{opacity: .75}}>{'版本 ' + internalState.version.id}</p>
                         <p className={styles.header} style={{fontSize: '24px'}}>新实例创建向导</p>
                     </div>
                     <LayoutGroup>

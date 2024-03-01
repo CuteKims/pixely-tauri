@@ -1,5 +1,5 @@
 //Context
-import { pageStackContext } from '../../App/contextWrappers/page_stack'
+import { pageStackContext } from '../../App/contextWrapper/page_stack'
 //Shared components
 import { PageContainer } from '../../shared/page'
 import Sidemenu from '../../shared/sidemenu'

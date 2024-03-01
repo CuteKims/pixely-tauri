@@ -1,15 +1,16 @@
 import styles from './ScrollBox.module.css'
 
 import { forwardRef, useEffect, useImperativeHandle, useRef, useState } from "react"
-import { motion } from 'framer-motion';
+import { AnimatePresence, motion } from 'framer-motion';
 import { IconArrow } from '../../shared/icons';
 
 type ScrollboxProps = {
     children: React.ReactNode,
     fullHeight?: boolean,
+    float?: React.ReactNode,
 }
 
-export const ScrollBox = forwardRef<HTMLDivElement, ScrollboxProps>(({children, fullHeight}, ref) => {
+export const ScrollBox = forwardRef<HTMLDivElement, ScrollboxProps>(({children, fullHeight, float}, ref) => {
     let containerRef = useRef<HTMLDivElement>(null);
     let childrenRef = useRef<HTMLDivElement>(null);
     let sliderRef = useRef<HTMLDivElement>(null);
@@ -66,47 +67,54 @@ export const ScrollBox = forwardRef<HTMLDivElement, ScrollboxProps>(({children, 
                         {children}
                     </div>
                 </div>
-                <motion.div id={styles['scrollbar-track']}
-                style={{
-                    margin: fullHeight ? '0px' : '36px 0px 0px 0px',
-                    height: elementHeights.client - (fullHeight ? 0 : 36),
-                    opacity: elementHeights.client / elementHeights.scroll >= 1 ? '0' : '1',
-                }}
-                onMouseDown={(event) => onTrackMouseDown(event)}
-                onHoverStart={() => setMouseState({pan: mouseState.pan, hover: true})}
-                onHoverEnd={() => setMouseState({pan: mouseState.pan, hover: false})}>
-                    <motion.div
-                    ref={sliderRef}
-                    id={styles['scrollbar-slider']}
+                <motion.div
+                    id={styles['scrollbar-track']}
                     style={{
-                        height: getSliderHeight(),
-                        transform: 'translateY(' + (scrollTop / elementHeights.scroll) * (elementHeights.client - (fullHeight ? 0 : 36)) + 'px)',
-                        width: mouseState.hover || mouseState.pan ? '8px' : '2px',
-                        backgroundColor: mouseState.hover || mouseState.pan ? 'rgba(255, 255, 255, .5)' : 'rgba(255, 255, 255, .75)'}}
-                    onPanStart={() => setMouseState({pan: true, hover: mouseState.hover})}
-                    onPanEnd={() => setMouseState({pan: false, hover: mouseState.hover})}
-                    onPan={(_event, panInfo) => {
-                        containerRef.current?.scrollTo({
-                            top: (panInfo.delta.y * (elementHeights.scroll / elementHeights.client)) + containerRef.current.scrollTop,
-                            left: 0,
-                            behavior: 'instant'
-                        })
-                    }}/>
+                        margin: fullHeight ? '0px' : '36px 0px 0px 0px',
+                        height: elementHeights.client - (fullHeight ? 0 : 36),
+                        opacity: elementHeights.client / elementHeights.scroll >= 1 ? '0' : '1',
+                    }}
+                    onMouseDown={(event) => onTrackMouseDown(event)}
+                    onHoverStart={() => setMouseState({pan: mouseState.pan, hover: true})}
+                    onHoverEnd={() => setMouseState({pan: mouseState.pan, hover: false})}
+                >
+                    <motion.div
+                        ref={sliderRef}
+                        id={styles['scrollbar-slider']}
+                        style={{
+                            height: getSliderHeight(),
+                            transform: 'translateY(' + (scrollTop / elementHeights.scroll) * (elementHeights.client - (fullHeight ? 0 : 36)) + 'px)',
+                            width: mouseState.hover || mouseState.pan ? '8px' : '2px',
+                            backgroundColor: mouseState.hover || mouseState.pan ? 'rgba(255, 255, 255, .5)' : 'rgba(255, 255, 255, .75)'
+                        }}
+                        onPanStart={() => setMouseState({pan: true, hover: mouseState.hover})}
+                        onPanEnd={() => setMouseState({pan: false, hover: mouseState.hover})}
+                        onPan={(_event, panInfo) => {
+                            containerRef.current?.scrollTo({
+                                top: (panInfo.delta.y * (elementHeights.scroll / elementHeights.client)) + containerRef.current.scrollTop,
+                                left: 0,
+                                behavior: 'instant'
+                            })
+                        }}
+                    />
                 </motion.div>
-                <div style={{position: 'absolute', width: '100%', height: '100%', pointerEvents: 'none', display: 'flex', justifyContent: 'center', overflow: 'hidden'}}>
-                    <div
-                    id={styles['back-to-top-button']}
-                    style={{top: (scrollTop > window.innerHeight ? 0 : -80) + (fullHeight ? 0 : 35)}}
-                    onClick={() => containerRef.current?.scrollTo({top: 0, left: 0, behavior: 'smooth'})}>
-                        <div style={{margin: '6px 10px'}}>
-                            <IconArrow direction='up'/>
-                        </div>
-                        <div style={{height: '100%', display: 'flex'}}>
-                            <p>Back to top</p>
-                        </div>
-                    </div>
+                <div style={{width: '100%', height: '100%', position: 'absolute', pointerEvents: 'none'}}>
+                    <AnimatePresence>
+                        {scrollTop > 120 ? (
+                            <motion.div
+                                style={{margin: '0px 36px'}}
+                                initial={{y: -56}}
+                                animate={{y: fullHeight ? 0 : 35}}
+                                exit={{y: -56}}
+                                transition={{duration: .5, ease: [0,.8,.2,1]}}
+                            >
+                                {float}
+                            </motion.div>
+                        ) : null}
+                    </AnimatePresence>
                 </div>
             </div>
+            
         </>
     )
 })

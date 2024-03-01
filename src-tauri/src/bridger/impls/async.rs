@@ -4,13 +4,13 @@ use async_trait::async_trait;
 use uuid::Uuid;
 
 #[async_trait]
-impl impls::ExecuteTask for models::AsyncTask {
-    async fn execute(&self, window: tauri::Window) -> Result<models::Return, Box<dyn std::error::Error>> {
-        let result = match self {
+impl impls::ExecutableTask for models::AsyncTask {
+    async fn execute(&self, window: tauri::Window) -> Result<String, Box<dyn std::error::Error>> {
+        let uuid = match self {
             models::AsyncTask::InstallInstance(installer) => install(),
             models::AsyncTask::InstallJava => todo!(),
         }?;
-        Ok(models::Return::AsyncTaskUuid(result.to_string()))
+        Ok(uuid.to_string())
     }
 }
 

@@ -1,4 +1,4 @@
-use serde;
+use serde::{self, Serialize};
 use tauri::window;
 
 use crate::rasterizer::models::installer::InstanceInstaller;
@@ -28,5 +28,5 @@ pub enum AsyncTask {
 #[derive(Debug)]
 pub enum Return {
     InstantResponse(String),
-    AsyncTaskUuid(String)
+    AsyncTaskProgressId(String)
 }

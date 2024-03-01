@@ -1,7 +1,7 @@
 import { TitleBarProps } from "."
 import { PAGES_MAP } from "../../../consts/pages"
-import { GlobalContext } from "../contextWrappers/global"
-import { PageStackContext } from "../contextWrappers/page_stack"
+import { GlobalContext } from "../contextWrapper/global"
+import { PageStackContext } from "../contextWrapper/page_stack"
 
 export const titleBarPropsAdapter = (pageStackContext: PageStackContext, globalContext: GlobalContext): TitleBarProps => {
     return {

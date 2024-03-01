@@ -1,8 +1,8 @@
 import { useState } from 'react';
 
-import bgimage from '../../assets/bgimage/wallpaper14.jpg'
+import bgimage from '../../assets/bgimage/wallpaper6.jpg'
 
-import { PageStackState, pageStackContext, pageStackContextWrapper } from './contextWrappers/page_stack';
+import { PageStackState, pageStackContext, pageStackContextWrapper } from './contextWrapper/page_stack';
 
 
 import Titlebar from './TitleBar';
@@ -11,7 +11,7 @@ import { appWindow } from '@tauri-apps/api/window';
 import { PAGES_MAP } from '../../consts/pages';
 import ActionCenter from './ActionCenter';
 
-import { GlobalState, globalContextWrapper } from './contextWrappers/global'
+import { GlobalState, globalContextWrapper } from './contextWrapper/global'
 import { titleBarPropsAdapter } from './TitleBar/adapter';
 import { actionCenterPropsAdapter } from './ActionCenter/adapter';
 
@@ -29,7 +29,7 @@ const App: React.FC = () => {
         <>
             <Titlebar props={titleBarPropsAdapter(pageStackContextValue, globalContextValue)}/>
             <ActionCenter props={actionCenterPropsAdapter(pageStackContextValue, globalContextValue)}/>
-            <ModalPresenter />
+            <ModalContainer />
             <pageStackContext.Provider value={pageStackContextValue}>
                 <CurrentPage />
             </pageStackContext.Provider>
@@ -38,9 +38,9 @@ const App: React.FC = () => {
     )
 }
 
-const ModalPresenter: React.FC = () => {
+const ModalContainer: React.FC = () => {
     return (
-        <div id='modal-presenter' style={{position: 'absolute', height: '100%', width: '100%', zIndex: 99, pointerEvents: 'none'}}>
+        <div id='modal-container' style={{position: 'absolute', height: '100%', width: '100%', zIndex: 99, pointerEvents: 'none'}}>
             <Watermark />
         </div>
     )

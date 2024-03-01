@@ -1,6 +1,6 @@
 import { ActionCenterProps } from "."
-import { GlobalContext } from "../contextWrappers/global"
-import { PageStackContext } from "../contextWrappers/page_stack"
+import { GlobalContext } from "../contextWrapper/global"
+import { PageStackContext } from "../contextWrapper/page_stack"
 
 export const actionCenterPropsAdapter = (pageStackContext: PageStackContext, globalContext: GlobalContext): ActionCenterProps => {
     return {
