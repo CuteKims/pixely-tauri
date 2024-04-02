@@ -1,15 +1,39 @@
 use std::path::{Path, PathBuf};
 
-use crate::rasterizer::{models::{parser::resource_parser::{InstanceResource, DownloadIndex, InstanceResourceType, DownloadSource}, parser::{json_parser::{InstanceExecutableJar, AssetIndex, LibraryJar, JvmArgumentAction, JavaArgumentRule, JavaArgumentRuleOs, LibraryDownloadIndex}, asset_parser::AssetObject}}, utils::crossplat::{get_os_info, OsInfo}};
+use crate::rasterizer::{
+    models::{
+        parser::resource_parser::{
+            DownloadIndex, DownloadSource, InstanceResource, InstanceResourceType,
+        },
+        parser::{
+            asset_parser::AssetObject,
+            json_parser::{
+                AssetIndex, InstanceExecutableJar, JavaArgumentRule, JavaArgumentRuleOs,
+                JvmArgumentAction, LibraryDownloadIndex, LibraryJar,
+            },
+        },
+    },
+    utils::crossplat::{get_os_info, OsInfo},
+};
 
 impl InstanceResource for DownloadIndex {
-    fn parse(&self, instance_id: String, source: DownloadSource, os_info: OsInfo) -> Result<Vec<DownloadIndex>, Box<dyn std::error::Error>> {
+    fn parse(
+        &self,
+        instance_id: String,
+        source: DownloadSource,
+        os_info: OsInfo,
+    ) -> Result<Vec<DownloadIndex>, Box<dyn std::error::Error>> {
         Ok(vec![self.clone()])
     }
 }
 
 impl InstanceResource for InstanceExecutableJar {
-    fn parse(&self, instance_id: String, source: DownloadSource, os_info: OsInfo) -> Result<Vec<DownloadIndex>, Box<dyn std::error::Error>> {
+    fn parse(
+        &self,
+        instance_id: String,
+        source: DownloadSource,
+        os_info: OsInfo,
+    ) -> Result<Vec<DownloadIndex>, Box<dyn std::error::Error>> {
         let mut path = PathBuf::new();
         path.push(format!("/versions/{}/{}.jar", instance_id, instance_id).as_str());
         Ok(vec![DownloadIndex {
@@ -23,7 +47,12 @@ impl InstanceResource for InstanceExecutableJar {
 }
 
 impl InstanceResource for AssetIndex {
-    fn parse(&self, instance_id: String, source: DownloadSource, os_info: OsInfo) -> Result<Vec<DownloadIndex>, Box<dyn std::error::Error>> {
+    fn parse(
+        &self,
+        instance_id: String,
+        source: DownloadSource,
+        os_info: OsInfo,
+    ) -> Result<Vec<DownloadIndex>, Box<dyn std::error::Error>> {
         let mut path = PathBuf::new();
         path.push(format!("/assets/indexes/{}.json", self.id).as_str());
         Ok(vec![DownloadIndex {
@@ -37,21 +66,39 @@ impl InstanceResource for AssetIndex {
 }
 
 impl InstanceResource for AssetObject {
-    fn parse(&self, instance_id: String, source: DownloadSource, os_info: OsInfo) -> Result<Vec<DownloadIndex>, Box<dyn std::error::Error>> {
+    fn parse(
+        &self,
+        instance_id: String,
+        source: DownloadSource,
+        os_info: OsInfo,
+    ) -> Result<Vec<DownloadIndex>, Box<dyn std::error::Error>> {
         let mut path = PathBuf::new();
-        path.push(Path::new(&format!("/assets/objects/{}/{}", &self.hash[0..2], &self.hash)));
+        path.push(Path::new(&format!(
+            "/assets/objects/{}/{}",
+            &self.hash[0..2],
+            &self.hash
+        )));
         Ok(vec![DownloadIndex {
             resource_type: InstanceResourceType::Asset,
             path,
             sha1: Option::Some(self.hash.clone()),
             size: Option::Some(self.size),
-            url: format!("https://bmclapi2.bangbang93.com/assets/{}/{}", &self.hash[0..2], &self.hash),
+            url: format!(
+                "https://bmclapi2.bangbang93.com/assets/{}/{}",
+                &self.hash[0..2],
+                &self.hash
+            ),
         }])
     }
 }
 
 impl InstanceResource for LibraryJar {
-    fn parse(&self, instance_id: String, source: DownloadSource, os_info: OsInfo) -> Result<Vec<DownloadIndex>, Box<dyn std::error::Error>> {
+    fn parse(
+        &self,
+        instance_id: String,
+        source: DownloadSource,
+        os_info: OsInfo,
+    ) -> Result<Vec<DownloadIndex>, Box<dyn std::error::Error>> {
         let mut vec: Vec<DownloadIndex> = Vec::new();
         let mut format_and_push = |library_index: &LibraryDownloadIndex| -> () {
             let mut path = PathBuf::new();
@@ -64,9 +111,13 @@ impl InstanceResource for LibraryJar {
                 url: library_index.url.clone(),
             })
         };
-        let mut closure = || if self.downloads.classifiers.is_some() {
-            for (os, native) in self.natives.clone().unwrap().into_iter() {
-                if os == os_info.os {format_and_push(&self.downloads.classifiers.as_ref().unwrap()[&native])}
+        let mut closure = || {
+            if self.downloads.classifiers.is_some() {
+                for (os, native) in self.natives.clone().unwrap().into_iter() {
+                    if os == os_info.os {
+                        format_and_push(&self.downloads.classifiers.as_ref().unwrap()[&native])
+                    }
+                }
             }
         };
         match &self.rules {
@@ -75,7 +126,7 @@ impl InstanceResource for LibraryJar {
                 if rules.clone().check(os_info) && self.downloads.artifact.is_some() {
                     format_and_push(self.downloads.artifact.as_ref().unwrap());
                 }
-            },
+            }
             None => {
                 closure();
                 if self.downloads.artifact.is_some() {
@@ -117,25 +168,25 @@ impl JsonRules for Vec<JavaArgumentRule> {
                     } else {
                         is_satisfied = false;
                     }
-                },
-                None => {is_satisfied = true;},
+                }
+                None => {
+                    is_satisfied = true;
+                }
             }
             is_satisfied
         }
         let mut is_satisfied: bool = true;
         for rule in self.into_iter() {
             match rule.action {
-                JvmArgumentAction::Allow => {
-                    match &rule.os {
-                        Some(_) => {
-                            is_satisfied = match_rule(rule.os.unwrap(), os_info.clone());
-                        },
-                        None => {is_satisfied = true;}
+                JvmArgumentAction::Allow => match &rule.os {
+                    Some(_) => {
+                        is_satisfied = match_rule(rule.os.unwrap(), os_info.clone());
                     }
-                }
-                JvmArgumentAction::Disallow => {
-                    return !match_rule(rule.os.unwrap(), os_info)
+                    None => {
+                        is_satisfied = true;
+                    }
                 },
+                JvmArgumentAction::Disallow => return !match_rule(rule.os.unwrap(), os_info),
             }
         }
         is_satisfied

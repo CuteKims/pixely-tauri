@@ -76,7 +76,7 @@ export function pageStackContextWrapper(state: [Page[], React.Dispatch<React.Set
                 if(subpage !== undefined) {
                     subpage.internalState = callback(subpage.internalState, subpage.pageKey)
                 } else {
-                    console.error('pageStackContext was trying to set internalState to an unexisting subpage.')
+                    console.error('pageStackContext was trying to set internalState to an non-existing subpage.')
                 }
                 return [...pageStack]
             })

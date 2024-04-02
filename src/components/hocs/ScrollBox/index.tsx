@@ -19,6 +19,8 @@ export const ScrollBox = forwardRef<HTMLDivElement, ScrollboxProps>(({children, 
     let [scrollTop, setScrollTop] = useState(0)
     let [mouseState, setMouseState] = useState({pan: false, hover: false})
 
+    console.log('ScrollBox Rerendered')
+
     // @ts-ignore
     useImperativeHandle(ref, () => containerRef.current) //FIXME: 不能将类型“HTMLDivElement | null”分配给类型“HTMLDivElement”。
 
@@ -114,7 +116,6 @@ export const ScrollBox = forwardRef<HTMLDivElement, ScrollboxProps>(({children, 
                     </AnimatePresence>
                 </div>
             </div>
-            
         </>
     )
 })

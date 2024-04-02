@@ -3,7 +3,12 @@ use std::path::PathBuf;
 use crate::rasterizer::utils::crossplat::OsInfo;
 
 pub trait InstanceResource {
-    fn parse(&self, instance_id: String, source: DownloadSource, os_info: OsInfo) -> Result<Vec<DownloadIndex>, Box<dyn std::error::Error>>;
+    fn parse(
+        &self,
+        instance_id: String,
+        source: DownloadSource,
+        os_info: OsInfo,
+    ) -> Result<Vec<DownloadIndex>, Box<dyn std::error::Error>>;
 }
 
 pub enum DownloadSource {
@@ -18,7 +23,7 @@ pub struct DownloadIndex {
     pub path: PathBuf,
     pub sha1: Option<String>,
     pub size: Option<usize>,
-    pub url: String
+    pub url: String,
 }
 
 #[derive(Clone, Debug)]

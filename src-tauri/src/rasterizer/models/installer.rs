@@ -7,5 +7,5 @@ use super::core::minecraft_instance::InstanceModificationType;
 pub struct InstanceInstaller {
     pub instance_name: String,
     pub instance_id: String,
-    pub client_json_url: String
+    pub client_json_url: String,
 }

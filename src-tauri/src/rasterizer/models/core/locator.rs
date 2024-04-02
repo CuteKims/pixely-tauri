@@ -1,3 +1,3 @@
 pub struct InstanceLocator<'a> {
-    pub root_path: &'a std::path::Path
+    pub root_path: &'a std::path::Path,
 }

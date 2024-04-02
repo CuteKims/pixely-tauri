@@ -1,6 +1,6 @@
 use std::collections::HashMap;
 
-use serde::{Serialize, Deserialize};
+use serde::{Deserialize, Serialize};
 
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
@@ -12,7 +12,7 @@ pub struct Asset {
 #[serde(rename_all = "camelCase")]
 pub struct AssetObjects {
     #[serde(flatten)]
-    extra: HashMap<String, AssetObject>
+    extra: HashMap<String, AssetObject>,
 }
 
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]

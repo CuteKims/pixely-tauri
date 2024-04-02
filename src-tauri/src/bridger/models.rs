@@ -7,7 +7,7 @@ use crate::rasterizer::models::installer::InstanceInstaller;
 #[serde(rename_all = "camelCase")]
 pub enum Task {
     Instant(InstantTask),
-    Async(AsyncTask)
+    Async(AsyncTask),
 }
 
 #[derive(serde::Deserialize)]
@@ -24,9 +24,8 @@ pub enum AsyncTask {
     InstallJava,
 }
 
-#[derive(serde::Serialize)]
-#[derive(Debug)]
+#[derive(serde::Serialize, Debug)]
 pub enum Return {
     InstantResponse(String),
-    AsyncTaskProgressId(String)
+    AsyncTaskProgressId(String),
 }

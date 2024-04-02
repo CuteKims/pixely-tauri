@@ -96,7 +96,7 @@ const Plaza_Installer: React.FC = () => {
     let internalState = pageStackContextValue?.getLastSubpageInternalState() as InternalState
 
     return (
-        <div style={{width: '100%', height: '100%'}}>
+        <>
             <ScrollBox ref={scrollBoxRef}>
                 <Subpage style={{paddingBottom: '136px', gap: '18px'}}>
                     <div>
@@ -119,11 +119,10 @@ const Plaza_Installer: React.FC = () => {
                             <InstallationSettings props={{title: '禁用版本隔离（不推荐）'}} key='isolation'/>
                         </Chapter>
                     </LayoutGroup>
-                    
                 </Subpage>
             </ScrollBox>
             <InstallerPreviewer version={internalState?.version} animatePosY={internalState?.animatePosY}/>
-        </div>
+        </>
     )
 }
 

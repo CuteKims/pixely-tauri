@@ -7,7 +7,7 @@ import { PageStackState, pageStackContext, pageStackContextWrapper } from './con
 
 import Titlebar from './TitleBar';
 
-import { appWindow } from '@tauri-apps/api/window';
+import { webviewWindow } from '@tauri-apps/api';
 import { PAGES_MAP } from '../../consts/pages';
 import ActionCenter from './ActionCenter';
 
@@ -20,7 +20,7 @@ const App: React.FC = () => {
     const globalState = useState<GlobalState>({isActionCenterShow: false, isMaximized: false, windowSize: {width: 960, height: 540}})
     const pageStackState = useState<PageStackState>([{pageKey: 'launcher'}])
     
-    let globalContextValue = globalContextWrapper(globalState, appWindow)
+    let globalContextValue = globalContextWrapper(globalState, webviewWindow.getCurrent())
     let pageStackContextValue = pageStackContextWrapper(pageStackState)
 
     let CurrentPage = PAGES_MAP[pageStackContextValue.getLastPage().pageKey].component

@@ -1,4 +1,3 @@
-import { AnimatePresence, motion } from "framer-motion";
 import { useContext, useEffect, useRef } from "react";
 import BackendInvoker from "../../../../bridger/invoker";
 import { VersionManifest, ParsedTaskResponse, ManifestVersion } from "../../../../bridger/parser";

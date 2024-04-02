@@ -22,7 +22,7 @@ pub enum VersionType {
     Release,
     Snapshot,
     OldBeta,
-    OldAlpha
+    OldAlpha,
 }
 
 #[derive(serde::Serialize, serde::Deserialize)]

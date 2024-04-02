@@ -1,4 +1,4 @@
-import { WebviewWindow } from "@tauri-apps/api/window"
+import { WebviewWindow } from "@tauri-apps/api/webviewWindow"
 
 export type GlobalState = {
     windowSize: {
@@ -23,12 +23,16 @@ export function globalContextWrapper(state: [GlobalState, React.Dispatch<React.S
     return {
         globalState,
         toggleMaximize: () => {
-            appWindow.isMaximized().then((isMaximized: boolean) => {
-                if(isMaximized) {
-                    appWindow.toggleMaximize().then(() => setGlobalState(state => {return {...state, isMaximized: false}}))
-                } else {
-                    appWindow.toggleMaximize().then(() => setGlobalState(state => {return {...state, isMaximized: true}}))
+            appWindow.isMaximized().then(bool => {
+                switch (bool) {
+                    case true:
+                        appWindow.unmaximize().then(() => setGlobalState(state => {return {...state, isMaximized: bool}}))
+                        break;
+                    case false:
+                        appWindow.maximize().then(() => setGlobalState(state => {return {...state, isMaximized: bool}}))
+                        break;
                 }
+                
             })
         },
         toggleIsActionCenterShow: () => {

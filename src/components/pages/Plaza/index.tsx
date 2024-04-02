@@ -2,7 +2,7 @@
 import { Suspense, useContext } from 'react'
 import { pageStackContext } from '../../App/contextWrapper/page_stack'
 //Shared components
-import { PageContainer } from '../../shared/page'
+import { Page } from '../../shared/page'
 import Sidemenu from '../../shared/sidemenu'
 //Private objects
 import SUBPAGES_MAP_PLAZA from './consts'
@@ -13,12 +13,11 @@ const Plaza: React.FC = () => {
     let subpageKey = pageStackContextValue.getLastSubpage()?.pageKey ?? 'plaza.version_manifest'
     let SubpageComponent = SUBPAGES_MAP_PLAZA.map[subpageKey].component;
     return (
-        <PageContainer>
-            <Sidemenu subpagesMap={SUBPAGES_MAP_PLAZA}/>
+        <Page sidemenuMap={SUBPAGES_MAP_PLAZA}>
             <Suspense>
                 <SubpageComponent />
             </Suspense>
-        </PageContainer>
+        </Page>
     )
 }
 

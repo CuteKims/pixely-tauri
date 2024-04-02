@@ -1,11 +1,11 @@
 import { useEffect, useState } from 'react'
 import styles from './Launcher.module.css'
 import { MinecraftInstance, ParsedTaskResponse } from '../../../bridger/parser'
-import { convertFileSrc } from '@tauri-apps/api/tauri'
+import { convertFileSrc } from '@tauri-apps/api/core'
 import { motion } from 'framer-motion'
 import BackendInvoker from '../../../bridger/invoker'
 import { InstantTaskHeaders } from '../../../enums'
-import { PageContainer } from '../../shared/page'
+import { Page } from '../../shared/page'
 
 const Launcher: React.FC = () => {
     const [instanceArray, setInstanceArray] = useState<{state: 'loading' | 'ok' | 'error', data: null | MinecraftInstance[] | Error}>({state: 'loading', data: null});
@@ -37,7 +37,7 @@ const Launcher: React.FC = () => {
     }
     return (
         <>
-            <PageContainer fullScreen>
+            <Page fullScreen>
                 <div id={styles['tile-container']}  style={{transform: 'translateX(-' + pointer * 116 + 'px)'}} onWheel={handleWheel}>
                     {(() => {
                         switch (instanceArray.state) {
@@ -50,7 +50,7 @@ const Launcher: React.FC = () => {
                         }
                     })()}
                 </div>
-            </PageContainer>
+            </Page>
         </>
     )
 }

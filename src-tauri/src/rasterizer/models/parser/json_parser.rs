@@ -1,5 +1,5 @@
+use serde::{Deserialize, Serialize};
 use std::collections::HashMap;
-use serde::{Serialize, Deserialize};
 
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
@@ -61,14 +61,14 @@ pub struct VariantGameArgument {
 #[serde(rename_all = "camelCase")]
 pub struct GameArgumentRule {
     action: String,
-    features: GameArgumentRuleFeatures
+    features: GameArgumentRuleFeatures,
 }
 
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct GameArgumentRuleFeatures {
     #[serde(flatten)]
-    extra: HashMap<String, bool>
+    extra: HashMap<String, bool>,
 }
 
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
@@ -87,7 +87,7 @@ pub struct VariantJvmArgument {
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 pub struct JavaArgumentRule {
     pub action: JvmArgumentAction,
-    pub os: Option<JavaArgumentRuleOs>
+    pub os: Option<JavaArgumentRuleOs>,
 }
 
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
@@ -101,7 +101,7 @@ pub enum JvmArgumentAction {
 pub struct JavaArgumentRuleOs {
     pub name: Option<String>,
     pub version: Option<String>,
-    pub arch: Option<String>
+    pub arch: Option<String>,
 }
 
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
@@ -155,7 +155,7 @@ pub struct LibraryDownloadIndex {
     pub path: String,
     pub sha1: String,
     pub size: usize,
-    pub url: String
+    pub url: String,
 }
 
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]

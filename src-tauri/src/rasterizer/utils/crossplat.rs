@@ -7,12 +7,15 @@ pub fn get_os_info() -> Result<OsInfo, Box<dyn std::error::Error>> {
         let string = get_winver()?;
         let mut ver = String::new();
         for (i, char) in string.chars().enumerate() {
-            if char == '.' {break};
+            if char == '.' {
+                break;
+            };
             ver.push(char);
         }
-        if ver == "10" { 
+        if ver == "10" {
             is_winver_above_10 = true
-        } else {}
+        } else {
+        }
     } else if std::env::consts::OS == "macos" {
         os = String::from("osx");
     } else {
@@ -21,7 +24,7 @@ pub fn get_os_info() -> Result<OsInfo, Box<dyn std::error::Error>> {
     Ok(OsInfo {
         os,
         arch,
-        is_winver_above_10
+        is_winver_above_10,
     })
 }
 
@@ -45,7 +48,8 @@ fn extract_winver_from_str(input: &str) -> Result<&str, Box<dyn std::error::Erro
     lazy_static::lazy_static! {
         static ref RE: regex::Regex = regex::Regex::new(r"Microsoft\sWindows\s\[Version\s(\d+(\.\d+)+)\]").unwrap();
     }
-    let captured = RE.captures(input)
+    let captured = RE
+        .captures(input)
         .ok_or_else(|| err_msg)?
         .get(1)
         .ok_or_else(|| err_msg)?

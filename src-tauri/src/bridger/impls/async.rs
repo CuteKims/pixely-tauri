@@ -1,4 +1,4 @@
-use crate::bridger::{models, impls};
+use crate::bridger::{impls, models};
 
 use async_trait::async_trait;
 use uuid::Uuid;

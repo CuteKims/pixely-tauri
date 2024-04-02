@@ -1,6 +1,8 @@
+import { SubpageMap } from '../../../types/consts'
+import Sidemenu from '../sidemenu'
 import styles from './page.module.css'
 
-export const PageContainer: React.FC<{children?: React.ReactNode, fullScreen?: boolean}> = ({children, fullScreen}) => {
+export const Page: React.FC<{children?: React.ReactNode, fullScreen?: boolean, sidemenuMap?: SubpageMap}> = ({children, fullScreen, sidemenuMap}) => {
     return (
         <div id={styles['page-container']}>
             {fullScreen ? (
@@ -11,7 +13,12 @@ export const PageContainer: React.FC<{children?: React.ReactNode, fullScreen?: b
                 <>
                     <div id={styles['page-background']} />
                     <div id={styles['page-foreground']}>
-                        {children}
+                        {sidemenuMap ? (
+                            <Sidemenu subpagesMap={sidemenuMap}/>
+                        ) : null}
+                        <div style={{height: '100%', width: '100%'}}>
+                            {children}
+                        </div>
                     </div>
                 </>
             )}

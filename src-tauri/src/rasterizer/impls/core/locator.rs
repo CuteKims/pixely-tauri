@@ -1,4 +1,9 @@
-use crate::rasterizer::models::core::{locator::InstanceLocator, minecraft_instance::{MinecraftInstance, InstanceModificationType, InstanceVersion, VersionType}};
+use crate::rasterizer::models::core::{
+    locator::InstanceLocator,
+    minecraft_instance::{
+        InstanceModificationType, InstanceVersion, MinecraftInstance, VersionType,
+    },
+};
 
 impl InstanceLocator<'_> {
     pub fn get_all_instances(&self) -> Vec<MinecraftInstance> {
@@ -10,7 +15,10 @@ impl InstanceLocator<'_> {
                 r#type: VersionType::Release,
                 client_version: "1.12.2",
             },
-            modification: vec![InstanceModificationType::Forge, InstanceModificationType::Optifine],
+            modification: vec![
+                InstanceModificationType::Forge,
+                InstanceModificationType::Optifine,
+            ],
             instance_path: "E:/CodenamePixely/Playground/Minecraft",
             icon_path: "E:/CodenamePixely/pixely-tauri/src/assets/icons/icon_anvil.png",
         };
@@ -22,7 +30,10 @@ impl InstanceLocator<'_> {
                 r#type: VersionType::Release,
                 client_version: "1.12.2",
             },
-            modification: vec![InstanceModificationType::Forge, InstanceModificationType::Optifine],
+            modification: vec![
+                InstanceModificationType::Forge,
+                InstanceModificationType::Optifine,
+            ],
             instance_path: "E:/CodenamePixely/Playground/Minecraft",
             icon_path: "C:/Users/20475/Pictures/logo.png",
         };
@@ -34,7 +45,10 @@ impl InstanceLocator<'_> {
                 r#type: VersionType::Release,
                 client_version: "1.12.2",
             },
-            modification: vec![InstanceModificationType::Forge, InstanceModificationType::Optifine],
+            modification: vec![
+                InstanceModificationType::Forge,
+                InstanceModificationType::Optifine,
+            ],
             instance_path: "E:/CodenamePixely/Playground/Minecraft",
             icon_path: "E:/CodenamePixely/pixely-tauri/src/assets/icons/icon_anvil.png",
         };
@@ -46,11 +60,14 @@ impl InstanceLocator<'_> {
                 r#type: VersionType::Release,
                 client_version: "1.12.2",
             },
-            modification: vec![InstanceModificationType::Forge, InstanceModificationType::Optifine],
+            modification: vec![
+                InstanceModificationType::Forge,
+                InstanceModificationType::Optifine,
+            ],
             instance_path: "E:/CodenamePixely/Playground/Minecraft",
             icon_path: "C:/Users/20475/Pictures/logo.png",
         };
         let vec: Vec<MinecraftInstance> = vec![instance_a, instance_b, instance_c, instance_d];
-        return vec
+        return vec;
     }
 }
