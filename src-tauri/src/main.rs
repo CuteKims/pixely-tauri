@@ -8,7 +8,6 @@ mod statics;
 use serde_json;
 use std::{self};
 use tauri::{Manager, Window};
-use window_shadows;
 
 #[tauri::command]
 async fn rasterizer_bridger(
@@ -30,15 +29,16 @@ pub struct Notification {}
 #[tokio::main]
 async fn main() {
     tauri::Builder::default()
-        .plugin(tauri_plugin_shell::init())
+        // .plugin(tauri_plugin_shell::init())
         .setup(|app| {
-            // let window = app.get_webview_window("main").unwrap();
-            // window.with_webview(|webview| {
-            //     #[cfg(windows)]
-            //     unsafe {
-            //         webview.controller().SetZoomFactor(1.0);
-            //     }
-            // });
+            let window = app.get_webview_window("main").unwrap();
+            window.with_webview(|webview| {
+                #[cfg(windows)]
+                unsafe {
+                    webview.controller().SetZoomFactor(1.0);
+                }
+            });
+            window.set_shadow(false);
             Ok(())
         })
         .invoke_handler(tauri::generate_handler![rasterizer_bridger])

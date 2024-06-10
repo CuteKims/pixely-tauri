@@ -1,5 +1,5 @@
 import { ScrollBox } from "../../hocs/ScrollBox";
-import { Page } from "../../shared/page";
+import { Page } from "../../ui/page";
 
 async function get(url: string) {
     return await (await fetch(new Request(url))).json()

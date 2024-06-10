@@ -2,7 +2,7 @@ import styles from './ScrollBox.module.css'
 
 import { forwardRef, useEffect, useImperativeHandle, useRef, useState } from "react"
 import { AnimatePresence, motion } from 'framer-motion';
-import { IconArrow } from '../../shared/icons';
+import { IconArrow } from '../../ui/icons';
 
 type ScrollboxProps = {
     children: React.ReactNode,

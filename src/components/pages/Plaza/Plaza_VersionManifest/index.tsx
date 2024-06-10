@@ -2,7 +2,7 @@ import { useContext, useEffect, useRef } from "react";
 import BackendInvoker from "../../../../bridger/invoker";
 import { VersionManifest, ParsedTaskResponse, ManifestVersion } from "../../../../bridger/parser";
 import { ScrollBox } from "../../../hocs/ScrollBox";
-import { IconArrow, IconSearch } from "../../../shared/icons";
+import { IconArrow, IconSearch } from "../../../ui/icons";
 import { FallbackComponent } from "..";
 
 import styles from "./Plaza_VersionManifest.module.css"
@@ -14,7 +14,7 @@ import { InstantTaskHeaders, VersionType } from "../../../../enums";
 import { pageStackContext } from "../../../App/contextWrapper/page_stack";
 
 import { plaza_installer_INITIAL_STATE } from "../Plaza_Installer";
-import { Subpage } from "../../../shared/page";
+import { Subpage } from "../../../ui/page";
 
 type InternalState = {
     loadingState: 'loading' | 'ok' | 'error',

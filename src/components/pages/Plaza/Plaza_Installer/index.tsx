@@ -11,7 +11,7 @@ import iconStone from '../../../../assets/icons/stone_block_old.png'
 import { addonOptions, loaderOptions } from "./consts";
 import { Addons, ModLoaders, VersionType } from "../../../../enums";
 import { pageStackContext } from "../../../App/contextWrapper/page_stack";
-import { Subpage } from "../../../shared/page";
+import { Subpage } from "../../../ui/page";
 
 export type InstallationOptionProps = {
     id: string,
@@ -127,7 +127,7 @@ const Plaza_Installer: React.FC = () => {
 }
 
 const InstallerPreviewer: React.FC<{version: ManifestVersion | undefined, animatePosY: number | undefined}> = ({version, animatePosY}) => {
-    const transition = {ease: [0,.8,.2,1], duration: .5 + (Math.abs(((window.innerHeight - 94) - (animatePosY ?? 0))) * .00025)}
+    const transition = {ease: [0,.6,.4,1], duration: .5 + (Math.abs(((window.innerHeight - 94) - (animatePosY ?? 0))) * .00025)}
     return (
         <div style={{width: '100%', height: '100%', position: 'relative', top: '-100%', pointerEvents: 'none'}}>
             <div style={{height: '100%', padding: '0px 36px', display: 'flex', flexDirection: 'column'}}>

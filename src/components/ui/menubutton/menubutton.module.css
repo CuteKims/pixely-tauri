@@ -11,7 +11,7 @@
 }
 
 .side-button:hover {
-    background-color: var(--default-hover-color);
+    background-color: var(--reverse-color-10);
 }
 
 .side-button:hover p {
@@ -22,7 +22,7 @@
 .side-button-selected {
     height: 40px;
     width: 100%;
-    background-color: var(--default-activate-color);
+    background-color: var(--reverse-color-10);
     transition: cubic-bezier(0,.8,.2,1) .5s;
 }
 
@@ -33,7 +33,7 @@
 }
 
 .side-button-selected:hover {
-    background-color: var(--default-activate-color);
+    background-color: var(--reverse-color-10);
 }
 
 .side-button-selected:hover p {

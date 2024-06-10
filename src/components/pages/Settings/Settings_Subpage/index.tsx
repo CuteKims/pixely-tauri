@@ -1,5 +1,5 @@
 import { ScrollBox } from '../../../hocs/ScrollBox'
-import { Subpage } from '../../../shared/page'
+import { Subpage } from '../../../ui/page'
 import styles from './Settings_Subpage.module.css'
 
 const SettingsPage: React.FC = () => {

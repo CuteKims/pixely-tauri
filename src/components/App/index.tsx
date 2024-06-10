@@ -1,21 +1,19 @@
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 
-import bgimage from '../../assets/bgimage/wallpaper6.jpg'
+import bgimage from '../../assets/bgimage/wallpaper9.jpg'
 
 import { PageStackState, pageStackContext, pageStackContextWrapper } from './contextWrapper/page_stack';
 
-
-import Titlebar from './TitleBar';
+import Titlebar from './Titlebar';
 
 import { webviewWindow } from '@tauri-apps/api';
 import { PAGES_MAP } from '../../consts/pages';
 import ActionCenter from './ActionCenter';
 
 import { GlobalState, globalContextWrapper } from './contextWrapper/global'
-import { titleBarPropsAdapter } from './TitleBar/adapter';
+import { titlebarPropsAdapter, titlebarRefAdapter } from './Titlebar/adapter';
 import { actionCenterPropsAdapter } from './ActionCenter/adapter';
 
-/* This is a Smart component, that means it shouldn't contain ANYTHING related to styles and div elements and only deal with state management and logics. */
 const App: React.FC = () => {
     const globalState = useState<GlobalState>({isActionCenterShow: false, isMaximized: false, windowSize: {width: 960, height: 540}})
     const pageStackState = useState<PageStackState>([{pageKey: 'launcher'}])
@@ -25,9 +23,11 @@ const App: React.FC = () => {
 
     let CurrentPage = PAGES_MAP[pageStackContextValue.getLastPage().pageKey].component
 
+    const titlebarRef = useRef(titlebarRefAdapter(pageStackContextValue, globalContextValue))
+
     return (
         <>
-            <Titlebar props={titleBarPropsAdapter(pageStackContextValue, globalContextValue)}/>
+            <Titlebar props={titlebarPropsAdapter(pageStackContextValue, globalContextValue)} funcs={titlebarRef.current}/>
             <ActionCenter props={actionCenterPropsAdapter(pageStackContextValue, globalContextValue)}/>
             <ModalContainer />
             <pageStackContext.Provider value={pageStackContextValue}>
@@ -38,6 +38,8 @@ const App: React.FC = () => {
     )
 }
 
+
+
 const ModalContainer: React.FC = () => {
     return (
         <div id='modal-container' style={{position: 'absolute', height: '100%', width: '100%', zIndex: 99, pointerEvents: 'none'}}>
@@ -45,7 +47,6 @@ const ModalContainer: React.FC = () => {
         </div>
     )
 }
-
 
 const Watermark = () => {
     return <p id='watermark' style={{

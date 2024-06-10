@@ -1,13 +1,12 @@
 #titlebar {
     position: absolute;
     z-index: 100;
-    height: 35px;
+    height: 36px;
     width: 100%;
-    background-color: var(--default-ui-color);
+    background-color: var(--global-color-50);
     backdrop-filter: blur(10px);
-    border-bottom: solid 1px var(--default-activate-color);
     display: flex;
-    transition: background-color .5s, opacity .3s;
+    transition: .5s;
     box-shadow: 0px 0px 16px rgba(0, 0, 0, .3);
 }
 
@@ -16,45 +15,42 @@
 }
 
 .button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
     height: 36px;
-    overflow: hidden;
+    width: 36px;
     background-color: transparent;
     transition: .5s;
 }
 
 .button svg {
-    color: var(--default-font-color);
-    filter: drop-shadow(0px 1px 2px var(--default-ui-color));
+    margin: auto;
+    color: var(--global-font-color);
+    filter: drop-shadow(0px 1px 2px var(--global-color-100));
     transition: .5s;
 }
 
 .button:hover {
-    background-color: var(--default-hover-color);
+    background-color: var(--reverse-color-10);
     transition: .1s;
 }
 
 .button:active {
-    background-color: var(--default-activate-color);
+    background-color: var(--reverse-color-25);
     transition: .1s;
 }
 
-.button-close {
-    height: 36px;
-    overflow: hidden;
-    background-color: transparent;
-    transition: .5s;
-}
-
 .button-close svg {
-    color: var(--default-font-color);
-    filter: drop-shadow(0px 1px 2px var(--default-ui-color));
+    color: var(--global-font-color);
+    filter: drop-shadow(0px 1px 2px var(--global-color-100));
     transition: .5s;
 }
 
 .button-close:hover {
     background-color: rgba(255,0,0,.75);
     transition: 100ms;
-    box-shadow: 0px 0px 12px red;
+    box-shadow: 0px 0px 12px rgba(255,0,0,.75);
 }
 
 .button-close:active {
@@ -71,6 +67,23 @@
 .button-close:active svg {
     color: white;
     transition: .1s;
+}
+
+.button-home {
+    background-color: var(--global-color-50);
+    transition: .3s;
+}
+
+.button-home:hover {
+    background-color: var(--global-color-75);
+    box-shadow: 0px 0px 6px var(--global-color-50);
+    transition: .3s;
+}
+
+.button-home:active {
+    background-color: var(--global-color-100);
+    box-shadow: 0px 0px 18px var(--global-color-100);
+    transition: .3s;
 }
 
 .title {

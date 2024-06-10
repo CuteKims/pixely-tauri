@@ -1,9 +1,31 @@
 :root {
-    --default-ui-color: rgba(255, 255, 255, .5);
-    --default-font-color: #080808;
-    --default-ui-brightness: brightness(150%) contrast(75%) saturate(125%);
-    --default-hover-color: rgba(0,0,0,.1);
-    --default-activate-color: rgba(0,0,0,.2);
+    height: 100%;
+
+    --ui-filter-light: brightness(150%) contrast(75%) saturate(125%);
+    --ui-filter-black: brightness(75%);
+
+    --font-color-white: white;
+    --font-color-black: #161616;
+
+    --text-shadow-bright: 0px 0px 4px rgba(255, 255, 255, 1), 0px 0px 8px rgba(255, 255, 255, 1);
+    --text-shadow-dark: 0px 1px 3px rgba(0, 0, 0, .5);
+
+    --global-color-100: rgba(255, 255, 255, 1);
+    --global-color-75: rgba(255, 255, 255, .75);
+    --global-color-50: rgba(255, 255, 255, .50);
+    --global-color-25: rgba(255, 255, 255, .25);
+    --global-color-10: rgba(255, 255, 255, .10);
+
+    --reverse-color-100: rgba(0, 0, 0, 1);
+    --reverse-color-75: rgba(0, 0, 0, .75);
+    --reverse-color-50: rgba(0, 0, 0, .50);
+    --reverse-color-25: rgba(0, 0, 0, .25);
+    --reverse-color-10: rgba(0, 0, 0, .10);
+
+    --global-font-color: var(--font-color-black);
+    --global-text-shadow: var(--text-shadow-bright);
+    --global-ui-fillter: var(--ui-filter-light);
+
     --default-border: solid 1px rgba(255, 255, 255, .2);
 
     --default-box-shadow: 0px 4px 20px rgba(0,0,0,.2), 0px 4px 36px rgba(0,0,0,.2);
@@ -16,10 +38,6 @@
     font-family: 'Segoe UI', 'Microsoft YaHei';
 }
 
-html {
-    height: 100%;
-}
-
 body, #root {
     border: 0;
     padding: 0;
@@ -30,24 +48,36 @@ body, #root {
 
 p {
     margin: auto;
-    color: var(--default-font-color);
+    color: var(--global-font-color);
     font-size: 15px;
-    text-shadow: 0px 0px 4px rgba(255, 255, 255, 1), 0px 0px 8px rgba(255, 255, 255, 1);
+    text-shadow: var(--global-text-shadow);
+    transition-property: color, text-shadow;
+    transition-duration: .5s;
+}
+
+.paper {
+    box-sizing: border-box;
+    backdrop-filter: blur(10px);
+    border: var(--default-border);
+    box-shadow: var(--default-box-shadow);
 }
 
 @media (prefers-color-scheme: dark) {
     :root {
-        --default-ui-color: rgba(0,0,0,.5);
-        --default-font-color: #fff;
-        --default-ui-brightness: brightness(75%);
-        --default-hover-color: rgba(255,255,255,.1);
-        --default-activate-color: rgba(255,255,255,.2);
-    }
-    p {
-        margin: auto;
-        color: var(--default-font-color);
-        font-size: 15px;
-        text-shadow: 0px 1px 3px var(--default-ui-color);
+        --global-color-100: rgba(0, 0, 0, 1);
+        --global-color-75: rgba(0, 0, 0, .75);
+        --global-color-50: rgba(0, 0, 0, .50);
+        --global-color-25: rgba(0, 0, 0, .25);
+        --global-color-10: rgba(0, 0, 0, .10);
+
+        --reverse-color-100: rgba(255, 255, 255, 1);
+        --reverse-color-75: rgba(255, 255, 255, .75);
+        --reverse-color-50: rgba(255, 255, 255, .50);
+        --reverse-color-25: rgba(255, 255, 255, .25);
+        --reverse-color-10: rgba(255, 255, 255, .10);
+
+        --global-font-color: var(--font-color-white);
+        --global-text-shadow: var(--text-shadow-dark);
     }
 }
 

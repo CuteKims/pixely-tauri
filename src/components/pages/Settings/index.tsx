@@ -1,7 +1,7 @@
 //Context
 import { pageStackContext } from '../../App/contextWrapper/page_stack'
 //Shared components
-import { Page } from '../../shared/page'
+import { Page } from '../../ui/page'
 //Private objects
 import SUBPAGES_MAP_SETTINGS from './consts'
 import { Suspense, useContext } from 'react'

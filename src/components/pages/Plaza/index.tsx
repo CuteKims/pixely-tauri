@@ -2,8 +2,8 @@
 import { Suspense, useContext } from 'react'
 import { pageStackContext } from '../../App/contextWrapper/page_stack'
 //Shared components
-import { Page } from '../../shared/page'
-import Sidemenu from '../../shared/sidemenu'
+import { Page } from '../../ui/page'
+import Sidemenu from '../../ui/sidemenu'
 //Private objects
 import SUBPAGES_MAP_PLAZA from './consts'
 import React from 'react'

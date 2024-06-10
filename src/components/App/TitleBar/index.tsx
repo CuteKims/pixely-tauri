@@ -1,76 +1,96 @@
-import styles from './TitleBar.module.css'
+import styles from './Titlebar.module.css'
 
-export type TitleBarProps = {
+export type TitlebarProps = {
+    isMaximized: boolean,
+    isFocused: boolean,
+    titleStr: string
+}
+
+export type TitlebarRef = {
+    home: () => void,
     back: () => void,
     menu: () => void,
     minimize: () => void,
     maximize: () => void,
     close: () => void,
     test: () => void,
-    isMaximized: boolean,
-    isFocused: boolean,
-    titleStr: string
 }
 
 const TitlebarButton:  React.FC<{children: React.ReactNode, props: {
-    position: 'flex-start' | 'flex-end'
+    style: React.CSSProperties | undefined
     callback: () => void
 }}> = ({children, props}) => {
     return (
-        <div className={styles.button} style={{justifyContent: props.position}} onClick={props.callback}>
+        <div className={styles.button} style={props.style} onClick={props.callback}>
             {children}
         </div>
     )
 }
 
 //Dumb
-const TitleBar: React.FC<{props: TitleBarProps}> = ({props}) => {
-
+const TitleBar: React.FC<{props: TitlebarProps, funcs: TitlebarRef}> = ({props, funcs}) => {
     return (
         <div id={styles.titlebar} style={props.isFocused ? {opacity: 1} : {opacity: .5}}>
             {/* Back button */}
-            <TitlebarButton props={{position: 'flex-start', callback: props.back}}>
-                <svg xmlns="http://www.w3.org/2000/svg" width="48" height="36" viewBox="0 0 48 36">
-                    <path d="M-1019-1177.653l.707-.707,0,0,4.643-4.643.707.707-4.143,4.144h12.792v1h-12.793l4.146,4.146-.706.707Z" transform="translate(1035.29 1196.149)" fill="currentColor"/>
+            <div className={`${styles.button} ${styles['button-home']}`} style={{justifyContent: 'flex-start'}} onClick={funcs.test}>
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                    <rect width="4" height="4" transform="translate(10 10)" fill="currentColor"/>
+                    <rect width="4" height="4" transform="translate(10 4)" fill="currentColor"/>
+                    <rect width="4" height="4" transform="translate(4 4)" fill="currentColor"/>
+                    <rect width="4" height="4" transform="translate(4 16)" fill="currentColor"/>
+                    <rect width="4" height="4" transform="translate(10 16)" fill="currentColor"/>
+                    <rect width="4" height="4" transform="translate(16 10)" fill="currentColor"/>
+                    <rect width="4" height="4" transform="translate(4 10)" fill="currentColor"/>
+                    <rect width="24" height="24" fill="none"/>
+                </svg>
+            </div>
+            <TitlebarButton props={{style: {justifyContent: 'flex-start'}, callback: funcs.back}}>
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                    <line x1="12" transform="translate(6 12)" fill="none" stroke="currentColor" stroke-width="1"/>
+                    <line x1="4" y2="4" transform="translate(6 8)" fill="none" stroke="currentColor" stroke-linecap="square" stroke-width="1"/>
+                    <line x1="4" y1="4" transform="translate(6 12)" fill="none" stroke="currentColor" stroke-linecap="square" stroke-width="1"/>
+                    <rect width="24" height="24" fill="none"/>
                 </svg>
             </TitlebarButton>
             {/* Menu button */}
-            <TitlebarButton props={{position: 'flex-start', callback: props.menu}}>
-                <svg xmlns="http://www.w3.org/2000/svg" width="48" height="36" viewBox="0 0 48 36">
-                    <rect width="14" height="1" transform="translate(17 13)" fill="currentColor"/>
-                    <rect width="14" height="1" transform="translate(17 18)" fill="currentColor"/>
-                    <rect width="14" height="1" transform="translate(17 23)" fill="currentColor"/>
-                </svg>
-            </TitlebarButton>
-            {/* Test button */}
-            <TitlebarButton props={{position: 'flex-start', callback: props.test}}>
-                <svg xmlns="http://www.w3.org/2000/svg" width="48" height="36" viewBox="0 0 48 36">
-                    <rect width="14" height="1" transform="translate(17 18)" fill="currentColor"/>
+            <TitlebarButton props={{style: {justifyContent: 'flex-start'}, callback: funcs.menu}}>
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                    <line x1="12" transform="translate(6 12)" fill="none" stroke="currentColor" stroke-width="1"/>
+                    <line x1="12" transform="translate(6 8)" fill="none" stroke="currentColor" stroke-width="1"/>
+                    <line x1="12" transform="translate(6 16)" fill="none" stroke="currentColor" stroke-width="1"/>
+                    <rect width="24" height="24" fill="none"/>
                 </svg>
             </TitlebarButton>
             <Title str={props.titleStr}/>
             {/* Minimize button */}
-            <TitlebarButton props={{position: 'flex-end', callback: props.minimize}}>
-                <svg xmlns="http://www.w3.org/2000/svg" width="48" height="36" viewBox="0 0 48 36">
-                    <rect width="10" height="1" transform="translate(19 22)" fill="currentColor"/>
+            <TitlebarButton props={{style: {justifyContent: 'flex-end'}, callback: funcs.minimize}}>
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                    <line x2="10" transform="translate(7 16.5)" fill="none" stroke="currentColor" stroke-width="1"/>
+                    <rect width="24" height="24" fill="none"/>
                 </svg>
             </TitlebarButton>
             {/* Maximize button */}
-            <TitlebarButton props={{position: 'flex-end', callback: props.maximize}}>
+            <TitlebarButton props={{style: {justifyContent: 'flex-end'}, callback: funcs.maximize}}>
                 {props.isMaximized ? <>
                     <svg width="48.000000" height="36.000000" viewBox="0 0 48 36" fill="none" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink">
                         <path d="M22 13L29 13L29 21L27 21L27 23L19 23L19 15L21 15L21 13L22 13ZM28 14L22 14L22 15L27 15L27 20L28 20L28 14ZM22 16L20 16L20 22L26 22L26 16L22 16Z" fillRule="evenodd" fill="currentColor"/>
                     </svg>
                 </> : <>
-                    <svg xmlns="http://www.w3.org/2000/svg" width="48" height="36" viewBox="0 0 48 36">
-                        <path d="M-854,11h-9V1h10V11Zm0-1V2h-8v8Z" transform="translate(882 12)" fill="currentColor"/>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                        <g transform="translate(7 7)" fill="none" stroke="currentColor" stroke-width="1">
+                            <rect width="10" height="10" stroke="none"/>
+                            <rect x="0.5" y="0.5" width="9" height="9" fill="none"/>
+                        </g>
+                        <rect width="24" height="24" fill="none"/>
                     </svg>
                 </>}
             </TitlebarButton>
             {/* Close button */}
-            <div className={styles['button-close']} onClick={props.close}>
-                <svg xmlns="http://www.w3.org/2000/svg" width="48" height="36" viewBox="0 0 48 36">
-                    <path d="M-1925.7-1176.989l-4.6,4.6-.706-.707,4.6-4.6-4.6-4.6.707-.707,4.6,4.6,4.6-4.6.707.707-4.6,4.6,4.6,4.6-.707.707Z" transform="translate(1949.697 1195.697)" fill="currentColor"/>
+            <div className={`${styles.button} ${styles['button-close']}`} onClick={funcs.close}>
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                    <line x2="8" y2="8" transform="translate(8 8)" fill="none" stroke="currentColor" stroke-linecap="square" stroke-width="1"/>
+                    <line x1="8" y2="8" transform="translate(8 8)" fill="none" stroke="currentColor" stroke-linecap="square" stroke-width="1"/>
+                    <rect width="24" height="24" fill="none"/>
                 </svg>
             </div>
         </div>

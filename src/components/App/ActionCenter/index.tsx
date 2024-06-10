@@ -4,7 +4,7 @@ import { PAGES_MAP } from '../../../consts/pages';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Transition } from '../../hocs/transition';
 import { NotificationChannels } from '../../../enums';
-import { RadioButton } from '../../shared/menubutton';
+import { RadioButton } from '../../ui/menubutton';
 import { Page } from '../contextWrapper/page_stack';
 
 import { Notification } from '../../../types/notif';
