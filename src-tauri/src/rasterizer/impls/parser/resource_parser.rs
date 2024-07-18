@@ -8,7 +8,7 @@ use crate::rasterizer::{
         parser::{
             asset_parser::AssetObject,
             json_parser::{
-                AssetIndex, InstanceExecutableJar, JavaArgumentRule, JavaArgumentRuleOs,
+                AssetIndex, InstanceExecutableJar, JvmArgumentRule, JvmArgumentRuleOs,
                 JvmArgumentAction, LibraryDownloadIndex, LibraryJar,
             },
         },
@@ -142,15 +142,21 @@ pub trait JsonRules {
     fn check(self, os_info: OsInfo) -> bool; //To be changed
 }
 
-impl JsonRules for Vec<JavaArgumentRule> {
+impl JsonRules for Vec<JvmArgumentRule> {
     fn check(self, os_info: OsInfo) -> bool {
-        fn match_rule(os_rule: JavaArgumentRuleOs, os_info: OsInfo) -> bool {
+        fn match_rule(os_rule: JvmArgumentRuleOs, os_info: OsInfo) -> bool {
             let is_satisfied: bool;
             match os_rule.name {
+                None => {
+                    is_satisfied = true;
+                }
                 Some(os_name) => {
-                    if os_name == os_info.os {
-                        //is Windows
-                        if os_info.os == "windows" {
+                    if os_name != os_info.os {
+                        is_satisfied = false;
+                    } else {
+                        if os_info.os != "windows" {
+                            is_satisfied = false;
+                        } else {
                             //Required Windows version
                             if os_rule.version.is_some() && os_info.is_winver_above_10 {
                                 is_satisfied = true;
@@ -161,16 +167,8 @@ impl JsonRules for Vec<JavaArgumentRule> {
                             } else {
                                 is_satisfied = false;
                             }
-                        //Not Windows
-                        } else {
-                            is_satisfied = true;
                         }
-                    } else {
-                        is_satisfied = false;
                     }
-                }
-                None => {
-                    is_satisfied = true;
                 }
             }
             is_satisfied

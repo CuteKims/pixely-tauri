@@ -1,6 +1,14 @@
 import ReactDOM from "react-dom/client";
-import App from "./components/App";
 import "./global.css";
+import { RouteObject, RouterProvider, createMemoryRouter } from "react-router";
+import React from "react";
+import Root from "./components/routes/_root/Root";
+
+import "./i18n/i18n";
+import { launcherRoutes } from "./components/routes/launcher/routes";
+import { playgroundRoutes } from "./components/routes/playground/routes";
+import { plazaRoutes } from "./components/routes/plaza/routes";
+import { settingsRoutes } from "./components/routes/settings/routes";
 
 // let task: Task = {
 //     type: 'async',
@@ -26,10 +34,25 @@ import "./global.css";
 //     console.log(event)
 // })
 
+export const routes: RouteObject[] = [
+    {
+        path: '/',
+        element: <Root />,
+        children: [
+            launcherRoutes,
+            plazaRoutes,
+            settingsRoutes,
+            playgroundRoutes
+        ]
+    }
+]
 
+const router = createMemoryRouter(routes)
 
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement)
     .render(
-        <App/>
+        <React.StrictMode>
+            <RouterProvider router={router} />
+        </React.StrictMode>
     );
 

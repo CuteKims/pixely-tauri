@@ -1,0 +1,7 @@
+.glass {
+    display: flex;
+    box-sizing: border-box;
+    backdrop-filter: blur(5px);
+    border: var(--default-border);
+    box-shadow: var(--default-box-shadow);
+}

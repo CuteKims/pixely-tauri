@@ -38,7 +38,6 @@ async fn main() {
                     webview.controller().SetZoomFactor(1.0);
                 }
             });
-            window.set_shadow(false);
             Ok(())
         })
         .invoke_handler(tauri::generate_handler![rasterizer_bridger])

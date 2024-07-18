@@ -27,21 +27,15 @@ pub struct InstanceJson {
     pub client_version: Option<String>,
 }
 
-#[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
-#[serde(rename_all = "camelCase")]
-pub struct AssetIndex {
-    pub id: String,
-    pub sha1: String,
-    pub size: usize,
-    pub total_size: usize,
-    pub url: String,
-}
+// ### Arguments
 
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 pub struct Arguments {
     pub game: Vec<GameArguments>,
     pub jvm: Vec<JvmArguments>,
 }
+
+// Game Arguments
 
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -71,6 +65,10 @@ pub struct GameArgumentRuleFeatures {
     extra: HashMap<String, bool>,
 }
 
+// End Game Arguments
+
+// JVM Arguments
+
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum JvmArguments {
@@ -80,14 +78,14 @@ pub enum JvmArguments {
 
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 pub struct VariantJvmArgument {
-    pub rules: Vec<JavaArgumentRule>,
+    pub rules: Vec<JvmArgumentRule>,
     pub value: ArgumentValue,
 }
 
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
-pub struct JavaArgumentRule {
+pub struct JvmArgumentRule {
     pub action: JvmArgumentAction,
-    pub os: Option<JavaArgumentRuleOs>,
+    pub os: Option<JvmArgumentRuleOs>,
 }
 
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
@@ -98,18 +96,71 @@ pub enum JvmArgumentAction {
 }
 
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
-pub struct JavaArgumentRuleOs {
+pub struct JvmArgumentRuleOs {
     pub name: Option<String>,
     pub version: Option<String>,
     pub arch: Option<String>,
 }
 
+// End JVM Arguments
+
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum ArgumentValue {
-    Signle(String),
+    Single(String),
     Mutiple(Vec<String>),
 }
+
+// ### End Arguments
+
+// ### JavaVersion
+
+#[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct JavaVersion {
+    pub component: String,
+    pub major_version: i64,
+}
+
+// ### Logging
+
+#[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
+pub struct Logging {
+    pub client: Client,
+}
+
+#[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
+pub struct Client {
+    pub argument: String,
+    pub file: ClientLoggingXml,
+    #[serde(rename = "type")]
+    pub type_field: String,
+}
+
+#[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
+pub struct ClientLoggingXml {
+    id: String,
+    sha1: String,
+    size: usize,
+    url: String,
+}
+
+
+// ### End Logging
+
+// ### AssetIndex
+
+#[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct AssetIndex {
+    pub id: String,
+    pub sha1: String,
+    pub size: usize,
+    pub total_size: usize,
+    pub url: String,
+}
+
+// ### Downloads
 
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 pub struct Downloads {
@@ -126,19 +177,16 @@ pub struct InstanceExecutableJar {
     pub url: String,
 }
 
-#[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
-#[serde(rename_all = "camelCase")]
-pub struct JavaVersion {
-    pub component: String,
-    pub major_version: i64,
-}
+// ### End Downloads
+
+// ### LibraryJar
 
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct LibraryJar {
     pub downloads: LibraryDownload,
     pub name: String,
-    pub rules: Option<Vec<JavaArgumentRule>>,
+    pub rules: Option<Vec<JvmArgumentRule>>,
     pub extract: Option<Extract>,
     pub natives: Option<HashMap<String, String>>,
 }
@@ -163,6 +211,10 @@ pub struct Extract {
     pub exclude: Vec<String>,
 }
 
+// ### End LibraryJar
+
+
+
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 pub struct Natives {
     pub osx: Option<String>,
@@ -170,23 +222,4 @@ pub struct Natives {
     pub windows: Option<String>,
 }
 
-#[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
-pub struct Logging {
-    pub client: Client,
-}
 
-#[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
-pub struct Client {
-    pub argument: String,
-    pub file: ClientLoggingXml,
-    #[serde(rename = "type")]
-    pub type_field: String,
-}
-
-#[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
-pub struct ClientLoggingXml {
-    id: String,
-    sha1: String,
-    size: usize,
-    url: String,
-}

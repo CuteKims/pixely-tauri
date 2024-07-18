@@ -1,4 +1,9 @@
-import { NotificationChannels } from "../enums"
+export enum NotificationChannels {
+    Downloader,
+    UpdateChecker,
+    ErrorNotifier,
+    Test,
+}
 
 export type Notification<T extends NotificationChannels> = {
     timestamp: number,

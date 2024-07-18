@@ -1,0 +1,74 @@
+.container {
+}
+
+.spinner {
+    position: absolute;
+    width: 25px;
+    height: 25px;
+}
+
+.dot-container {
+    visibility: hidden;
+    position: absolute;
+    transform: rotate(-180deg);
+    animation-iteration-count: infinite;
+    animation-name: orbit;
+    animation-duration: 5s;
+}
+
+.dot {
+    position: absolute;
+    background-color: var(--global-text-color);
+}
+
+.dot-container:nth-child(2) {
+    animation-delay: 240ms;
+}
+
+.dot-container:nth-child(3) {
+    animation-delay: 480ms;
+}
+
+.dot-container:nth-child(4) {
+    animation-delay: 720ms;
+}
+
+.dot-container:nth-child(5) {
+    animation-delay: 960ms;
+}
+
+.progress {
+    position: absolute;
+}
+
+@keyframes orbit {
+    0% {
+        visibility: hidden;
+        transform: rotate(-180deg);
+        animation-timing-function: cubic-bezier(0,.15,.85,1);
+    }
+    5% {
+        visibility: visible;
+        transform: rotate(-60deg);
+        animation-timing-function: cubic-bezier(0,.25,1,.75);
+    }
+    30% {
+        transform: rotate(120deg);
+        animation-timing-function: ease-in-out;
+    }
+    35% {
+        transform: rotate(300deg);
+        animation-timing-function: cubic-bezier(0,.25,1,.75);
+    }
+    60% {
+        transform: rotate(480deg);
+        animation-timing-function: cubic-bezier(.25,0,1,1);
+    }
+    65% {
+        visibility: hidden;
+        transform: rotate(630deg);
+    }
+    100% {
+        transform: rotate(630deg);
+    }
+}

@@ -18,12 +18,12 @@
     height: 100%;
     width: calc(100% - 216px);
     margin-left: 108px;
-    display: flex;
     overflow-x: hidden;
 }
 
 #subpage {
+    height: 100%;
+    width: 100%;
     display: flex;
     flex-direction: column;
-    padding: 36px;
 }

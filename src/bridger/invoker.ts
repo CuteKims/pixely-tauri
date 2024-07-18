@@ -1,6 +1,6 @@
 import { invoke } from "@tauri-apps/api/core";
 import BackendResponseParser, { ParsedTaskResponse, RawTaskResponse } from "./parser";
-import { InstantTaskHeaders, AsyncTaskHeaders } from "../enums";
+import { InstantTaskHeaders, AsyncTaskHeaders } from "../types/task";
 
 export default class BackendInvoker {
     task: Task;

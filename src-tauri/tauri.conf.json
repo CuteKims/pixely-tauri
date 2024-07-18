@@ -28,8 +28,8 @@
         "decorations": false,
         "fullscreen": false,
         "title": "Pixely",
-        "width": 854,
-        "height": 480,
+        "width": 1708,
+        "height": 960,
         "minWidth": 854,
         "minHeight": 480,
         "additionalBrowserArgs": "--enable-features=msWebView2EnableDraggableRegions"

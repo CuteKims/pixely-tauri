@@ -1,0 +1,12 @@
+{
+    "path.launcher": "启动台",
+    "path.plaza": "广场",
+    "path.settings": "设置",
+        "path.settings.user": "用户账户",
+        "path.settings.launch": "启动",
+        "path.settings.network": "网络",
+        "path.settings.personalization": "个性化",
+        "path.settings.notification": "通知",
+        "path.settings.advanced": "高级",
+        "path.settings.about": "关于Pixely"
+}

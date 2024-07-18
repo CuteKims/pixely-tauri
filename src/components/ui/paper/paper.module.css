@@ -1,6 +1,0 @@
-.paper {
-    box-sizing: border-box;
-    backdrop-filter: blur(10px);
-    border: var(--default-border);
-    box-shadow: var(--default-box-shadow);
-}

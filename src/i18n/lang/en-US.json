@@ -1,0 +1,12 @@
+{
+    "path.launcher": "Launchpad",
+    "path.plaza": "Plaza",
+    "path.settings": "Settings",
+        "path.settings.user": "User & Accounts",
+        "path.settings.launch": "Launch",
+        "path.settings.network": "Network",
+        "path.settings.personalization": "Personalization",
+        "path.settings.notification": "Notification",
+        "path.settings.advanced": "Advanced",
+        "path.settings.about": "About Pixely"
+}
