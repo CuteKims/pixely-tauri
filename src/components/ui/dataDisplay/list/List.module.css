@@ -1,4 +1,17 @@
-.stack-list {
+.stack-list__header {
+    font-size: 15px;
+    color: white;
+    text-shadow: var(--text-shadow-dark);
+    margin: 0px;
+    margin-bottom: 8px;
+}
+
+.stack-list__container {
     display: flex;
     flex-direction: column;
+}
+
+.grid-list__container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
 }

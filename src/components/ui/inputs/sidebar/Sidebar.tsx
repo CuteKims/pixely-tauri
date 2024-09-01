@@ -14,7 +14,7 @@ export const SidebarBase: React.FC<{propsArray: {text: string, selected?: boolea
     return (
         <div className={styles['sidebar']}>
             {propsArray.map(props => (
-                <SidebarButton text={props.text} selected={props.selected} callback={props.callback}/>
+                <SidebarButton key={props.text} text={props.text} selected={props.selected} callback={props.callback}/>
             ))}
         </div>
     )

@@ -9,6 +9,7 @@ import { launcherRoutes } from "./components/routes/launcher/routes";
 import { playgroundRoutes } from "./components/routes/playground/routes";
 import { plazaRoutes } from "./components/routes/plaza/routes";
 import { settingsRoutes } from "./components/routes/settings/routes";
+import { listen } from "@tauri-apps/api/event";
 
 // let task: Task = {
 //     type: 'async',
@@ -33,6 +34,10 @@ import { settingsRoutes } from "./components/routes/settings/routes";
 //     console.log('Got Event from backend!')
 //     console.log(event)
 // })
+
+listen('rasterizer_bridger', event => {
+    console.log(JSON.parse(event.payload as string))
+})
 
 export const routes: RouteObject[] = [
     {

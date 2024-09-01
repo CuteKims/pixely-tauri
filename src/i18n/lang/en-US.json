@@ -3,10 +3,40 @@
     "path.plaza": "Plaza",
     "path.settings": "Settings",
         "path.settings.user": "User & Accounts",
-        "path.settings.launch": "Launch",
+        "path.settings.launching": "Launching",
         "path.settings.network": "Network",
         "path.settings.personalization": "Personalization",
         "path.settings.notification": "Notification",
         "path.settings.advanced": "Advanced",
-        "path.settings.about": "About Pixely"
+        "path.settings.about": "About Pixely",
+
+    "ui.settings.user": "User & Accounts",
+        "ui.settings.user.pixely_account": "Pixely account",
+            "ui.settings.user.pixely_account.check_profile": "Check & edit profile",
+            "ui.settings.user.pixely_account.switch": "Switch account...",
+            "ui.settings.user.pixely_account.logout": "Log out",
+            "ui.settings.user.pixely_account.introduction": "Get to know the capabilities of Pixely account...",
+    
+        "ui.settings.user.minecraft_account": "Minecraft account",
+            "ui.settings.user.minecraft_account.type.microsoft": "Microsoft account",
+            "ui.settings.user.minecraft_account.type.mojang": "Mojang account",
+            "ui.settings.user.minecraft_account.add": "Add new account...",
+            "ui.settings.user.minecraft_account.ask_when_launch": "Ask which account to use before launching",
+
+    "ui.settings.launching": "Launching",
+
+        "ui.settings.launching.jre": "Java Runtime",
+            "ui.settings.launching.jre.refresh": "Refresh",
+            "ui.settings.launching.jre.install": "Install other versions...",
+            "ui.settings.launching.jre.auto": "Let Pixely decide which Java Runtime to use",
+
+    "ui.settings.launching.memory": "Memory Allowcation",
+        "ui.settings.launching.memory.memory_meter": "Memory",
+            "ui.settings.launching.memory.memory_meter.installed": "{{size}} Installed",
+            "ui.settings.launching.memory.memory_meter.used": "Used",
+            "ui.settings.launching.memory.memory_meter.allowcated": "Allowcated",
+            "ui.settings.launching.memory.memory_meter.warning.header": "Note",
+            "ui.settings.launching.memory.memory_meter.warning": "Avoid setting memory above the installed size to prevent performance issues from swapping. Ensure the page file disk is fast and has enough space.",
+        "ui.settings.launching.memory.auto": "Let Pixely allowcate memory",
+        "ui.settings.launching.memory.manual": "Allowcate memory manually"
 }

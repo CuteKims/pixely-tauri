@@ -110,12 +110,13 @@
 .title p {
     margin: auto 6px auto 0px;
     transition: .25s;
-    animation: .5s cubic-bezier(0, .8, .2, 1) intro;
+    animation: .3s cubic-bezier(0, .75, .25, 1) intro;
 }
 
 @keyframes intro {
     from {
-        transform: translateX(20px);
+        opacity: 0;
+        transform: translateX(12px);
     }
     to {
         transform: translateX(0px);

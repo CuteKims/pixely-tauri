@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+  <g transform="translate(3 8)" fill="currentColor">
+    <rect width="6" height="1" stroke="none"/>
+    <rect x="0.5" y="0.5" width="5" fill="none"/>
+  </g>
+  <g transform="translate(3 15)" fill="currentColor">
+    <rect width="6" height="1" stroke="none"/>
+    <rect x="0.5" y="0.5" width="5" fill="none"/>
+  </g>
+  <g transform="translate(2 11.5)" fill="currentColor">
+    <rect width="6" height="1" stroke="none"/>
+    <rect x="0.5" y="0.5" width="5" fill="none"/>
+  </g>
+  <g transform="translate(-6 -6)">
+    <g transform="translate(28 11) rotate(90)" fill="none">
+      <path d="M10.5,0,14,6l-3.5,6h-7L0,6,3.5,0Z" stroke="none"/>
+      <path d="M 4.074371337890625 1 L 1.15770435333252 6 L 4.074371337890625 11 L 9.925629615783691 11 L 12.8422966003418 6 L 9.925629615783691 1 L 4.074371337890625 1 M 3.500000953674316 0 L 10.5 0 L 14 6 L 10.5 12 L 3.500000953674316 12 L 9.5367431640625e-07 6 L 3.500000953674316 0 Z" stroke="none" fill="currentColor"/>
+    </g>
+    <g transform="translate(-111 46.5)" fill="none">
+      <path d="M127-31.5V-32l6-3.5,6,3.5v.5L133-28Z" stroke="none"/>
+      <path d="M 133.0001525878906 -29.15761756896973 L 137.4438781738281 -31.75012016296387 L 133.0001525878906 -34.34195327758789 L 128.5557861328125 -31.75011825561523 L 133.0001525878906 -29.15761756896973 M 133.0001983642578 -27.99990081787109 L 126.9999084472656 -31.5 L 126.9999084472656 -32.00040054321289 L 133.0001983642578 -35.49959945678711 L 138.9996032714844 -32.00040054321289 L 138.9996032714844 -31.5 L 133.0001983642578 -27.99990081787109 Z" stroke="none" fill="currentColor"/>
+    </g>
+    <g transform="translate(21.5 18)" fill="currentColor">
+      <rect width="1" height="6" stroke="none"/>
+      <rect x="0.5" y="0.5" height="5" fill="none"/>
+    </g>
+  </g>
+  <rect id="viewbox" t="24" fill="none"/>
+</svg>

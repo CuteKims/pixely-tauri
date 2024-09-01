@@ -1,0 +1,39 @@
+.ram-meter-container {
+    display: flex;
+    flex-direction: column;
+    padding: 10px 14px;
+    background-color: var(--global-color-75);
+    backdrop-filter: var(--global-ui-filter);
+    gap: 8px;
+    transition: .5s;
+}
+
+.ram-meter {
+    width: 100%;
+    height: 16px;
+    display: flex;
+    background-color: var(--global-color-25);
+    transition: .5s
+}
+
+.ram-meter-indicator {
+    box-sizing: border-box;
+    border-right: solid 1px var(--reverse-color-50);
+    height: 48px;
+    overflow: hidden;
+    transition: .5s cubic-bezier(0,.8,.2,1);
+}
+
+.ram-warning {
+    display: flex;
+    background-color: #EEE;
+    margin-bottom: 4px;
+    padding: 4px 0px;
+    border: 1px solid black
+}
+
+.ram-warning p {
+    font-size: 12px;
+    text-shadow: none;
+    color: var(--text-color-black)
+}

@@ -25,8 +25,10 @@ export const ScrollBox = forwardRef<HTMLDivElement, ScrollboxProps>((props, ref)
     useEffect(() => {
         if (childrenRef.current == undefined || containerRef.current == undefined) return;
         const observer = new ResizeObserver(() => {
-            let height = {scroll: childrenRef.current!.clientHeight + (props.fullHeight ? 0 : 36), client: containerRef.current!.clientHeight};
-            setElementHeights(height);
+            try {
+                let height = {scroll: childrenRef.current!.clientHeight + (props.fullHeight ? 0 : 36), client: containerRef.current!.clientHeight};
+                setElementHeights(height);
+            } catch {}
         });
         observer.observe(containerRef.current);
         observer.observe(childrenRef.current);

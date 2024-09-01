@@ -2,6 +2,7 @@
     height: 100%;
     width: 100%;
     position: absolute;
+    transition: .5s cubic-bezier(0,.8,.2,1);
 }
 
 #page-background {
@@ -9,7 +10,7 @@
     width: calc(100% - 216px);
     margin-left: 108px;
     box-shadow: var(--default-box-shadow);
-    backdrop-filter: blur(30px);
+    backdrop-filter: blur(48px);
 }
 
 #page-foreground {
@@ -23,7 +24,18 @@
 
 #subpage {
     height: 100%;
-    width: 100%;
+    width: min(100%, 960px);
     display: flex;
     flex-direction: column;
+    gap: 18px;
+    /* animation: intro cubic-bezier(0,.8,.2,1) .5s; */
+}
+
+@keyframes intro {
+    from {
+        transform: translateY(60px);
+    }
+    to {
+        transform: translateY(0px);
+    }
 }

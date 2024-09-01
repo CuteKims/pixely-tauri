@@ -1,0 +1,13 @@
+.image-setter {
+    border: dashed 1px white;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 24px;
+}
+
+.image-setter p {
+    color: white;
+    text-shadow: var(--text-shadow-dark);
+    margin: 0px auto;
+}

@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+  <g transform="translate(10 13)" fill="none" stroke="currentColor" stroke-width="1">
+    <rect width="4" height="9" stroke="none"/>
+    <rect x="0.5" y="0.5" width="3" height="8" fill="none"/>
+  </g>
+  <g transform="translate(-246 44)" fill="none">
+    <path d="M262-32h-8l-1-10h10Z" stroke="none"/>
+    <path d="M 261.0949096679688 -33.00040054321289 L 261.8948364257812 -41.00030136108398 L 254.1048889160156 -41.00030136108398 L 254.9048004150391 -33.00040054321289 L 261.0949096679688 -33.00040054321289 M 261.9999084472656 -32.00040054321289 L 253.9998016357422 -32.00040054321289 L 252.9999084472656 -42.00030136108398 L 262.9998168945312 -42.00030136108398 L 261.9999084472656 -32.00040054321289 Z" stroke="none" fill="currentColor"/>
+  </g>
+  <g transform="translate(8 11)" fill="none" stroke="currentColor" stroke-width="1">
+    <rect width="8" height="3" stroke="none"/>
+    <rect x="0.5" y="0.5" width="7" height="2" fill="none"/>
+  </g>
+  <g transform="translate(13 3)" fill="currentColor" stroke="none" stroke-width="1">
+    <rect width="1" height="5" stroke="none"/>
+    <rect x="0.5" y="0.5" height="4" fill="none"/>
+  </g>
+  <g transform="translate(11 3)" fill="currentColor" stroke="none" stroke-width="1">
+    <rect width="1" height="3" stroke="none"/>
+    <rect x="0.5" y="0.5" height="2" fill="none"/>
+  </g>
+  <rect id="viewbox" t="24" fill="none"/>
+</svg>

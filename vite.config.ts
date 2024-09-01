@@ -1,9 +1,18 @@
 import { defineConfig } from "vite";
+import svgr from "vite-plugin-svgr"
 import react from "@vitejs/plugin-react";
 
 // https://vitejs.dev/config/
 export default defineConfig(async () => ({
-  plugins: [react()],
+  plugins: [react(), svgr({
+    svgrOptions: {
+      svgProps: {
+        height: '24px',
+        width: '24px',
+        color: 'var(--global-text-color)',
+        filter: 'var(--global-svg-shadow)'
+      }
+    }})],
 
   // Vite options tailored for Tauri development and only applied in `tauri dev` or `tauri build`
   //

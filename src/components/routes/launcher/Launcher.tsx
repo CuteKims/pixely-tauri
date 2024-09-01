@@ -1,36 +1,20 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import styles from './Launcher.module.css'
-import { ParsedTaskResponse } from '../../../bridger/parser'
 import { convertFileSrc } from '@tauri-apps/api/core'
 import { motion } from 'framer-motion'
-import BackendInvoker from '../../../bridger/invoker'
-import { InstantTaskHeaders } from '../../../types/task'
 import { Page } from '../../ui/page/Page'
+import { LauncherInstance } from '../../../types/ui'
 
 const Launcher: React.FC = () => {
-    const [instanceArray, setInstanceArray] = useState<{state: 'loading' | 'ok' | 'error', data: null | MinecraftInstance[] | Error}>({state: 'loading', data: null});
+    const [instanceArray, setInstanceArray] = useState<{state: 'loading' | 'ok' | 'error', data: null | LauncherInstance[] | Error}>({state: 'loading', data: null});
     const [pointer, setPointer] = useState(0)
-    useEffect(() => {
-        new BackendInvoker({
-            type: 'instant',
-            header: InstantTaskHeaders.GetInstancesInstalled,
-            body: null,
-        }).invoke().then(result => {
-            setInstanceArray({
-                state: 'ok',
-                data: (result as ParsedTaskResponse<InstantTaskHeaders>).body as MinecraftInstance[]
-            })
-        }).catch(error => {
-            setInstanceArray({state: 'error', data: error})
-        })
-    }, [])
     function handleWheel(props: any) {
         if (props.deltaY < 0) {
             if (pointer > 0) {
                 setPointer(pointer - 1)
             }
         } else {
-            if (pointer < ((instanceArray.data as MinecraftInstance[]).length - 1)) {
+            if (pointer < ((instanceArray.data as LauncherInstance[]).length - 1)) {
                 setPointer(pointer + 1)
             }
         }
@@ -39,16 +23,17 @@ const Launcher: React.FC = () => {
         <>
             <Page fullScreen>
                 <div id={styles['tile-container']}  style={{transform: 'translateX(-' + pointer * 116 + 'px)'}} onWheel={handleWheel}>
-                    {(() => {
+                    {/* {(() => {
                         switch (instanceArray.state) {
                             case 'loading': return <></>
                             // @ts-ignore
                             case 'error': return <p>{instanceArray.data}</p> //FIXME: 不能将类型“MinecraftInstance[] | Error | null”分配给类型“ReactNode”。
                             case 'ok': {
-                                return (instanceArray.data as MinecraftInstance[]).map((element, index) => <Tile key={index} props={{position: index, iconPath: element.iconPath, name: element.name, pointer, setPointer}}/>)
+                                return (instanceArray.data as LauncherInstance[]).map((element, index) => <Tile key={index} props={{position: index, iconPath: element.iconPath, name: element.instanceId, pointer, setPointer}}/>)
                             }
                         }
-                    })()}
+                    })()} */}
+                    <Tile props={{position: 1, pointer: 1, setPointer: () => {}, iconPath: '', name: '123'}} />
                 </div>
             </Page>
         </>

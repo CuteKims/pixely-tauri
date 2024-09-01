@@ -1,5 +1,4 @@
 import { useContext, useEffect, useRef, useState } from "react";
-import { ManifestVersion } from "../../../../bridger/parser";
 import { ScrollBox } from "../../../ui/utils/scrollBox/ScrollBox";
 import { AnimatePresence, LayoutGroup, motion } from "framer-motion";
 import styles from './NewInstanceForm.module.css'
@@ -9,7 +8,6 @@ import iconGrass from '../../../../assets/icons/grass_block.png'
 import iconStone from '../../../../assets/icons/stone_block_old.png'
 
 import { addonOptions, loaderOptions } from "./consts";
-import { Addons, ModLoaders, VersionType } from "../../../../types/task";
 import { Subpage } from "../../../ui/page/Page";
 
 export type InstallationOptionProps = {

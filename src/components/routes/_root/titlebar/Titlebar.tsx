@@ -28,11 +28,17 @@ const TitlebarButton:  React.FC<{children: React.ReactNode, props: {
 const TitleBar: React.FC<{props: TitlebarProps}> = ({props}) => {
 
     let navigate = useNavigate()
+    let {i18n} = useTranslation()
+
+    let toggleLanguage = () => {
+        if(i18n.language == 'zh-CN') i18n.changeLanguage('en-US')
+        else i18n.changeLanguage('zh-CN')
+    }
 
     return (
         <div id={styles['titlebar-container']} style={props.isFocused ? {opacity: 1} : {opacity: .5}}>
             <div id={styles['titlebar']}>
-                <div className={`${styles.button} ${styles['button-home']}`} style={{justifyContent: 'flex-start'}} onClick={() => navigate('./plaza/versions')}>
+                <div className={`${styles.button} ${styles['button-home']}`} style={{justifyContent: 'flex-start'}} onClick={toggleLanguage}>
                     <IconPixelyLogo />
                 </div>
                 <TitlebarButton props={{style: {justifyContent: 'flex-start'}, callback: () => navigate(-1)}}>
@@ -100,12 +106,12 @@ const Title: React.FC = () => {
                     matches.forEach((match, index) => {
                         let style: CSSProperties = (index == matches.length - 1) ? {opacity: 1} : {opacity: .5}
                         nodeArray.push(
-                            <p style={style}>
+                            <p key={match.id} style={style}>
                                 {t(`path.${match.id}`)}
                             </p>
                         )
                         nodeArray.push(
-                            <p style={style}>
+                            <p key={match.id + '/'} style={style}>
                                 /
                             </p>
                         )

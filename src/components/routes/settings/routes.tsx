@@ -5,6 +5,11 @@ import { ListItem } from "../../ui/dataDisplay/list/ListItem";
 import { Subpage } from "../../ui/page/Page";
 import { ScrollBox } from "../../ui/utils/scrollBox/ScrollBox";
 import { User } from "./user/User";
+import { Launching } from "./launch/Launching";
+import { Personalization } from "./personalization/Personalization";
+import { About } from "./about/About";
+import { Network } from "./network/Network";
+import { Notification } from "./notification/Notification";
 
 export const settingsRoutes: RouteObject = {
     path: '/settings',
@@ -14,27 +19,27 @@ export const settingsRoutes: RouteObject = {
         {
             path: '/settings/user',
             id: 'settings.user',
-            element: <User />
+            element: <User />,
         },
         {
-            path: '/settings/launch',
-            id: 'settings.launch',
-            element: <></>
+            path: '/settings/launching',
+            id: 'settings.launching',
+            element: <Launching />
         },
         {
             path: '/settings/network',
             id: 'settings.network',
-            element: <></>
+            element: <Network />
         },
         {
             path: '/settings/personalization',
             id: 'settings.personalization',
-            element: <></>
+            element: <Personalization />
         },
         {
             path: '/settings/notification',
             id: 'settings.notification',
-            element: <></>
+            element: <Notification />
         },
         {
             path: '/settings/advanced',
@@ -44,7 +49,7 @@ export const settingsRoutes: RouteObject = {
         {
             path: '/settings/about',
             id: 'settings.about',
-            element: <></>
+            element: <About />
         }
     ]
 }

@@ -39,7 +39,7 @@ const ActionCenter: React.FC<{props: ActionCenterProps}> = ({props}) => {
                     exited: {opacity: 0, transform: 'scale(1.1)', filter: 'blur(10px)', pointerEvents: 'none'}
                 },
                 timeout: {
-                    enter: 83,
+                    enter: 33,
                     exit: 500
                 },
                 unmountAfterExit: true,

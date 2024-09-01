@@ -2,10 +2,6 @@ import { WebviewWindow } from "@tauri-apps/api/webviewWindow"
 import { createContext } from "react"
 
 export type RootState = {
-    windowSize: {
-        width: number,
-        height: number,
-    }
     isMaximized: boolean,
     isActionCenterShow: boolean,
 }

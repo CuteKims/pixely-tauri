@@ -3,10 +3,17 @@
     "path.plaza": "广场",
     "path.settings": "设置",
         "path.settings.user": "用户账户",
-        "path.settings.launch": "启动",
+        "path.settings.launching": "启动",
         "path.settings.network": "网络",
         "path.settings.personalization": "个性化",
         "path.settings.notification": "通知",
         "path.settings.advanced": "高级",
-        "path.settings.about": "关于Pixely"
+        "path.settings.about": "关于Pixely",
+
+    "ui.settings.launching.memory": "内存",
+    "ui.settings.launching.memory.installed": "已安装 {{size}}",
+    "ui.settings.launching.memory.used": "已使用",
+    "ui.settings.launching.memory.allowcated": "分配大小",
+    "ui.settings.launching.memory_warning.header": "注意",
+    "ui.settings.launching.memory_warning": "不推荐的内存设置：分配超过已安装大小会导致内存交换，这会严重影响性能。请确保页面文件所处磁盘足够快，且有足够的可用空间。"
 }

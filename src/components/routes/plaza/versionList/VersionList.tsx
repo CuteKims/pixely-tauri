@@ -1,14 +1,10 @@
 import { useContext, useEffect, useRef, useState } from "react";
-import BackendInvoker from "../../../../bridger/invoker";
 import { VersionManifest, ParsedTaskResponse, ManifestVersion } from "../../../../bridger/parser";
 import { ScrollBox } from "../../../ui/utils/scrollBox/ScrollBox";
 import { IconArrow, IconSearch } from "../../../ui/icons";
 
 import styles from "./VersionList.module.css"
 
-import iconDirt from '../../../../assets/icons/dirt_block.png'
-import iconGrass from '../../../../assets/icons/grass_block.png'
-import iconStone from '../../../../assets/icons/stone_block_old.png'
 import { InstantTaskHeaders } from "../../../../types/task";
 import { VersionTypes } from "../../../../types/instance";
 

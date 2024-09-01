@@ -8,7 +8,7 @@
 }
 
 .dot-container {
-    visibility: hidden;
+    opacity: 0;
     position: absolute;
     transform: rotate(-180deg);
     animation-iteration-count: infinite;
@@ -43,12 +43,12 @@
 
 @keyframes orbit {
     0% {
-        visibility: hidden;
+        opacity: 0;
         transform: rotate(-180deg);
         animation-timing-function: cubic-bezier(0,.15,.85,1);
     }
     5% {
-        visibility: visible;
+        opacity: 1;
         transform: rotate(-60deg);
         animation-timing-function: cubic-bezier(0,.25,1,.75);
     }
@@ -61,11 +61,12 @@
         animation-timing-function: cubic-bezier(0,.25,1,.75);
     }
     60% {
+        opacity: 1;
         transform: rotate(480deg);
         animation-timing-function: cubic-bezier(.25,0,1,1);
     }
     65% {
-        visibility: hidden;
+        opacity: 0;
         transform: rotate(630deg);
     }
     100% {

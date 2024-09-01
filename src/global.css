@@ -1,27 +1,33 @@
 :root {
     height: 100%;
 
-    --ui-filter-light: brightness(150%) contrast(75%) saturate(125%);
-    --ui-filter-dark: brightness(75%);
+    --ui-filter-light: contrast(200%) brightness(90%);
+    --ui-filter-dark: contrast(200%) brightness(75%);
 
     --text-color-light: white;
     --text-color-dark: #161616;
+
+    --svg-shadow-light: drop-shadow(0px 0px 4px rgba(255, 255, 255, 1)) drop-shadow(0px 0px 8px rgba(255, 255, 255, 1));
+    --svg-shadow-dark: drop-shadow(0px 1px 3px rgba(0, 0, 0, .5));
 
     --text-shadow-light: 0px 0px 4px rgba(255, 255, 255, 1), 0px 0px 8px rgba(255, 255, 255, 1);
     --text-shadow-dark: 0px 1px 3px rgba(0, 0, 0, .5);
 
     --global-color-100: rgba(255, 255, 255, 1);
+    --global-color-90: rgba(255, 255, 255, .90);
     --global-color-75: rgba(255, 255, 255, .75);
     --global-color-50: rgba(255, 255, 255, .50);
     --global-color-25: rgba(255, 255, 255, .25);
     --global-color-10: rgba(255, 255, 255, .10);
 
     --reverse-color-100: rgba(0, 0, 0, 1);
+    --reverse-color-90: rgba(0, 0, 0, .90);
     --reverse-color-75: rgba(0, 0, 0, .75);
     --reverse-color-50: rgba(0, 0, 0, .50);
     --reverse-color-25: rgba(0, 0, 0, .25);
     --reverse-color-10: rgba(0, 0, 0, .10);
 
+    --global-svg-shadow: var(--svg-shadow-light);
     --global-text-color: var(--text-color-dark);
     --global-text-shadow: var(--text-shadow-light);
     --global-ui-filter: var(--ui-filter-light);
@@ -46,14 +52,6 @@ body, #root {
     user-select: none;
 }
 
-p {
-    color: var(--global-text-color);
-    font-size: 15px;
-    text-shadow: var(--global-text-shadow);
-    transition-property: color, text-shadow;
-    transition-duration: .5s;
-}
-
 .paper {
     box-sizing: border-box;
     backdrop-filter: blur(10px);
@@ -64,17 +62,20 @@ p {
 @media (prefers-color-scheme: dark) {
     :root {
         --global-color-100: rgba(0, 0, 0, 1);
+        --global-color-90: rgba(0, 0, 0, .90);
         --global-color-75: rgba(0, 0, 0, .75);
         --global-color-50: rgba(0, 0, 0, .50);
         --global-color-25: rgba(0, 0, 0, .25);
         --global-color-10: rgba(0, 0, 0, .10);
 
         --reverse-color-100: rgba(255, 255, 255, 1);
+        --reverse-color-90: rgba(255, 255, 255, .90);
         --reverse-color-75: rgba(255, 255, 255, .75);
         --reverse-color-50: rgba(255, 255, 255, .50);
         --reverse-color-25: rgba(255, 255, 255, .25);
         --reverse-color-10: rgba(255, 255, 255, .10);
 
+        --global-svg-shadow: var(--svg-shadow-dark);
         --global-text-color: var(--text-color-light);
         --global-text-shadow: var(--text-shadow-dark);
         --global-ui-filter: var(--ui-filter-dark);
@@ -83,4 +84,86 @@ p {
 
 ::-webkit-scrollbar {
     display: none;
+}
+
+@keyframes fade-in {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes top-slide-in {
+    from {
+        transform: translateY(-12px);
+    }
+    to {
+        transform: translateY(0px);
+    }
+}
+
+@keyframes bottom-slide-in {
+    from {
+        transform: translateY(12px);
+    }
+    to {
+        transform: translateY(0px);
+    }
+}
+
+@keyframes left-slide-in {
+    from {
+        transform: translateX(-12px);
+    }
+    to {
+        transform: translateX(0px);
+    }
+}
+
+@keyframes right-slide-in {
+    from {
+        transform: translateX(12px);
+    }
+    to {
+        transform: translateX(0px);
+    }
+}
+
+@keyframes scale-up-in {
+    from {
+        transform: scale(.95);
+    }
+    to {
+        transform: scale(1);
+    }
+}
+
+@keyframes scale-down-in {
+    from {
+        transform: scale(1.05);
+    }
+    to {
+        transform: scale(1);
+    }
+}
+
+p {
+    white-space: pre-line;
+    margin: 0;
+    color: var(--global-text-color);
+    font-size: 15px;
+    text-shadow: var(--global-text-shadow);
+    transition-property: color, text-shadow;
+    transition-duration: .5s;
+}
+
+h1 {
+    white-space: pre-line;
+    margin: 0;
+    font-weight: 400;
+    font-size: 24px;
+    color: var(--text-color-light);
+    text-shadow: 0px 1px 4px rgba(0, 0, 0, .6);
 }
