@@ -40,7 +40,8 @@ const Ripple: React.FC<{
     };
 
     const destroyRipple = () => {
-        setRippleEffect(rippleEffect => {return rippleEffect.slice(1)})
+        setTimeout(() => setRippleEffect(rippleEffect => {return rippleEffect.slice(1)}), 25)
+        
     }
 
     const _onClick: MouseEventHandler<HTMLDivElement> = (event) => {
@@ -68,24 +69,21 @@ const Ripple: React.FC<{
 
     return (
         <div className={styles['ripple__container']} ref={containerRef} onClick={_onClick} onMouseDown={_onMouseDown} onMouseUp={_onMouseUp} onMouseLeave={_onMouseLeave} onMouseEnter={_onMouseEnter}>
-            {children}
             <TransitionGroup className={styles['ripple-effect__container']} enter exit>
                 {rippleEffect.map(({key, radius, position, nodeRef}) => (
-                    <CSSTransition key={key} nodeRef={nodeRef} timeout={radius * 2} classNames={{enter: styles['ripple-effect--enter'], exit: styles['ripple-effect--exit'], enterActive: styles['ripple-effect--enter-active'], exitActive: styles['ripple-effect--exit-active']}}>
-                        <div ref={nodeRef} style={{
-                            position: 'absolute',
-                            backgroundColor: 'rgba(255, 255, 255, .3)',
+                    <CSSTransition key={key} nodeRef={nodeRef} timeout={1000} classNames={{enter: styles['ripple-effect--enter'], exit: styles['ripple-effect--exit'], enterActive: styles['ripple-effect--enter-active'], exitActive: styles['ripple-effect--exit-active']}}>
+                        <div ref={nodeRef} className={styles['ripple-effect']} style={{
                             top: `${position[1] - radius}px`,
                             left: `${position[0] - radius}px`,
                             height: `${radius * 2}px`,
                             width: `${radius * 2}px`,
                             borderRadius: `${radius}px`,
-                            filter: 'blur(24px)',
                             transition: `${radius * 0.002}s cubic-bezier(0, .5, .5, 1)`
                         }}/>
                     </CSSTransition>
                 ))}
             </TransitionGroup>
+            {children}
         </div>
     )
 }

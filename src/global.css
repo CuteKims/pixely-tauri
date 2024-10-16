@@ -1,7 +1,7 @@
 :root {
     height: 100%;
 
-    --ui-filter-light: brightness(200%) saturate(200%);
+    --ui-filter-light: brightness(175%) saturate(200%);
     --ui-filter-dark: brightness(75%);
 
     --text-color-light: white;

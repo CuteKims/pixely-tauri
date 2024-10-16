@@ -103,7 +103,7 @@ const Title: React.FC = () => {
     return (
         <>
             <div className={styles.title} data-tauri-drag-region>
-                {(() => {
+                {/* {(() => {
                     let nodeArray: ReactNode[] = []
                     matches.forEach((match, index) => {
                         let style: CSSProperties = (index == matches.length - 1) ? {opacity: 1} : {opacity: .5}
@@ -120,7 +120,7 @@ const Title: React.FC = () => {
                     })
                     nodeArray.pop()
                     return nodeArray
-                })()}
+                })()} */}
             </div>
         </>
     )

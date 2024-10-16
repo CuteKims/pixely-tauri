@@ -51,7 +51,7 @@ const Playground: React.FC = () => {
 const TestButton = forwardRef<HTMLDivElement, {text: string, onClick: () => void}>(function TestButton({text, onClick}, ref) {
     return (
         <motion.div layout ref={ref} initial={{scale: .9, opacity: 0}} animate={{scale: 1, opacity: 1}} exit={{scale: .9, opacity: 0}}>
-            <ListItem text={{primary: text}} clickable onClick={onClick}/>
+            <ListItem text={{primary: text}} onClick={onClick}/>
         </motion.div>
     )
 })
