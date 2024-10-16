@@ -2,18 +2,17 @@
     position: relative;
 }
 
-.ripple-effect__container {
+.ripple-pool {
+    position: absolute;
     height: 100%;
     width: 100%;
-    position: absolute;
     overflow: hidden;
-    top: 0px;
 }
 
 .ripple-effect {
     position: absolute;
     filter: blur(24px);
-    background-color: rgba(255, 255, 255, .5)
+    background-color: rgba(255, 255, 255, .5);
 }
 
 .ripple-effect--enter {
@@ -28,10 +27,10 @@
 .ripple-effect--exit {
     scale: 1;
     opacity: 1;
-    transition: 1s linear !important;
+    transition-timing-function: linear !important;
 }
 .ripple-effect--exit-active {
     scale: 1;
     opacity: 0;
-    transition: 1s linear !important;
+    transition-timing-function: linear !important;
 }

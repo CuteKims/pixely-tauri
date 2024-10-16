@@ -20,7 +20,7 @@ export const ScrollBox = forwardRef<HTMLDivElement, ScrollboxProps>((props, ref)
     let [mouseState, setMouseState] = useState({pan: false, hover: false})
 
     // @ts-ignore
-    useImperativeHandle(ref, () => containerRef.current) //FIXME: 不能将类型“HTMLDivElement | null”分配给类型“HTMLDivElement”。
+    useImperativeHandle(ref, () => containerRef) //FIXME: 不能将类型“HTMLDivElement | null”分配给类型“HTMLDivElement”。
 
     useEffect(() => {
         if (childrenRef.current == undefined || containerRef.current == undefined) return;

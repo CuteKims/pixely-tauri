@@ -1,12 +1,47 @@
-import { createRef, MouseEventHandler, RefObject, useRef, useState } from "react"
+import { createRef, CSSProperties, forwardRef, MouseEventHandler, RefObject, useImperativeHandle, useRef, useState } from "react"
 import styles from './Ripple.module.css'
 import { CSSTransition, Transition, TransitionGroup } from "react-transition-group"
+
+type RippleEffect = {key: string, timestamp: number, scrapping: boolean, radius: number, position: [number, number], nodeRef: RefObject<HTMLDivElement>}
 
 function calcRadius(size: [number, number]) {
     return Math.sqrt(size[0] ** 2 + size[1] ** 2);
 }
 
-const Ripple: React.FC<{
+export function useRippleEffect(ripplePoolRef: RefObject<HTMLDivElement>): {rippleEffect: RippleEffect[], createRipple: MouseEventHandler, destroyRipple: () => void} {
+    const [rippleEffect, setRippleEffect] = useState<RippleEffect[]>([]);
+
+    const createRipple: MouseEventHandler = (event) => {
+        let key = crypto.randomUUID()
+        let DOMRect = ripplePoolRef.current!.getBoundingClientRect();
+        let x = event.clientX - DOMRect.left;
+        let y = event.clientY - DOMRect.top;
+        let date = new Date()
+        setRippleEffect(rippleEffect => [...rippleEffect, {
+            key,
+            timestamp: date.getSeconds() * 1000 + date.getMilliseconds(),
+            scrapping: false,
+            radius: calcRadius([
+                ripplePoolRef.current!.clientHeight,
+                ripplePoolRef.current!.clientWidth,
+            ]),
+            position: [x, y],
+            nodeRef: createRef()
+        }]);
+    };
+
+    const destroyRipple = () => {
+        setTimeout(() => setRippleEffect(rippleEffect => rippleEffect.slice(1)), 100)
+        
+    }
+    return {
+        rippleEffect,
+        createRipple,
+        destroyRipple
+    }
+}
+
+const RippleWrapper: React.FC<{
     children: React.ReactNode,
     onClick?: MouseEventHandler<HTMLDivElement>,
     onMouseDown?: MouseEventHandler<HTMLDivElement>,
@@ -14,35 +49,8 @@ const Ripple: React.FC<{
     onMouseEnter?: MouseEventHandler<HTMLDivElement>,
     onMouseLeave?: MouseEventHandler<HTMLDivElement>
 }> = ({ children, onClick, onMouseDown, onMouseUp, onMouseEnter, onMouseLeave }) => {
-    const containerRef = useRef<HTMLDivElement>(null)
-    const [rippleEffect, setRippleEffect] = useState<{key: string, timestamp: number, scrapping: boolean, radius: number, position: [number, number], nodeRef: RefObject<HTMLDivElement>}[]>([]);
-
-    const createRipple: MouseEventHandler<HTMLDivElement> = (event) => {
-        let key = crypto.randomUUID()
-        let DOMRect = containerRef.current!.getBoundingClientRect();
-        let x = event.clientX - DOMRect.left;
-        let y = event.clientY - DOMRect.top;
-        let date = new Date()
-        setRippleEffect((rippleEffect) => [
-            ...rippleEffect,
-            {
-                key,
-                timestamp: date.getSeconds() * 1000 + date.getMilliseconds(),
-                scrapping: false,
-                radius: calcRadius([
-                    containerRef.current!.clientHeight,
-                    containerRef.current!.clientWidth,
-                ]),
-                position: [x, y],
-                nodeRef: createRef()
-            },
-        ]);
-    };
-
-    const destroyRipple = () => {
-        setTimeout(() => setRippleEffect(rippleEffect => {return rippleEffect.slice(1)}), 25)
-        
-    }
+    const ripplePoolRef = createRef<HTMLDivElement>()
+    const {rippleEffect, createRipple, destroyRipple} = useRippleEffect(ripplePoolRef)
 
     const _onClick: MouseEventHandler<HTMLDivElement> = (event) => {
         if(onClick) onClick(event)
@@ -68,10 +76,19 @@ const Ripple: React.FC<{
     }
 
     return (
-        <div className={styles['ripple__container']} ref={containerRef} onClick={_onClick} onMouseDown={_onMouseDown} onMouseUp={_onMouseUp} onMouseLeave={_onMouseLeave} onMouseEnter={_onMouseEnter}>
-            <TransitionGroup className={styles['ripple-effect__container']} enter exit>
+        <div className={styles['ripple__container']} onClick={_onClick} onMouseDown={_onMouseDown} onMouseUp={_onMouseUp} onMouseLeave={_onMouseLeave} onMouseEnter={_onMouseEnter}>
+            <RipplePool ref={ripplePoolRef} rippleEffect={rippleEffect} style={{top: '0px'}}/>
+            {children}
+        </div>
+    )
+}
+
+export const RipplePool = forwardRef<HTMLDivElement, {rippleEffect: RippleEffect[], style?: CSSProperties}>(({rippleEffect, style}, ref) => {
+    return (
+        <div className={styles['ripple-pool']} style={style} ref={ref}>
+            <TransitionGroup component={null} enter exit>
                 {rippleEffect.map(({key, radius, position, nodeRef}) => (
-                    <CSSTransition key={key} nodeRef={nodeRef} timeout={1000} classNames={{enter: styles['ripple-effect--enter'], exit: styles['ripple-effect--exit'], enterActive: styles['ripple-effect--enter-active'], exitActive: styles['ripple-effect--exit-active']}}>
+                    <CSSTransition key={key} nodeRef={nodeRef} timeout={radius * 2} classNames={{enter: styles['ripple-effect--enter'], exit: styles['ripple-effect--exit'], enterActive: styles['ripple-effect--enter-active'], exitActive: styles['ripple-effect--exit-active']}}>
                         <div ref={nodeRef} className={styles['ripple-effect']} style={{
                             top: `${position[1] - radius}px`,
                             left: `${position[0] - radius}px`,
@@ -83,9 +100,9 @@ const Ripple: React.FC<{
                     </CSSTransition>
                 ))}
             </TransitionGroup>
-            {children}
         </div>
+        
     )
-}
+})
 
-export default Ripple
+export default RippleWrapper
