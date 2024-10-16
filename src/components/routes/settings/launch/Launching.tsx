@@ -19,11 +19,11 @@ export const Launching: React.FC = () => {
                 />
                 <ListItem
                     text={{primary: t('ui.settings.launching.jre.refresh')}}
-                    clickable
+                    onClick={() => {}}
                 />
                 <ListItem
                     text={{primary: t('ui.settings.launching.jre.install')}}
-                    clickable
+                    onClick={() => {}}
                 />
                 <ListItem
                     text={{primary: t('ui.settings.launching.jre.auto')}}

@@ -6,6 +6,7 @@ import { AnimatePresence, motion } from "framer-motion";
 
 import { bridger } from "../_root/Root";
 import { forwardRef, ReactElement, useEffect, useState } from "react";
+import Ripple from "../../ui/utils/ripple/Ripple";
 
 const Playground: React.FC = () => {
     // let [state, setState] = useState<string[]>(bridger.get().map(task => {return task.taskId}))
@@ -22,6 +23,9 @@ const Playground: React.FC = () => {
         <Page style={{height: '100%'}}>
             <ScrollBox contentContainerStyle={{padding: '40px'}}>
                 <StackList>
+                    <Ripple>
+                        <div style={{height: '20px', width: '200px'}}></div>
+                    </Ripple>
                     {/* <ListItem
                         text={{primary: 'Click to test', secondary: 'Just click it'}}
                         clickable

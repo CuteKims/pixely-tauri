@@ -1,3 +1,5 @@
+//This component is to be scrapped.
+
 import { useEffect, useRef, useState } from "react"
 
 export const Transition: React.FC<{children: React.ReactNode, props: {

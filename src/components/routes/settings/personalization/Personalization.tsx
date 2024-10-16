@@ -24,12 +24,12 @@ export const Personalization: React.FC = () => {
                 <ListItem
                     text={{primary: '选择计算机上的文件...'}}
                     icon={<IconFolder />}
-                    clickable
+                    onClick={() => {}}
                 />
                 <ListItem
                     text={{primary: '浏览预设图片...'}}
                     icon={<IconPhotos />}
-                    clickable
+                    onClick={() => {}}
                 />
             </StackList>
             <StackList header="用户界面" animation={{delay: getAnimationTiming.fromFrames(16)}}>

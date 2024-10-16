@@ -105,20 +105,9 @@
     padding-left: 12px;
     flex-grow: 1;
     app-region: drag;
+    justify-content: center;
 }
 
 .title p {
     margin: auto 6px auto 0px;
-    transition: .25s;
-    animation: .3s cubic-bezier(0, .75, .25, 1) intro;
-}
-
-@keyframes intro {
-    from {
-        opacity: 0;
-        transform: translateX(12px);
-    }
-    to {
-        transform: translateX(0px);
-    }
 }

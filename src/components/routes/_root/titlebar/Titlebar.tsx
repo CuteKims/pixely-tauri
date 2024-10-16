@@ -2,7 +2,8 @@ import { useMatches, useNavigate } from 'react-router'
 import styles from './Titlebar.module.css'
 import { IconPixelyLogo } from '../../../ui/icons/IconPixelyLogo'
 import { useTranslation } from 'react-i18next'
-import { CSSProperties, ReactNode } from 'react'
+import { CSSProperties, ReactNode, useRef } from 'react'
+import { motion } from 'framer-motion'
 
 export type TitlebarProps = {
     isMaximized: boolean,
@@ -98,6 +99,7 @@ const TitleBar: React.FC<{props: TitlebarProps}> = ({props}) => {
 const Title: React.FC = () => {
     let matches = useMatches().slice(1)
     let { t, i18n } = useTranslation()
+    let ref = useRef<HTMLDivElement>(null)
     return (
         <>
             <div className={styles.title} data-tauri-drag-region>
@@ -106,14 +108,14 @@ const Title: React.FC = () => {
                     matches.forEach((match, index) => {
                         let style: CSSProperties = (index == matches.length - 1) ? {opacity: 1} : {opacity: .5}
                         nodeArray.push(
-                            <p key={match.id} style={style}>
+                            <motion.p layout style={style}>
                                 {t(`path.${match.id}`)}
-                            </p>
+                            </motion.p>
                         )
                         nodeArray.push(
-                            <p key={match.id + '/'} style={style}>
+                            <motion.p layout key={match.id + '/'} style={style}>
                                 /
-                            </p>
+                            </motion.p>
                         )
                     })
                     nodeArray.pop()

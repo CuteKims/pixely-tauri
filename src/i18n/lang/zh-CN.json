@@ -10,10 +10,33 @@
         "path.settings.advanced": "高级",
         "path.settings.about": "关于Pixely",
 
-    "ui.settings.launching.memory": "内存",
-    "ui.settings.launching.memory.installed": "已安装 {{size}}",
-    "ui.settings.launching.memory.used": "已使用",
-    "ui.settings.launching.memory.allowcated": "分配大小",
-    "ui.settings.launching.memory_warning.header": "注意",
-    "ui.settings.launching.memory_warning": "不推荐的内存设置：分配超过已安装大小会导致内存交换，这会严重影响性能。请确保页面文件所处磁盘足够快，且有足够的可用空间。"
+    "ui.settings.user": "账号",
+        "ui.settings.user.pixely_account": "Pixely账号",
+            "ui.settings.user.pixely_account.check_profile": "查看或编辑个人档案",
+            "ui.settings.user.pixely_account.switch": "切换账户...",
+            "ui.settings.user.pixely_account.logout": "登出",
+            "ui.settings.user.pixely_account.introduction": "了解Pixely账号可以做什么...",
+    
+        "ui.settings.user.minecraft_account": "Minecraft账号档案",
+            "ui.settings.user.minecraft_account.type.microsoft": "微软账号",
+            "ui.settings.user.minecraft_account.type.mojang": "Mojang账号",
+            "ui.settings.user.minecraft_account.add": "添加新账号",
+            "ui.settings.user.minecraft_account.ask_when_launch": "启动前询问使用哪个账号",
+
+    "ui.settings.launching": "启动",
+
+        "ui.settings.launching.jre": "Java运行时",
+            "ui.settings.launching.jre.refresh": "刷新",
+            "ui.settings.launching.jre.install": "安装其他版本...",
+            "ui.settings.launching.jre.auto": "让Pixely决定使用哪个运行时",
+
+    "ui.settings.launching.memory": "内存分配",
+        "ui.settings.launching.memory.memory_meter": "内存",
+            "ui.settings.launching.memory.memory_meter.installed": "已安装 {{size}}",
+            "ui.settings.launching.memory.memory_meter.used": "已使用",
+            "ui.settings.launching.memory.memory_meter.allowcated": "分配大小",
+            "ui.settings.launching.memory.memory_meter.warning.header": "注意",
+            "ui.settings.launching.memory.memory_meter.warning": "分配超过已安装大小会导致内存交换，这会严重影响性能。请确保页面文件所处磁盘足够快，且有足够的可用空间。",
+        "ui.settings.launching.memory.auto": "让Pixely分配内存",
+        "ui.settings.launching.memory.manual": "手动分配内存"
 }

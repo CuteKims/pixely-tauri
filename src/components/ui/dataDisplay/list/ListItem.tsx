@@ -2,9 +2,9 @@ import { useEffect, useRef, useState } from 'react'
 import { Avatar } from '../avatar/Avatar'
 import style from './ListItem.module.css'
 import { getCssAnimation, UiAnimationProperty } from '../../animation'
+import Ripple from '../../utils/ripple/Ripple'
 
 export type ListItemProps = {
-    clickable?: boolean,
     animation?: UiAnimationProperty
     selected?: boolean,
     text?: {
@@ -18,8 +18,9 @@ export type ListItemProps = {
 }
 
 export const ListItem: React.FC<ListItemProps> = (props) => {
-    return (
-        <div className={props.clickable ? style['list-item--clickable'] : style['list-item']} onClick={props.onClick} style={getCssAnimation(props.animation)}>
+    const [isHover, setIsHover] = useState(false)
+    let component = (
+        <div className={isHover ? style['list-item--hover'] : style['list-item']} style={getCssAnimation(props.animation)}>
             {(() => {
                 if(props.customPrefix) {
                     return (
@@ -73,6 +74,12 @@ export const ListItem: React.FC<ListItemProps> = (props) => {
             })()}
         </div>
     )
+    if(props.onClick !== undefined) return (
+        <Ripple onClick={props.onClick} onMouseEnter={() => {setIsHover(true)}} onMouseLeave={() => {setIsHover(false)}}>
+            {component}
+        </Ripple>
+    )
+    else return component
 }
 
 export type ListDividerProps = {

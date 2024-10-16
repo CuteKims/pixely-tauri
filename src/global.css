@@ -1,8 +1,8 @@
 :root {
     height: 100%;
 
-    --ui-filter-light: contrast(200%) brightness(90%);
-    --ui-filter-dark: contrast(200%) brightness(75%);
+    --ui-filter-light: brightness(200%) saturate(200%);
+    --ui-filter-dark: brightness(75%);
 
     --text-color-light: white;
     --text-color-dark: #161616;

@@ -14,12 +14,12 @@ export const About: React.FC = () =>{
             <h1>关于Pixely</h1>
             <Logo />
             <StackList animation={{delay: getAnimationTiming.fromFrames(20)}}>
-                <ListItem text={{primary: '软件版本'}} clickable icon={<IconPixely style={{transition: '.5s'}}/>} customSuffix={<p>开发版 Milestone 2</p>}/>
-                <ListItem text={{primary: '查看新增功能'}} clickable icon={<IconLightBulb style={{transition: '.5s'}}/>}/>
+                <ListItem text={{primary: '软件版本'}} onClick={() => {}} icon={<IconPixely style={{transition: '.5s'}}/>} customSuffix={<p>开发版 Milestone 2</p>}/>
+                <ListItem text={{primary: '查看新增功能'}} onClick={() => {}} icon={<IconLightBulb style={{transition: '.5s'}}/>}/>
             </StackList>
             <StackList header="鸣谢" animation={{delay: getAnimationTiming.fromFrames(26)}}>
-                <ListItem text={{primary: '查看爱发电赞助者'}} clickable icon={<IconAfdian style={{transition: '.5s'}}/>}/>
-                <ListItem text={{primary: '开源授权声明'}} clickable icon={<IconOpenSource style={{transition: '.5s'}}/>}/>
+                <ListItem text={{primary: '查看爱发电赞助者'}} onClick={() => {}} icon={<IconAfdian style={{transition: '.5s'}}/>}/>
+                <ListItem text={{primary: '开源授权声明'}} onClick={() => {}} icon={<IconOpenSource style={{transition: '.5s'}}/>}/>
             </StackList>
         </Subpage>
     )

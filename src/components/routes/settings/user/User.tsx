@@ -17,18 +17,19 @@ export const User: React.FC = () => {
                     text={{primary: 'CuteKims#0303', secondary: t('ui.settings.user.pixely_account')}}
                     customPrefix={<Avatar src={avatar} size={36} rounded style={{margin: "-2px"}}/>}
                     customSuffix={<p style={{fontSize: '14px'}}>{t('ui.settings.user.pixely_account.check_profile')}</p>}
+                    onClick={() => {}}
                 />
                 <ListItem
                     text={{primary: t('ui.settings.user.pixely_account.switch')}}
-                    clickable
+                    onClick={() => {}}
                 />
                 <ListItem
                     text={{primary: t('ui.settings.user.pixely_account.logout')}}
-                    clickable
+                    onClick={() => {}}
                 />
                 <ListItem
                     text={{primary: t('ui.settings.user.pixely_account.introduction')}}
-                    clickable
+                    onClick={() => {}}
                 />
             </StackList>
             <StackList header={t('ui.settings.user.minecraft_account')} animation={{delay: getAnimationTiming.fromFrames(16)}}>
@@ -38,7 +39,7 @@ export const User: React.FC = () => {
                     />
                     <ListItem
                         text={{primary: t('ui.settings.user.minecraft_account.add')}}
-                        clickable
+                        onClick={() => {}}
                     />
                 </GridList>
                 <ListItem text={{primary: t('ui.settings.user.minecraft_account.ask_when_launch')}}/>
