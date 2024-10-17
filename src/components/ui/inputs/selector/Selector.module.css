@@ -1,8 +1,8 @@
 .selector {
     position: relative;
     min-height: 32px;
+    min-width: 80px;
     display: flex;
-    border-radius: 16px;
     outline: solid 1px;
     outline-color: var(--reverse-color-25);
     background-color: var(--global-color-50);
@@ -34,4 +34,8 @@
     margin: auto;
     filter: var(--global-svg-shadow);
     transition: .5s;
+}
+
+.dropdown {
+    position: absolute;
 }

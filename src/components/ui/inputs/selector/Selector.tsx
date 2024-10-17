@@ -1,19 +1,55 @@
-import { createRef } from 'react'
+import { createRef, CSSProperties, useState } from 'react'
 import { RipplePool, useRippleEffect } from '../../utils/ripple/Ripple'
 import styles from './Selector.module.css'
-import { ListItem } from '../../dataDisplay/list/ListItem'
+import { createPortal } from 'react-dom'
+import { CSSTransition } from 'react-transition-group'
 
-const Selector: React.FC<{text: string}> = ({text}) => {
+type SelectorItem = {value: any, node: React.ReactNode}
+
+const Selector: React.FC<{items: SelectorItem[], value: '' | any, onChange?: (value: string | number) => void}> = ({items, value, onChange}) => {
+    let selectorRef = createRef<HTMLDivElement>()
+    let dropdownRef = createRef<HTMLDivElement>()
+    const [dropdown, setDropdown] = useState<CSSProperties | undefined>(undefined)
+    const clickHandler = () => {
+        setDropdown(dropdown => {
+            if(dropdown == null) {
+                let result: CSSProperties = {}
+                let DOMRect = selectorRef.current!.getBoundingClientRect()
+                let verticalDirection = DOMRect.top + DOMRect.height / 2 > document.documentElement.clientHeight / 2 ? 'top' : 'bottom'
+                let horizontalDirection = DOMRect.left + DOMRect.width / 2 > document.documentElement.clientWidth / 2 ? 'left' : 'right'
+
+                if(verticalDirection === 'top') result.bottom = `${document.documentElement.clientHeight - DOMRect.top}px`
+                else result.top = `${DOMRect.bottom}px`
+
+                if(horizontalDirection === 'left') result.right = `${document.documentElement.clientWidth - DOMRect.right}px`
+                else result.left = `${DOMRect.left}px`
+
+                result.width = `${DOMRect.width}px`
+                
+                return result
+            }
+            else return undefined
+        })
+    }
     let ripplePoolRef = createRef<HTMLDivElement>()
     const {rippleEffect, createRipple, destroyRipple} = useRippleEffect(ripplePoolRef)
     return (
-        <div className={styles['selector']} onMouseDown={createRipple} onMouseUp={destroyRipple} onMouseLeave={destroyRipple}>
-            <RipplePool ref={ripplePoolRef} rippleEffect={rippleEffect} rippleColor='var(--reverse-color-10)' style={{borderRadius: '16px'}}/>
-            <p>{text}</p>
-            <div className={styles['selector__arrow']}>
-                <Arrow />
+        <>
+            <div ref={selectorRef} className={styles['selector']} onMouseDown={createRipple} onMouseUp={destroyRipple} onMouseLeave={destroyRipple} onClick={clickHandler}>
+                <RipplePool ref={ripplePoolRef} rippleEffect={rippleEffect} rippleColor='var(--reverse-color-10)'/>
+                {value === '' ? null : <p>{items.find(item => item.value === value)?.node}</p>}
+                <div className={styles['selector__arrow']}>
+                    <Arrow />
+                </div>
             </div>
-        </div>
+            {createPortal((
+                <CSSTransition in={dropdown !== undefined} nodeRef={dropdownRef} timeout={500} classNames={{enter: ''}} unmountOnExit>
+                    <div className={styles['dropdown']} ref={dropdownRef} style={dropdown}>
+                        {items.map(item => <p key={item.value}>{item.node}</p>)}
+                    </div>
+                </CSSTransition>
+            ), document.getElementById('modal-container')!)}
+        </>
     )
 }
 

@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { createPortal } from 'react-dom'
 
 import bgimage from '../../../assets/bgimage/wallpaper14.jpg'
 
@@ -12,6 +13,7 @@ import { Outlet } from 'react-router';
 import { RootState, globalContextWrapper, rootContext } from './rootContext';
 import { webviewWindow } from '@tauri-apps/api';
 import { useBridger } from '../../../bridger/bridger';
+import { AnimatePresence } from 'framer-motion';
 
 export const bridger = useBridger()
 
@@ -19,13 +21,23 @@ const Root: React.FC = () => {
     const rootContextValue = globalContextWrapper(useState<RootState>({isActionCenterShow: false, isMaximized: false}), webviewWindow.getCurrent())
     return (
         <>
-            <Titlebar props={titlebarPropsAdapter(rootContextValue)}/>
-            <ActionCenter props={actionCenterPropsAdapter(rootContextValue)}/>
-            <ModalContainer />
-            <rootContext.Provider value={rootContextValue}>
-                <Outlet />
-            </rootContext.Provider>
-            <img src={bgimage} style={{position: 'absolute', height: '100%', width: '100%', objectFit: 'cover', zIndex: -1, transform: rootContextValue.rootState.isActionCenterShow ? 'scale(1.01)' : 'scale(1.05)', transition: '.5s cubic-bezier(0,.8,.2,1)'}}/>
+            <div id="foreground-container">
+                <div id="titlebar-container">
+                    <Titlebar props={titlebarPropsAdapter(rootContextValue)} />
+                </div>
+                <div id="modal-container">
+                    <ModalContainer />
+                    <ActionCenter props={actionCenterPropsAdapter(rootContextValue)}/>
+                </div>
+            </div>
+            <div id="root-outlet-container">
+                <rootContext.Provider value={rootContextValue}>
+                    <Outlet />
+                </rootContext.Provider>
+            </div>
+            <div id="background-container">
+                <img src={bgimage} style={{height: '100%', width: '100%', objectFit: 'cover', transform: rootContextValue.rootState.isActionCenterShow ? 'scale(1.01)' : 'scale(1.05)', transition: '.5s cubic-bezier(0,.8,.2,1)'}}/>
+            </div>
         </>
     )
 }

@@ -7,7 +7,7 @@ const Button: React.FC<{text: string}> = ({text}) => {
     const {rippleEffect, createRipple, destroyRipple} = useRippleEffect(ripplePoolRef)
     return (
         <div className={styles['button']} onMouseDown={createRipple} onMouseUp={destroyRipple} onMouseLeave={destroyRipple}>
-            <RipplePool ref={ripplePoolRef} rippleEffect={rippleEffect} rippleColor='var(--reverse-color-10)' style={{borderRadius: '16px'}}/>
+            <RipplePool ref={ripplePoolRef} rippleEffect={rippleEffect} rippleColor='var(--reverse-color-10)'/>
             <p>{text}</p>
         </div>
     )

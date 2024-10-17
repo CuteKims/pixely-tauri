@@ -1,6 +1,4 @@
 :root {
-    height: 100%;
-
     --ui-filter-light: brightness(175%) saturate(200%);
     --ui-filter-dark: brightness(75%);
 
@@ -42,14 +40,6 @@
     -moz-osx-font-smoothing: grayscale;
     -webkit-text-size-adjust: 100%;
     font-family: 'Segoe UI', 'Microsoft YaHei';
-}
-
-body, #root {
-    border: 0;
-    padding: 0;
-    margin: 0;
-    overflow: hidden;
-    user-select: none;
 }
 
 .paper {

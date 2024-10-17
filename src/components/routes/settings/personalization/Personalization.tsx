@@ -36,12 +36,12 @@ export const Personalization: React.FC = () => {
                 <ListItem
                     text={{primary: '显示语言'}}
                     icon={<IconTranslate />}
-                    customSuffix={<Selector text='简体中文（中国大陆）'/>}
+                    customSuffix={<Selector items={[{value: 'zh-CN', node: '简体中文（中国大陆）'}, {value: 'zh-TW', node: '繁體中文（中國台灣）'}, {value: 'en-US', node: 'English (US)'}]} value='zh-CN'/>}
                 />
                 <ListItem
                     text={{primary: '主题', secondary: '更改用户界面显示颜色'}}
                     icon={<IconBrush />}
-                    customSuffix={<Selector text='浅色'/>}
+                    customSuffix={<Selector items={[{value: 'light', node: '浅色'}, {value: 'dark', node: '深色'}]} value='light'/>}
                 />
                 <ListItem
                     text={{primary: '选择强调色...'}}

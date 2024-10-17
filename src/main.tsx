@@ -1,5 +1,6 @@
 import ReactDOM from "react-dom/client";
 import "./global.css";
+import "./root.css"
 import { RouteObject, RouterProvider, createMemoryRouter } from "react-router";
 import React from "react";
 import Root from "./components/routes/_root/Root";
