@@ -1,0 +1,23 @@
+.button {
+    position: relative;
+    display: flex;
+    height: 32px;
+    min-width: 32px;
+    border-radius: 16px;
+    outline: solid 1px;
+    outline-color: var(--reverse-color-25);
+    background-color: var(--global-color-50);
+    transition-property: background-color, outline-color;
+    transition: .5s;
+}
+
+.button:hover {
+    background-color: var(--reverse-color-10);
+    transition: background-color .1s;
+}
+
+.button p {
+    position: relative;
+    font-size: 12px;
+    margin: auto 12px;
+}

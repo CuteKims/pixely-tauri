@@ -1,0 +1,37 @@
+.selector {
+    position: relative;
+    min-height: 32px;
+    display: flex;
+    border-radius: 16px;
+    outline: solid 1px;
+    outline-color: var(--reverse-color-25);
+    background-color: var(--global-color-50);
+    transition-property: background-color, outline-color;
+    transition: .5s;
+}
+
+.selector:hover {
+    background-color: var(--reverse-color-10);
+    transition: background-color .1s;
+}
+
+.selector p {
+    position: relative;
+    font-size: 12px;
+    margin: auto;
+    margin-left: 12px;
+}
+
+.selector__arrow {
+    width: 32px;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.selector__arrow svg {
+    color: var(--global-text-color);
+    margin: auto;
+    filter: var(--global-svg-shadow);
+    transition: .5s;
+}

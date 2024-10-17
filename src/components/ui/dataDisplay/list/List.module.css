@@ -9,9 +9,11 @@
 .stack-list__container {
     display: flex;
     flex-direction: column;
+    gap: 4px;
 }
 
 .grid-list__container {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 4px;
 }

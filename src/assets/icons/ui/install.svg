@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+    <g transform="translate(-6 -6)">
+        <path d="M0,3V14l4,2,9-3,2.5-2.5L13,9.25V2L9,0Z" transform="translate(24.5 27.5) rotate(180)" fill="none" stroke="currentColor" stroke-width="1"/>
+        <path d="M721.5,323.5l-9,3-4-2" transform="translate(-697 -310)" fill="none" stroke="currentColor" stroke-width="1"/>
+        <line y2="11" transform="translate(15.5 16.5)" fill="none" stroke="currentColor" stroke-width="1"/>
+        <line y2="3" transform="translate(20.5 11.5)" fill="none" stroke="currentColor" stroke-width="1"/>
+        <path d="M721.415,324.5l4,2-2.5,2.5-4-2Z" transform="translate(-709.915 -310)" fill="none" stroke="currentColor" stroke-width="1"/>
+        <line x2="2" y2="1" transform="translate(24.5 13.5)" fill="none" stroke="currentColor" stroke-width="1"/>
+        <path d="M709.5,324.5l9-3,2,3-9,3Z" transform="translate(-700 -313)" fill="none" stroke="currentColor" stroke-width="1"/>
+    </g>
+</svg>

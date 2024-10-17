@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+    <g transform="translate(5 5)" fill="none" stroke="currentColor" stroke-width="1">
+        <rect width="16" height="16" stroke="none"/>
+        <rect x="0.5" y="0.5" width="15" height="15" fill="none"/>
+    </g>
+    <path d="M-571-294v-16h16v1h-15v15Z" transform="translate(574 313)" fill="currentColor"/>
+    <g transform="translate(-6 -6)">
+        <g transform="translate(582 321)" fill="none">
+            <path d="M-570.938-294A8,8,0,0,1-563-301a8,8,0,0,1,7.938,7Z" stroke="none"/>
+            <path d="M -556.2896728515625 -295.0003051757812 C -557.1565551757812 -297.9171142578125 -559.8655395507812 -299.9996032714844 -563.0004272460938 -299.9996032714844 C -566.1348876953125 -299.9996032714844 -568.8434448242188 -297.9171142578125 -569.7102661132812 -295.0003051757812 L -556.2896728515625 -295.0003051757812 M -555.0621948242188 -294.0003051757812 L -570.9376831054688 -294.0003051757812 C -570.4456176757812 -297.9463195800781 -567.079833984375 -300.9996032714844 -563.0004272460938 -300.9996032714844 C -558.920166015625 -300.9996032714844 -555.5543212890625 -297.9463195800781 -555.0621948242188 -294.0003051757812 Z" stroke="none" fill="currentColor"/>
+        </g>
+        <g transform="translate(15 13)" fill="none" stroke="currentColor" stroke-width="1">
+            <circle cx="4" cy="4" r="4" stroke="none"/>
+            <circle cx="4" cy="4" r="3.5" fill="none"/>
+        </g>
+    </g>
+</svg>

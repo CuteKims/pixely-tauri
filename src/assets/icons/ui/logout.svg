@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+    <path d="M-524.243-303.141l2.324-2.324H-529v-1h7.091l-2.333-2.333.707-.707,3.535,3.535-.707.707h0l-2.828,2.829Z" transform="translate(532 318.464)" fill="currentColor"/>
+    <g transform="translate(-6 -6)">
+            <g transform="translate(-529 -310)" fill="none">
+                <path d="M556,319v16l-7,3V322Z" stroke="none"/>
+                <path d="M 555 320.5165405273438 L 550 322.6593933105469 L 550 336.4834594726562 L 555 334.3406066894531 L 555 320.5165405273438 M 556 319 L 556 335 L 549 338 L 549 322 L 556 319 Z" stroke="none" fill="currentColor"/>
+            </g>
+        <path d="M-529-305.5V-311h11v1h-10v4.5Z" transform="translate(545 320)" fill="currentColor"/>
+        <path d="M-528-307h-1v-2.5h1v1.5h4v1Z" transform="translate(545 332)" fill="currentColor"/>
+        <line y2="2" transform="translate(22.5 18.496)" fill="none" stroke="currentColor" stroke-linecap="square" stroke-width="1"/>
+    </g>
+</svg>

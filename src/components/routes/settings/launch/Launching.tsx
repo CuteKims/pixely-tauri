@@ -1,6 +1,11 @@
 import styles from './Launching.module.css'
 import avatar from '../../../../assets/avatar.jpg'
 
+import IconAuto from '../../../../assets/icons/ui/auto.svg?react'
+import IconInstall from '../../../../assets/icons/ui/install.svg?react'
+import IconRefresh from '../../../../assets/icons/ui/refresh.svg?react'
+import IconWrench from '../../../../assets/icons/ui/wrench.svg?react'
+
 import { Avatar } from "../../../ui/dataDisplay/avatar/Avatar"
 import { GridList, StackList } from "../../../ui/dataDisplay/list/List"
 import { ListItem } from "../../../ui/dataDisplay/list/ListItem"
@@ -20,22 +25,27 @@ export const Launching: React.FC = () => {
                 <ListItem
                     text={{primary: t('ui.settings.launching.jre.refresh')}}
                     onClick={() => {}}
+                    icon={<IconRefresh />}
                 />
                 <ListItem
                     text={{primary: t('ui.settings.launching.jre.install')}}
                     onClick={() => {}}
+                    icon={<IconInstall />}
                 />
                 <ListItem
                     text={{primary: t('ui.settings.launching.jre.auto')}}
+                    icon={<IconAuto />}
                 />
             </StackList>
             <StackList header={t('ui.settings.launching.memory')} animation={{delay: getAnimationTiming.fromFrames(16)}}>
                 <MemoryMeter />
                 <ListItem
                     text={{primary: t('ui.settings.launching.memory.auto')}}
+                    icon={<IconAuto />}
                 />
                 <ListItem
                     text={{primary: t('ui.settings.launching.memory.manual')}}
+                    icon={<IconWrench />}
                 />
             </StackList>
         </Subpage>

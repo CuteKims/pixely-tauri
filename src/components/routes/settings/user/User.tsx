@@ -3,9 +3,12 @@ import { GridList, StackList } from "../../../ui/dataDisplay/list/List"
 import { ListItem } from "../../../ui/dataDisplay/list/ListItem"
 import { Subpage } from "../../../ui/page/Page"
 
+import IconSwitchAccount from '../../../../assets/icons/ui/switch_account.svg?react'
+import IconLogout from '../../../../assets/icons/ui/logout.svg?react'
 import avatar from '../../../../assets/avatar.jpg'
 import { useTranslation } from "react-i18next"
 import { getAnimationTiming } from "../../../ui/animation"
+import Button from "../../../ui/inputs/button/Button"
 
 export const User: React.FC = () => {
     let {t} = useTranslation()
@@ -16,16 +19,17 @@ export const User: React.FC = () => {
                 <ListItem
                     text={{primary: 'CuteKims#0303', secondary: t('ui.settings.user.pixely_account')}}
                     customPrefix={<Avatar src={avatar} size={36} rounded style={{margin: "-2px"}}/>}
-                    customSuffix={<p style={{fontSize: '14px'}}>{t('ui.settings.user.pixely_account.check_profile')}</p>}
-                    onClick={() => {}}
+                    customSuffix={<Button text={t('ui.settings.user.pixely_account.check_profile')}/>}
                 />
                 <ListItem
                     text={{primary: t('ui.settings.user.pixely_account.switch')}}
                     onClick={() => {}}
+                    icon={<IconSwitchAccount />}
                 />
                 <ListItem
                     text={{primary: t('ui.settings.user.pixely_account.logout')}}
                     onClick={() => {}}
+                    icon={<IconLogout />}
                 />
                 <ListItem
                     text={{primary: t('ui.settings.user.pixely_account.introduction')}}

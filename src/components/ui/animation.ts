@@ -1,5 +1,4 @@
 import { CSSProperties } from "react"
-import { XOR } from "ts-xor"
 
 type SlideInTransitions = 'top-slide-in' | 'bottom-slide-in' | 'left-slide-in' | 'right-slide-in'
 type ScaleInTransitions = 'scale-up-in' | 'scale-down-in'

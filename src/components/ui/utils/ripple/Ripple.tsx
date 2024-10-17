@@ -83,19 +83,21 @@ const RippleWrapper: React.FC<{
     )
 }
 
-export const RipplePool = forwardRef<HTMLDivElement, {rippleEffect: RippleEffect[], style?: CSSProperties}>(({rippleEffect, style}, ref) => {
+export const RipplePool = forwardRef<HTMLDivElement, {rippleEffect: RippleEffect[], style?: CSSProperties, rippleColor?: string}>(({rippleEffect, style, rippleColor}, ref) => {
     return (
         <div className={styles['ripple-pool']} style={style} ref={ref}>
             <TransitionGroup component={null} enter exit>
                 {rippleEffect.map(({key, radius, position, nodeRef}) => (
-                    <CSSTransition key={key} nodeRef={nodeRef} timeout={radius * 2} classNames={{enter: styles['ripple-effect--enter'], exit: styles['ripple-effect--exit'], enterActive: styles['ripple-effect--enter-active'], exitActive: styles['ripple-effect--exit-active']}}>
+                    <CSSTransition key={key} nodeRef={nodeRef} timeout={Math.max(radius * 2.5, 500)} classNames={{enter: styles['ripple-effect--enter'], exit: styles['ripple-effect--exit'], enterActive: styles['ripple-effect--enter-active'], exitActive: styles['ripple-effect--exit-active']}}>
                         <div ref={nodeRef} className={styles['ripple-effect']} style={{
+                            backgroundColor: rippleColor,
                             top: `${position[1] - radius}px`,
                             left: `${position[0] - radius}px`,
                             height: `${radius * 2}px`,
                             width: `${radius * 2}px`,
+                            filter: `blur(${Math.max(radius * 0.05, 8)}px)`,
                             borderRadius: `${radius}px`,
-                            transition: `${radius * 0.002}s cubic-bezier(0, .5, .5, 1)`
+                            transition: `${Math.max(radius * 0.0025, .5)}s cubic-bezier(0, .5, .5, 1)`
                         }}/>
                     </CSSTransition>
                 ))}

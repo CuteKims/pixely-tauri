@@ -17,7 +17,7 @@ export const StackList: React.FC<{children: React.ReactNode, gap?: string, heade
                     )
                 }
             })()}
-            <div className={styles['stack-list__container']} style={{gap: props.gap ?? '4px'}}>
+            <div className={styles['stack-list__container']} style={{gap: props.gap}}>
                 {(() => {
                     if (props.animation) {
                         let delay = 0
@@ -47,7 +47,7 @@ export const StackList: React.FC<{children: React.ReactNode, gap?: string, heade
 export const GridList: React.FC<{children?: React.ReactNode, gap?: string, animation?: UiAnimationProperty}> = (props) => {
     let childrenLength = useRef(React.Children.count(props.children)).current
     return (
-        <div className={styles['grid-list__container']} style={{gap: props.gap ?? '4px', ...getCssAnimation(props.animation, defaultAnimationProps, ['fade-in'])}}>
+        <div className={styles['grid-list__container']} style={{gap: props.gap, ...getCssAnimation(props.animation, defaultAnimationProps, ['fade-in'])}}>
             {(() => {
                     if (props.animation) {
                         let delay = 0

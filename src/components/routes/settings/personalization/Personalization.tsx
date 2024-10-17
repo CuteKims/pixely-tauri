@@ -12,9 +12,9 @@ import IconBrush from '../../../../assets/icons/ui/brush.svg?react'
 import IconColorPalatte from '../../../../assets/icons/ui/color_palatte.svg?react'
 import IconTransparentEffect from '../../../../assets/icons/ui/transparent_effect.svg?react'
 import IconAnimation from '../../../../assets/icons/ui/animation.svg?react'
+import IconTranslate from '../../../../assets/icons/ui/translate.svg?react'
 
-import { Avatar } from '../../../ui/dataDisplay/avatar/Avatar'
-import IconGrassBlock from '../../../../assets/icons/minecraft/grass_block.png'
+import Selector from '../../../ui/inputs/selector/Selector'
 
 export const Personalization: React.FC = () => {
     return (
@@ -34,29 +34,35 @@ export const Personalization: React.FC = () => {
             </StackList>
             <StackList header="用户界面" animation={{delay: getAnimationTiming.fromFrames(16)}}>
                 <ListItem
+                    text={{primary: '显示语言'}}
+                    icon={<IconTranslate />}
+                    customSuffix={<Selector text='简体中文（中国大陆）'/>}
+                />
+                <ListItem
                     text={{primary: '主题', secondary: '更改用户界面显示颜色'}}
                     icon={<IconBrush />}
+                    customSuffix={<Selector text='浅色'/>}
                 />
                 <ListItem
                     text={{primary: '选择强调色...'}}
                     icon={<IconColorPalatte />}
                 />
                 <ListItem
-                    text={{primary: ['高级材质', <p style={{fontSize: '12px', opacity: .5}}>需要重启</p>], secondary: '用户界面元素的透明、颜色过滤和模糊效果。如果用户界面出现性能问题，请尝试关闭该选项。'}}
+                    text={{primary: ['高级材质', <span style={{fontSize: '12px', opacity: .5}}>需要重启</span>], secondary: '用户界面元素的透明、颜色过滤和模糊效果。如果用户界面出现性能问题，请尝试关闭该选项。'}}
                     icon={<IconTransparentEffect />}
                 />
             </StackList>
             <StackList header="动画" animation={{delay: getAnimationTiming.fromFrames(22)}}>
                 <ListItem
-                    text={{primary: ['全局动画效果', <p style={{fontSize: '12px', opacity: .5}}>需要重启</p>]}}
+                    text={{primary: ['全局动画效果', <span style={{fontSize: '12px', opacity: .5}}>需要重启</span>]}}
                     icon={<IconAnimation />}
                 />
                 <ListItem
-                    text={{primary: ['过渡动画速度倍率', <p style={{fontSize: '12px', opacity: .5}}>需要重启</p>]}}
+                    text={{primary: ['过渡动画速度倍率', <span style={{fontSize: '12px', opacity: .5}}>需要重启</span>]}}
                     icon={<IconAnimation />}
                 />
                 <ListItem
-                    text={{primary: ['关键帧动画速度倍率', <p style={{fontSize: '12px', opacity: .5}}>需要重启</p>]}}
+                    text={{primary: ['关键帧动画速度倍率', <span style={{fontSize: '12px', opacity: .5}}>需要重启</span>]}}
                     icon={<IconAnimation />}
                 />
             </StackList>
