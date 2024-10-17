@@ -9,8 +9,6 @@ import AnimatedOutlet from '../../utils/AnimatedOutlet';
 
 
 const Settings: React.FC = () => {
-    let outlet = useOutlet()
-    let location = useLocation()
     return (
         <Page routes={settingsRoutes}>
             <AnimatedOutlet />
