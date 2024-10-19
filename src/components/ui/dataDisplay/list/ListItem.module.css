@@ -36,7 +36,6 @@
 .list-item__text-container__primary-text {
     display: flex;
     align-items: center;
-    gap: 6px;
     font-size: 14px;
     margin: 10px 10px 0px 12px;
     color: var(--global-text-color);
@@ -48,7 +47,6 @@
 .list-item__text-container__secondary-text {
     display: flex;
     align-items: center;
-    gap: 6px;
     font-size: 12px;
     opacity: .75;
     margin: 0px 10px 10px 12px;

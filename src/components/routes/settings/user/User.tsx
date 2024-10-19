@@ -19,7 +19,7 @@ export const User: React.FC = () => {
                 <ListItem
                     text={{primary: 'CuteKims#0303', secondary: t('ui.settings.user.pixely_account')}}
                     customPrefix={<Avatar src={avatar} size={36} rounded style={{margin: "-2px"}}/>}
-                    customSuffix={<Button text={t('ui.settings.user.pixely_account.check_profile')}/>}
+                    customSuffix={<Button>{t('ui.settings.user.pixely_account.check_profile')}</Button>}
                 />
                 <ListItem
                     text={{primary: t('ui.settings.user.pixely_account.switch')}}

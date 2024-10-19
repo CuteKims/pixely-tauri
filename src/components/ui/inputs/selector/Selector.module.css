@@ -38,4 +38,59 @@
 
 .dropdown {
     position: absolute;
+    outline: solid 1px;
+    outline-color: var(--reverse-color-25);
+    padding: 8px 0px;
+    background-color: var(--global-color-50);
+    backdrop-filter: blur(10px);
+    pointer-events: all;
+    box-shadow: var(--default-box-shadow);
+    transition: .5s;
+}
+
+.dropdown--enter--upward {
+    transform: translateY(8px);
+    opacity: 0;
+}
+
+.dropdown--enter--downward {
+    transform: translateY(-8px);
+    opacity: 0;
+}
+
+.dropdown--enter-active {
+    transform: translateY(0px);
+    opacity: 1;
+}
+
+.dropdown--exit {
+    transform: translateY(0px);
+    opacity: 1;
+}
+
+.dropdown--exit-active--upward {
+    transform: translateY(8px);
+    opacity: 0;
+}
+
+.dropdown--exit-active--downward {
+    transform: translateY(-8px);
+    opacity: 0;
+}
+
+.dropdown__item {
+    min-height: 32px;
+    display: flex;
+    align-items: center;
+    font-size: 12px;
+    padding: 0px 12px;
+    color: var(--global-text-color);
+    text-shadow: var(--global-text-shadow);
+    transition-property: color, text-shadow, background-color;
+    transition-duration: .5s;
+}
+
+.dropdown__item:hover {
+    background-color: var(--reverse-color-10);
+    transition: background-color .1s;
 }

@@ -15,8 +15,14 @@
     transition: background-color .1s;
 }
 
-.button p {
+.text {
     position: relative;
+    margin: 0px 12px;
+    display: flex;
+    align-items: center;
     font-size: 12px;
-    margin: auto 12px;
+    color: var(--global-text-color);
+    text-shadow: var(--global-text-shadow);
+    transition-property: color, text-shadow;
+    transition-duration: .5s;
 }

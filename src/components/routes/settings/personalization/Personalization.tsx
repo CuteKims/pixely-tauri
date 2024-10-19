@@ -48,21 +48,21 @@ export const Personalization: React.FC = () => {
                     icon={<IconColorPalatte />}
                 />
                 <ListItem
-                    text={{primary: ['高级材质', <span style={{fontSize: '12px', opacity: .5}}>需要重启</span>], secondary: '用户界面元素的透明、颜色过滤和模糊效果。如果用户界面出现性能问题，请尝试关闭该选项。'}}
+                    text={{primary: ['高级材质', <span style={{fontSize: '12px', opacity: .5, marginLeft: '6px'}}>需要重启</span>], secondary: '用户界面元素的透明、颜色过滤和模糊效果。如果用户界面出现性能问题，请尝试关闭该选项。'}}
                     icon={<IconTransparentEffect />}
                 />
             </StackList>
             <StackList header="动画" animation={{delay: getAnimationTiming.fromFrames(22)}}>
                 <ListItem
-                    text={{primary: ['全局动画效果', <span style={{fontSize: '12px', opacity: .5}}>需要重启</span>]}}
+                    text={{primary: ['全局动画效果', <span style={{fontSize: '12px', opacity: .5, marginLeft: '6px'}}>需要重启</span>]}}
                     icon={<IconAnimation />}
                 />
                 <ListItem
-                    text={{primary: ['过渡动画速度倍率', <span style={{fontSize: '12px', opacity: .5}}>需要重启</span>]}}
+                    text={{primary: ['过渡动画速度倍率', <span style={{fontSize: '12px', opacity: .5, marginLeft: '6px'}}>需要重启</span>]}}
                     icon={<IconAnimation />}
                 />
                 <ListItem
-                    text={{primary: ['关键帧动画速度倍率', <span style={{fontSize: '12px', opacity: .5}}>需要重启</span>]}}
+                    text={{primary: ['关键帧动画速度倍率', <span style={{fontSize: '12px', opacity: .5, marginLeft: '6px'}}>需要重启</span>]}}
                     icon={<IconAnimation />}
                 />
             </StackList>

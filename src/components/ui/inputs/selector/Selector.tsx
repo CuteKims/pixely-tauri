@@ -3,32 +3,33 @@ import { RipplePool, useRippleEffect } from '../../utils/ripple/Ripple'
 import styles from './Selector.module.css'
 import { createPortal } from 'react-dom'
 import { CSSTransition } from 'react-transition-group'
+import Button from '../button/Button'
 
 type SelectorItem = {value: any, node: React.ReactNode}
 
 const Selector: React.FC<{items: SelectorItem[], value: '' | any, onChange?: (value: string | number) => void}> = ({items, value, onChange}) => {
     let selectorRef = createRef<HTMLDivElement>()
     let dropdownRef = createRef<HTMLDivElement>()
-    const [dropdown, setDropdown] = useState<CSSProperties | undefined>(undefined)
+    const [dropdown, setDropdown] = useState<{style: CSSProperties, in: boolean, direction: 'upward' | 'downward'}>({style: {}, in: false, direction: 'downward'})
     const clickHandler = () => {
         setDropdown(dropdown => {
-            if(dropdown == null) {
+            if(!dropdown.in) {
                 let result: CSSProperties = {}
                 let DOMRect = selectorRef.current!.getBoundingClientRect()
                 let verticalDirection = DOMRect.top + DOMRect.height / 2 > document.documentElement.clientHeight / 2 ? 'top' : 'bottom'
                 let horizontalDirection = DOMRect.left + DOMRect.width / 2 > document.documentElement.clientWidth / 2 ? 'left' : 'right'
 
-                if(verticalDirection === 'top') result.bottom = `${document.documentElement.clientHeight - DOMRect.top}px`
-                else result.top = `${DOMRect.bottom}px`
+                if(verticalDirection === 'top') result.bottom = `${document.documentElement.clientHeight - DOMRect.top + 8}px`
+                else result.top = `${DOMRect.bottom + 8}px`
 
                 if(horizontalDirection === 'left') result.right = `${document.documentElement.clientWidth - DOMRect.right}px`
                 else result.left = `${DOMRect.left}px`
 
                 result.width = `${DOMRect.width}px`
                 
-                return result
+                return {style: result, in: true, direction: verticalDirection === 'top' ? 'upward' : 'downward'}
             }
-            else return undefined
+            else return {...dropdown, in: false}
         })
     }
     let ripplePoolRef = createRef<HTMLDivElement>()
@@ -43,9 +44,21 @@ const Selector: React.FC<{items: SelectorItem[], value: '' | any, onChange?: (va
                 </div>
             </div>
             {createPortal((
-                <CSSTransition in={dropdown !== undefined} nodeRef={dropdownRef} timeout={500} classNames={{enter: ''}} unmountOnExit>
-                    <div className={styles['dropdown']} ref={dropdownRef} style={dropdown}>
-                        {items.map(item => <p key={item.value}>{item.node}</p>)}
+                <CSSTransition
+                    in={dropdown.in}
+                    nodeRef={dropdownRef}
+                    timeout={500}
+                    classNames={{
+                        enter: dropdown.direction === 'upward' ? styles['dropdown--enter--upward'] : styles['dropdown--enter--downward'],
+                        enterActive: styles['dropdown--enter-active'],
+                        enterDone: styles['dropdown--enter-done'],
+                        exit: styles['dropdown--exit'],
+                        exitActive: dropdown.direction === 'upward' ? styles['dropdown--exit-active--upward'] : styles['dropdown--exit-active--downward']
+                    }}
+                    unmountOnExit
+                >
+                    <div className={styles['dropdown']} ref={dropdownRef} style={dropdown.style}>
+                        {items.map(item => <Button style={{backgroundColor: 'transparent', outline: 'none'}}>{item.node}</Button>)}
                     </div>
                 </CSSTransition>
             ), document.getElementById('modal-container')!)}
