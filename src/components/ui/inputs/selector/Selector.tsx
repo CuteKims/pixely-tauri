@@ -1,4 +1,4 @@
-import { createRef, CSSProperties, useState } from 'react'
+import { createRef, CSSProperties, RefObject, useEffect, useState } from 'react'
 import { RipplePool, useRippleEffect } from '../../utils/ripple/Ripple'
 import styles from './Selector.module.css'
 import { createPortal } from 'react-dom'
@@ -9,7 +9,6 @@ type SelectorItem = {value: any, node: React.ReactNode}
 
 const Selector: React.FC<{items: SelectorItem[], value: '' | any, onChange?: (value: string | number) => void}> = ({items, value, onChange}) => {
     let selectorRef = createRef<HTMLDivElement>()
-    let dropdownRef = createRef<HTMLDivElement>()
     const [dropdown, setDropdown] = useState<{style: CSSProperties, in: boolean, direction: 'upward' | 'downward'}>({style: {}, in: false, direction: 'downward'})
     const clickHandler = () => {
         setDropdown(dropdown => {
@@ -32,6 +31,10 @@ const Selector: React.FC<{items: SelectorItem[], value: '' | any, onChange?: (va
             else return {...dropdown, in: false}
         })
     }
+
+    const blurHandler = () => {
+        setDropdown(dropdown => ({...dropdown, in: false}))
+    }
     let ripplePoolRef = createRef<HTMLDivElement>()
     const {rippleEffect, createRipple, destroyRipple} = useRippleEffect(ripplePoolRef)
     return (
@@ -39,29 +42,50 @@ const Selector: React.FC<{items: SelectorItem[], value: '' | any, onChange?: (va
             <div ref={selectorRef} className={styles['selector']} onMouseDown={createRipple} onMouseUp={destroyRipple} onMouseLeave={destroyRipple} onClick={clickHandler}>
                 <RipplePool ref={ripplePoolRef} rippleEffect={rippleEffect} rippleColor='var(--reverse-color-10)'/>
                 {value === '' ? null : <p>{items.find(item => item.value === value)?.node}</p>}
-                <div className={styles['selector__arrow']}>
+                <div className={`${styles['selector__arrow']} ${dropdown.in ? styles['selector__arrow--in'] : ''}`}>
                     <Arrow />
                 </div>
             </div>
             {createPortal((
-                <CSSTransition
-                    in={dropdown.in}
-                    nodeRef={dropdownRef}
-                    timeout={500}
-                    classNames={{
-                        enter: dropdown.direction === 'upward' ? styles['dropdown--enter--upward'] : styles['dropdown--enter--downward'],
-                        enterActive: styles['dropdown--enter-active'],
-                        enterDone: styles['dropdown--enter-done'],
-                        exit: styles['dropdown--exit'],
-                        exitActive: dropdown.direction === 'upward' ? styles['dropdown--exit-active--upward'] : styles['dropdown--exit-active--downward']
-                    }}
-                    unmountOnExit
-                >
-                    <div className={styles['dropdown']} ref={dropdownRef} style={dropdown.style}>
-                        {items.map(item => <Button style={{backgroundColor: 'transparent', outline: 'none'}}>{item.node}</Button>)}
-                    </div>
-                </CSSTransition>
+                <Dropdown selectorRef={selectorRef} dropdown={dropdown} items={items} onBlur={blurHandler}/>
             ), document.getElementById('modal-container')!)}
+        </>
+    )
+}
+
+const Dropdown: React.FC<{selectorRef: RefObject<HTMLDivElement>, dropdown: {style: CSSProperties, in: boolean, direction: 'upward' | 'downward'}, items: SelectorItem[], onBlur: () => void}> = ({selectorRef, dropdown, items, onBlur}) => {
+    let dropdownRef = createRef<HTMLDivElement>()
+    const clickHandler: (event: MouseEvent) => void = (event) => {
+        onBlur()
+    }
+    useEffect(() => {
+        if(dropdown.in) {
+            console.log('added eventlistener')
+            document.addEventListener('click', clickHandler, true)
+            return () => {
+                console.log('eventlistener removed')
+                document.removeEventListener('click', clickHandler)
+            }
+        }
+    }, [dropdown.in])
+    return (
+        <>
+            <CSSTransition
+                in={dropdown.in}
+                nodeRef={dropdownRef}
+                timeout={500}
+                classNames={{
+                    enter: dropdown.direction === 'upward' ? styles['dropdown--enter--upward'] : styles['dropdown--enter--downward'],
+                    enterActive: styles['dropdown--enter-active'],
+                    exit: styles['dropdown--exit'],
+                    exitActive: dropdown.direction === 'upward' ? styles['dropdown--exit-active--upward'] : styles['dropdown--exit-active--downward']
+                }}
+                unmountOnExit
+            >
+                <div className={styles['dropdown']} ref={dropdownRef} style={dropdown.style}>
+                    {items.map(item => <Button style={{backgroundColor: 'transparent', outline: 'none'}}>{item.node}</Button>)}
+                </div>
+            </CSSTransition>
         </>
     )
 }

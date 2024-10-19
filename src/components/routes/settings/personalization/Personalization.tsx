@@ -41,7 +41,7 @@ export const Personalization: React.FC = () => {
                 <ListItem
                     text={{primary: '主题', secondary: '更改用户界面显示颜色'}}
                     icon={<IconBrush />}
-                    customSuffix={<Selector items={[{value: 'light', node: '浅色'}, {value: 'dark', node: '深色'}]} value='light'/>}
+                    customSuffix={<Selector items={[{value: 'light', node: '浅色'}, {value: 'dark', node: '深色'}, {value: 'auto', node: '跟随系统'}]} value='auto'/>}
                 />
                 <ListItem
                     text={{primary: '选择强调色...'}}

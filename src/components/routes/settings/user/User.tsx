@@ -9,6 +9,7 @@ import avatar from '../../../../assets/avatar.jpg'
 import { useTranslation } from "react-i18next"
 import { getAnimationTiming } from "../../../ui/animation"
 import Button from "../../../ui/inputs/button/Button"
+import { CircularProgress } from "../../../ui/dataDisplay/spinner/Spinner"
 
 export const User: React.FC = () => {
     let {t} = useTranslation()

@@ -1,7 +1,7 @@
 .button {
     position: relative;
     display: flex;
-    height: 32px;
+    min-height: 32px;
     min-width: 32px;
     outline: solid 1px;
     outline-color: var(--reverse-color-25);
@@ -11,7 +11,7 @@
 }
 
 .button:hover {
-    background-color: var(--reverse-color-10);
+    background-color: var(--reverse-color-10) !important;
     transition: background-color .1s;
 }
 
