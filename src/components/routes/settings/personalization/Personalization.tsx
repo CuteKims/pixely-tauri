@@ -16,9 +16,11 @@ import IconTranslate from '../../../../assets/icons/ui/translate.svg?react'
 
 import Selector from '../../../ui/inputs/selector/Selector'
 import { useTranslation } from 'react-i18next'
+import { useNavigate } from 'react-router'
 
 export const Personalization: React.FC = () => {
-    let {i18n} = useTranslation()
+    const {i18n} = useTranslation()
+    const navigate = useNavigate()
     return (
         <Subpage header='个性化你的启动器'>
             <StackList header='背景图片' animation={{delay: getAnimationTiming.fromFrames(10)}}>
@@ -31,7 +33,7 @@ export const Personalization: React.FC = () => {
                 <ListItem
                     text={{primary: '浏览预设图片...'}}
                     icon={<IconPhotos />}
-                    onClick={() => {}}
+                    onClick={() => navigate('/settings/personalization/preset_images')}
                 />
             </StackList>
             <StackList header="用户界面" animation={{delay: getAnimationTiming.fromFrames(16)}}>
@@ -42,7 +44,9 @@ export const Personalization: React.FC = () => {
                         <Selector
                             selections={[
                                 {value: 'zh-CN', node: '简体中文（中国大陆）'},
-                                {value: 'zh-TW', node: '繁體中文（中國台灣）'},
+                                {value: 'zh-TW', node: '繁體中文（台灣）'},
+                                {value: 'zh-HK', node: '繁體中文（香港特別行政區）'},
+                                {value: 'lzh', node: '文言（華夏）'},
                                 {value: 'en-US', node: 'English (US)'}
                             ]}
                             selectValue={i18n.language}

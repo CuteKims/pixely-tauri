@@ -43,12 +43,13 @@ export function useRippleEffect(ripplePoolRef: RefObject<HTMLDivElement>): {ripp
 
 const RippleWrapper: React.FC<{
     children: React.ReactNode,
+    rippleColor?: string,
     onClick?: MouseEventHandler<HTMLDivElement>,
     onMouseDown?: MouseEventHandler<HTMLDivElement>,
     onMouseUp?: MouseEventHandler<HTMLDivElement>,
     onMouseEnter?: MouseEventHandler<HTMLDivElement>,
     onMouseLeave?: MouseEventHandler<HTMLDivElement>
-}> = ({ children, onClick, onMouseDown, onMouseUp, onMouseEnter, onMouseLeave }) => {
+}> = ({ children, rippleColor, onClick, onMouseDown, onMouseUp, onMouseEnter, onMouseLeave }) => {
     const ripplePoolRef = useRef<HTMLDivElement>(null)
     const {rippleEffect, createRipple, destroyRipple} = useRippleEffect(ripplePoolRef)
 
@@ -77,7 +78,7 @@ const RippleWrapper: React.FC<{
 
     return (
         <div className={styles['ripple__container']} onClick={_onClick} onMouseDown={_onMouseDown} onMouseUp={_onMouseUp} onMouseLeave={_onMouseLeave} onMouseEnter={_onMouseEnter}>
-            <RipplePool ref={ripplePoolRef} rippleEffect={rippleEffect} style={{top: '0px'}}/>
+            <RipplePool ref={ripplePoolRef} rippleEffect={rippleEffect} rippleColor={rippleColor} style={{top: '0px'}}/>
             {children}
         </div>
     )

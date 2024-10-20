@@ -76,7 +76,7 @@ export const ListItem: React.FC<ListItemProps> = (props) => {
         let ripplePoolRef = useRef<HTMLDivElement>(null)
         const {rippleEffect, createRipple, destroyRipple} = useRippleEffect(ripplePoolRef)
         return (
-            <div className={`${styles['list-item__container']} ${styles['list-item__container--clickable']}`} style={getCssAnimation(props.animation)} onMouseDown={createRipple} onMouseUp={destroyRipple} onMouseLeave={destroyRipple}>
+            <div className={`${styles['list-item__container']} ${styles['list-item__container--clickable']}`} style={getCssAnimation(props.animation)} onMouseDown={createRipple} onMouseUp={destroyRipple} onMouseLeave={destroyRipple} onClick={props.onClick}>
                 <RipplePool ref={ripplePoolRef} rippleEffect={rippleEffect}/>
                 {listItem}
             </div>

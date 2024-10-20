@@ -1,6 +1,8 @@
 import styles from './Launching.module.css'
 import avatar from '../../../../assets/avatar.jpg'
 
+import image from '../../../../assets/bgimage/wallpaper17.jpg'
+
 import IconAuto from '../../../../assets/icons/ui/auto.svg?react'
 import IconInstall from '../../../../assets/icons/ui/install.svg?react'
 import IconRefresh from '../../../../assets/icons/ui/refresh.svg?react'
@@ -12,6 +14,7 @@ import { ListItem } from "../../../ui/dataDisplay/list/ListItem"
 import { Subpage } from "../../../ui/page/Page"
 import { useTranslation } from 'react-i18next'
 import { getAnimationTiming, getCssAnimation, UiAnimationProperty } from '../../../ui/animation'
+import ImagePresenter from '../../../ui/dataDisplay/imagePresenter/ImagePresenter'
 
 export const Launching: React.FC = () => {
     let {t} = useTranslation()

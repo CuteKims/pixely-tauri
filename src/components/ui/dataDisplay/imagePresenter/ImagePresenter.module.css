@@ -1,0 +1,25 @@
+.image-presenter__image {
+    width: 100%;
+    object-fit: cover;
+}
+
+.image-presenter__full-screen-image-container {
+    pointer-events: all;
+    position: absolute;
+    top: 36px;
+    left: 0px;
+    height: calc(100% - 36px);
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    background-color: rgba(0, 0, 0, .5);
+    backdrop-filter: blur(12px);
+}
+
+.image-presenter__full-screen-image-container__drag-container__image {
+    margin: auto;
+    transition: .5s cubic-bezier(0, .8, .2, 1);
+    transform-origin: top;
+    box-shadow: var(--default-box-shadow);
+    -webkit-user-drag: none;
+}

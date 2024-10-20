@@ -17,20 +17,25 @@ const Selector: React.FC<{
     const clickHandler = () => {
         setDropdown(dropdown => {
             if(!dropdown.in) {
-                let result: CSSProperties = {}
-                let DOMRect = selectorRef.current!.getBoundingClientRect()
-                let verticalDirection = DOMRect.top + DOMRect.height / 2 > document.documentElement.clientHeight / 2 ? 'top' : 'bottom'
-                let horizontalDirection = DOMRect.left + DOMRect.width / 2 > document.documentElement.clientWidth / 2 ? 'left' : 'right'
-
-                if(verticalDirection === 'top') result.bottom = `${document.documentElement.clientHeight - DOMRect.top + 8}px`
-                else result.top = `${DOMRect.bottom + 8}px`
-
-                if(horizontalDirection === 'left') result.right = `${document.documentElement.clientWidth - DOMRect.right}px`
-                else result.left = `${DOMRect.left}px`
-
-                result.minWidth = `${DOMRect.width}px`
-                
-                return {style: result, in: true, direction: verticalDirection === 'top' ? 'upward' : 'downward'}
+                try {
+                    let result: CSSProperties = {}
+                    let DOMRect = selectorRef.current!.getBoundingClientRect()
+                    let verticalDirection = DOMRect.top + DOMRect.height / 2 > document.documentElement.clientHeight / 2 ? 'top' : 'bottom'
+                    let horizontalDirection = DOMRect.left + DOMRect.width / 2 > document.documentElement.clientWidth / 2 ? 'left' : 'right'
+    
+                    if(verticalDirection === 'top') result.bottom = `${document.documentElement.clientHeight - DOMRect.top + 8}px`
+                    else result.top = `${DOMRect.bottom + 8}px`
+    
+                    if(horizontalDirection === 'left') result.right = `${document.documentElement.clientWidth - DOMRect.right}px`
+                    else result.left = `${DOMRect.left}px`
+    
+                    result.minWidth = `${DOMRect.width}px`
+                    
+                    return {style: result, in: true, direction: verticalDirection === 'top' ? 'upward' : 'downward'}
+                }
+                catch {
+                    return {...dropdown}
+                }
             }
             else return {...dropdown, in: false}
         })
