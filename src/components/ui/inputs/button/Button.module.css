@@ -11,7 +11,7 @@
 }
 
 .button:hover {
-    background-color: var(--reverse-color-10) !important;
+    background-color: var(--reverse-color-10);
     transition: background-color .1s;
 }
 

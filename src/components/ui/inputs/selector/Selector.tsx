@@ -1,14 +1,18 @@
-import { createRef, CSSProperties, RefObject, useEffect, useState } from 'react'
+import { CSSProperties, RefObject, useEffect, useRef, useState } from 'react'
 import { RipplePool, useRippleEffect } from '../../utils/ripple/Ripple'
 import styles from './Selector.module.css'
 import { createPortal } from 'react-dom'
 import { CSSTransition } from 'react-transition-group'
 import Button from '../button/Button'
 
-type SelectorItem = {value: any, node: React.ReactNode}
+type SelectorSelection = {value: any, node: React.ReactNode}
 
-const Selector: React.FC<{items: SelectorItem[], value: '' | any, onChange?: (value: string | number) => void}> = ({items, value, onChange}) => {
-    let selectorRef = createRef<HTMLDivElement>()
+const Selector: React.FC<{
+    selections: SelectorSelection[],
+    selectValue: '' | any,
+    onChange?: (newValue: any) => void
+}> = ({selections, selectValue, onChange}) => {
+    let selectorRef = useRef<HTMLDivElement>(null)
     const [dropdown, setDropdown] = useState<{style: CSSProperties, in: boolean, direction: 'upward' | 'downward'}>({style: {}, in: false, direction: 'downward'})
     const clickHandler = () => {
         setDropdown(dropdown => {
@@ -24,7 +28,7 @@ const Selector: React.FC<{items: SelectorItem[], value: '' | any, onChange?: (va
                 if(horizontalDirection === 'left') result.right = `${document.documentElement.clientWidth - DOMRect.right}px`
                 else result.left = `${DOMRect.left}px`
 
-                result.width = `${DOMRect.width}px`
+                result.minWidth = `${DOMRect.width}px`
                 
                 return {style: result, in: true, direction: verticalDirection === 'top' ? 'upward' : 'downward'}
             }
@@ -35,36 +39,67 @@ const Selector: React.FC<{items: SelectorItem[], value: '' | any, onChange?: (va
     const blurHandler = () => {
         setDropdown(dropdown => ({...dropdown, in: false}))
     }
-    let ripplePoolRef = createRef<HTMLDivElement>()
+    let ripplePoolRef = useRef<HTMLDivElement>(null)
     const {rippleEffect, createRipple, destroyRipple} = useRippleEffect(ripplePoolRef)
     return (
         <>
             <div ref={selectorRef} className={styles['selector']} onMouseDown={createRipple} onMouseUp={destroyRipple} onMouseLeave={destroyRipple} onClick={clickHandler}>
                 <RipplePool ref={ripplePoolRef} rippleEffect={rippleEffect} rippleColor='var(--reverse-color-10)'/>
-                {value === '' ? null : <p>{items.find(item => item.value === value)?.node}</p>}
+                {selectValue === '' ? null : <p>{selections.find(selection => selection.value === selectValue)?.node}</p>}
                 <div className={`${styles['selector__arrow']} ${dropdown.in ? styles['selector__arrow--in'] : ''}`}>
                     <Arrow />
                 </div>
             </div>
             {createPortal((
-                <Dropdown selectorRef={selectorRef} dropdown={dropdown} items={items} onBlur={blurHandler}/>
+                <Dropdown selectorRef={selectorRef} dropdown={dropdown} selections={selections} selectValue={selectValue} onChange={onChange} onBlur={blurHandler}/>
             ), document.getElementById('modal-container')!)}
         </>
     )
 }
 
-const Dropdown: React.FC<{selectorRef: RefObject<HTMLDivElement>, dropdown: {style: CSSProperties, in: boolean, direction: 'upward' | 'downward'}, items: SelectorItem[], onBlur: () => void}> = ({selectorRef, dropdown, items, onBlur}) => {
-    let dropdownRef = createRef<HTMLDivElement>()
-    const clickHandler: (event: MouseEvent) => void = (event) => {
-        onBlur()
+const Dropdown: React.FC<{
+    selectorRef: RefObject<HTMLDivElement>,
+    dropdown: {style: CSSProperties, in: boolean, direction: 'upward' | 'downward'},
+    selections: SelectorSelection[],
+    selectValue: string,
+    onChange?: (newValue: any) => void,
+    onBlur: () => void
+}> = ({selectorRef, dropdown, selections, selectValue, onChange: change, onBlur: blur}) => {
+    let dropdownRef = useRef<HTMLDivElement>(null)
+    const mouseDownHandler: (event: MouseEvent) => void = (event) => {
+        try {
+            let selectorDOMRect = selectorRef.current!.getBoundingClientRect()
+            let dropdownDOMRect = dropdownRef.current!.getBoundingClientRect()
+            if(
+                (
+                    event.clientX < selectorDOMRect.right &&
+                    event.clientX > selectorDOMRect.left &&
+                    event.clientY < selectorDOMRect.bottom &&
+                    event.clientY > selectorDOMRect.top
+                ) || (
+                    event.clientX < dropdownDOMRect.right &&
+                    event.clientX > dropdownDOMRect.left &&
+                    event.clientY < dropdownDOMRect.bottom &&
+                    event.clientY > dropdownDOMRect.top
+                )
+            ) {
+                return
+            }
+            else {
+                blur()
+            }
+        }
+        catch {
+            blur()
+        }
     }
     useEffect(() => {
         if(dropdown.in) {
-            console.log('added eventlistener')
-            document.addEventListener('click', clickHandler, true)
+            document.addEventListener('wheel', blur)
+            document.addEventListener('mousedown', mouseDownHandler, true)
             return () => {
-                console.log('eventlistener removed')
-                document.removeEventListener('click', clickHandler)
+                document.removeEventListener('wheel', blur)
+                document.removeEventListener('mousedown', mouseDownHandler, true)
             }
         }
     }, [dropdown.in])
@@ -83,7 +118,19 @@ const Dropdown: React.FC<{selectorRef: RefObject<HTMLDivElement>, dropdown: {sty
                 unmountOnExit
             >
                 <div className={styles['dropdown']} ref={dropdownRef} style={dropdown.style}>
-                    {items.map(item => <Button style={{backgroundColor: 'transparent', outline: 'none'}}>{item.node}</Button>)}
+                    {selections.map(selection => (
+                        <div className={styles['dropdown__button-container']}>
+                            <Button
+                                onClick={selection.value === selectValue ? blur : () => {
+                                    if (change) change(selection.value)   
+                                    blur()
+                                }}
+                                style={{backgroundColor: selection.value === selectValue ? 'var(--reverse-color-10)' : 'transparent', outline: 'none'}}
+                            >
+                                {selection.node}
+                            </Button>
+                        </div>
+                    ))}
                 </div>
             </CSSTransition>
         </>

@@ -49,7 +49,7 @@ const RippleWrapper: React.FC<{
     onMouseEnter?: MouseEventHandler<HTMLDivElement>,
     onMouseLeave?: MouseEventHandler<HTMLDivElement>
 }> = ({ children, onClick, onMouseDown, onMouseUp, onMouseEnter, onMouseLeave }) => {
-    const ripplePoolRef = createRef<HTMLDivElement>()
+    const ripplePoolRef = useRef<HTMLDivElement>(null)
     const {rippleEffect, createRipple, destroyRipple} = useRippleEffect(ripplePoolRef)
 
     const _onClick: MouseEventHandler<HTMLDivElement> = (event) => {

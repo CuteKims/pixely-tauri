@@ -1,7 +1,6 @@
 import { useState } from 'react';
-import { createPortal } from 'react-dom'
 
-import bgimage from '../../../assets/bgimage/wallpaper14.jpg'
+import bgimage from '../../../assets/bgimage/wallpaper12.png'
 
 import Titlebar from './titlebar/Titlebar';
 
@@ -13,7 +12,6 @@ import { Outlet } from 'react-router';
 import { RootState, globalContextWrapper, rootContext } from './rootContext';
 import { webviewWindow } from '@tauri-apps/api';
 import { useBridger } from '../../../bridger/bridger';
-import { AnimatePresence } from 'framer-motion';
 
 export const bridger = useBridger()
 

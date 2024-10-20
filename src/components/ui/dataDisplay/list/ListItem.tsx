@@ -1,13 +1,10 @@
-import { createRef, useEffect, useRef, useState } from 'react'
-import { Avatar } from '../avatar/Avatar'
+import { useRef } from 'react'
 import styles from './ListItem.module.css'
 import { getCssAnimation, UiAnimationProperty } from '../../animation'
-import Ripple, { RipplePool, useRippleEffect } from '../../utils/ripple/Ripple'
-import RippleWrapper from '../../utils/ripple/Ripple'
+import { RipplePool, useRippleEffect } from '../../utils/ripple/Ripple'
 
 export type ListItemProps = {
     animation?: UiAnimationProperty
-    selected?: boolean,
     text?: {
         primary: React.ReactNode,
         secondary?: React.ReactNode,
@@ -76,7 +73,7 @@ export const ListItem: React.FC<ListItemProps> = (props) => {
     )
 
     if(props.onClick) {
-        let ripplePoolRef = createRef<HTMLDivElement>()
+        let ripplePoolRef = useRef<HTMLDivElement>(null)
         const {rippleEffect, createRipple, destroyRipple} = useRippleEffect(ripplePoolRef)
         return (
             <div className={`${styles['list-item__container']} ${styles['list-item__container--clickable']}`} style={getCssAnimation(props.animation)} onMouseDown={createRipple} onMouseUp={destroyRipple} onMouseLeave={destroyRipple}>

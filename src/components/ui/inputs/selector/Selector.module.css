@@ -46,14 +46,24 @@
     position: absolute;
     outline: solid 1px;
     outline-color: var(--reverse-color-25);
-    padding: 8px 0px;
     background-color: var(--global-color-50);
-    backdrop-filter: blur(10px);
+    padding: 8px 0px;
+    backdrop-filter: blur(10px) saturate(150%);
     pointer-events: all;
     box-shadow: var(--default-box-shadow);
     transition:
         background-color .5s,
         outline-color .5s;
+}
+
+.dropdown__button-container {
+    background-color: transparent;
+    transition: .5s;
+}
+
+.dropdown__button-container:hover {
+    background-color: var(--reverse-color-10);
+    transition: .1s;
 }
 
 .dropdown--enter--upward {

@@ -15,8 +15,10 @@ import IconAnimation from '../../../../assets/icons/ui/animation.svg?react'
 import IconTranslate from '../../../../assets/icons/ui/translate.svg?react'
 
 import Selector from '../../../ui/inputs/selector/Selector'
+import { useTranslation } from 'react-i18next'
 
 export const Personalization: React.FC = () => {
+    let {i18n} = useTranslation()
     return (
         <Subpage header='个性化你的启动器'>
             <StackList header='背景图片' animation={{delay: getAnimationTiming.fromFrames(10)}}>
@@ -36,33 +38,73 @@ export const Personalization: React.FC = () => {
                 <ListItem
                     text={{primary: '显示语言'}}
                     icon={<IconTranslate />}
-                    customSuffix={<Selector items={[{value: 'zh-CN', node: '简体中文（中国大陆）'}, {value: 'zh-TW', node: '繁體中文（中國台灣）'}, {value: 'en-US', node: 'English (US)'}]} value='zh-CN'/>}
+                    customSuffix={
+                        <Selector
+                            selections={[
+                                {value: 'zh-CN', node: '简体中文（中国大陆）'},
+                                {value: 'zh-TW', node: '繁體中文（中國台灣）'},
+                                {value: 'en-US', node: 'English (US)'}
+                            ]}
+                            selectValue={i18n.language}
+                            onChange={newValue => i18n.changeLanguage(newValue)}
+                        />
+                    }
                 />
                 <ListItem
                     text={{primary: '主题', secondary: '更改用户界面显示颜色'}}
                     icon={<IconBrush />}
-                    customSuffix={<Selector items={[{value: 'light', node: '浅色'}, {value: 'dark', node: '深色'}, {value: 'auto', node: '跟随系统'}]} value='auto'/>}
+                    customSuffix={
+                        <Selector
+                            selections={[
+                                {value: 'light', node: '浅色'},
+                                {value: 'dark', node: '深色'},
+                                {value: 'auto', node: '跟随系统'}
+                            ]}
+                            selectValue='dark'
+                        />
+                    }
                 />
                 <ListItem
                     text={{primary: '选择强调色...'}}
                     icon={<IconColorPalatte />}
                 />
                 <ListItem
-                    text={{primary: ['高级材质', <span style={{fontSize: '12px', opacity: .5, marginLeft: '6px'}}>需要重启</span>], secondary: '用户界面元素的透明、颜色过滤和模糊效果。如果用户界面出现性能问题，请尝试关闭该选项。'}}
+                    text={{
+                        primary: [
+                            '高级材质',
+                            <span style={{fontSize: '12px', opacity: .5, marginLeft: '6px'}}>需要重启</span>
+                        ],
+                        secondary: '用户界面元素的透明、颜色过滤和模糊效果。如果用户界面出现性能问题，请尝试关闭该选项。'
+                    }}
                     icon={<IconTransparentEffect />}
                 />
             </StackList>
             <StackList header="动画" animation={{delay: getAnimationTiming.fromFrames(22)}}>
                 <ListItem
-                    text={{primary: ['全局动画效果', <span style={{fontSize: '12px', opacity: .5, marginLeft: '6px'}}>需要重启</span>]}}
+                    text={{
+                        primary: [
+                            '全局动画效果',
+                            <span style={{fontSize: '12px', opacity: .5, marginLeft: '6px'}}>需要重启</span>
+                        ]
+                    }}
                     icon={<IconAnimation />}
                 />
                 <ListItem
-                    text={{primary: ['过渡动画速度倍率', <span style={{fontSize: '12px', opacity: .5, marginLeft: '6px'}}>需要重启</span>]}}
+                    text={{
+                        primary: [
+                            '过渡动画速度倍率',
+                            <span style={{fontSize: '12px', opacity: .5, marginLeft: '6px'}}>需要重启</span>
+                        ]
+                    }}
                     icon={<IconAnimation />}
                 />
                 <ListItem
-                    text={{primary: ['关键帧动画速度倍率', <span style={{fontSize: '12px', opacity: .5, marginLeft: '6px'}}>需要重启</span>]}}
+                    text={{
+                        primary: [
+                            '关键帧动画速度倍率',
+                            <span style={{fontSize: '12px', opacity: .5, marginLeft: '6px'}}>需要重启</span>
+                        ]
+                    }}
                     icon={<IconAnimation />}
                 />
             </StackList>
