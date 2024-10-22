@@ -21,10 +21,8 @@ export const ListItem: React.FC<ListItemProps> = (props) => {
             {(() => {
                 if(props.customPrefix) {
                     return (
-                        <div style={{display: 'flex', margin: 'auto -2px auto 0px', padding: '12px 0px 12px 12px', alignContent: 'center', flexShrink: 0, minHeight: '32px', minWidth: '32px'}}>
-                            <div style={{display: 'flex', margin: 'auto'}}>
-                                {props.customPrefix}
-                            </div>
+                        <div className={styles['custom-prefix-container']}>
+                            {props.customPrefix}
                         </div>
                     )
                 }
@@ -32,10 +30,8 @@ export const ListItem: React.FC<ListItemProps> = (props) => {
             {(() => {
                 if(props.icon) {
                     return (
-                        <div style={{display: 'flex', margin: 'auto -10px auto 0px', padding: '12px 0px 12px 12px', alignContent: 'center', flexShrink: 0, minHeight: '32px', minWidth: '32px'}}>
-                            <div style={{display: 'flex', margin: 'auto'}}>
-                                {props.icon}
-                            </div>
+                        <div className={styles['icon-container']}>
+                            {props.icon}
                         </div>
                     )
                 }
@@ -45,14 +41,14 @@ export const ListItem: React.FC<ListItemProps> = (props) => {
                     if(props.text.secondary) {
                         return (
                             <div className={styles['list-item__text-container']}>
-                                <div className={styles['list-item__text-container__primary-text']}>{props.text.primary}</div>
-                                <div className={styles['list-item__text-container__secondary-text']}>{props.text.secondary}</div>
+                                <p className='plain-text--main'>{props.text.primary}</p>
+                                <p className='plain-text--small' style={{opacity: .8}}>{props.text.secondary}</p>
                             </div>
                         )
                     } else {
                         return (
                             <div className={styles['list-item__text-container']}>
-                                <div className={styles['list-item__text-container__primary-text']} style={{margin: '12px'}}>{props.text.primary}</div>
+                                <p className='plain-text--main'>{props.text.primary}</p>
                             </div>
                         )
                     }
@@ -61,10 +57,8 @@ export const ListItem: React.FC<ListItemProps> = (props) => {
             {(() => {
                 if(props.customSuffix) {
                     return (
-                        <div style={{display: 'flex', margin: 'auto 0px auto -2px', padding: '12px 12px 12px 0px', alignContent: 'center', alignSelf: 'end', flexShrink: 0, minHeight: '32px', minWidth: '32px'}}>
-                            <div style={{display: 'flex', margin: 'auto'}}>
-                                {props.customSuffix}
-                            </div>
+                        <div className={styles['custom-suffix-container']}>
+                            {props.customSuffix}
                         </div>
                     )
                 }
@@ -76,7 +70,7 @@ export const ListItem: React.FC<ListItemProps> = (props) => {
         let ripplePoolRef = useRef<HTMLDivElement>(null)
         const {rippleEffect, createRipple, destroyRipple} = useRippleEffect(ripplePoolRef)
         return (
-            <div className={`${styles['list-item__container']} ${styles['list-item__container--clickable']}`} style={getCssAnimation(props.animation)} onMouseDown={createRipple} onMouseUp={destroyRipple} onMouseLeave={destroyRipple} onClick={props.onClick}>
+            <div className={`${styles['list-item-container']} ${styles['list-item-container--clickable']}`} style={getCssAnimation(props.animation)} onMouseDown={createRipple} onMouseUp={destroyRipple} onMouseLeave={destroyRipple} onClick={props.onClick}>
                 <RipplePool ref={ripplePoolRef} rippleEffect={rippleEffect}/>
                 {listItem}
             </div>
@@ -84,20 +78,8 @@ export const ListItem: React.FC<ListItemProps> = (props) => {
     }
     
     else return (
-        <div className={styles['list-item__container']} style={getCssAnimation(props.animation)}>
+        <div className={styles['list-item-container']} style={getCssAnimation(props.animation)}>
             {listItem}
         </div>
-    )
-}
-
-export type ListDividerProps = {
-
-}
-
-export const ListDivider: React.FC<{}> = () => {
-    return (
-        <>
-
-        </>
     )
 }

@@ -85,7 +85,7 @@ const FullScreenImagePresenter: React.FC<{
             {state =>  (
                 <div
                     ref={imageContainerRef}
-                    style={{opacity: 0, transition: '.2s', ...fullScreenImageContainerTransitionStyles[state]}}
+                    style={{transition: '.2s', ...fullScreenImageContainerTransitionStyles[state]}}
                     className={styles['image-presenter__full-screen-image-container']}
                     onClick={handleClick}
                 >

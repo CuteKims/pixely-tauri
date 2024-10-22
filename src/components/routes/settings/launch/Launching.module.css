@@ -3,7 +3,7 @@
     flex-direction: column;
     padding: 10px 14px;
     background-color: var(--global-color-75);
-    backdrop-filter: var(--global-ui-filter);
+    backdrop-filter: var(--global-backdrop-filter);
     gap: 8px;
     transition: .5s;
 }

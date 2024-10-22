@@ -4,7 +4,7 @@ import { ListItem } from "../../ui/dataDisplay/list/ListItem";
 import { Page } from "../../ui/page/Page";
 import { motion } from "framer-motion";
 
-import image from '../../../assets/bgimage/SC_Frontiers_November2022.webp'
+import image from '../../../assets/bgimage/980d9965f5af340fb2bfaa3c382521fc.jpg'
 
 import { forwardRef } from "react";
 import ImagePresenter from "../../ui/dataDisplay/imagePresenter/ImagePresenter";
@@ -12,7 +12,7 @@ import ImagePresenter from "../../ui/dataDisplay/imagePresenter/ImagePresenter";
 const Playground: React.FC = () => {
     return (
         <Page style={{height: '100%', padding: '76px 40px 40px 40px'}}>
-            <ImagePresenter src={image} width={'256px'}/>
+            <ImagePresenter src={image} height={'256px'}/>
         </Page>
     )
 }

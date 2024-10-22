@@ -1,11 +1,11 @@
-.list-item__container {
+.list-item-container {
     position: relative;
     background-color: var(--global-color-50);
-    backdrop-filter: var(--global-ui-filter);
+    backdrop-filter: var(--global-backdrop-filter);
     transition: .5s;
 }
 
-.list-item__container--clickable:hover {
+.list-item-container--clickable:hover {
     background-color: var(--global-color-25);
     backdrop-filter: brightness(100%) saturate(200%);
     transition: .1s;
@@ -19,31 +19,12 @@
 
 .list-item__text-container {
     flex-grow: 1;
-    margin: auto 2px auto 2px;
+    margin: auto;
+    padding: 8px;
     display: flex;
     flex-direction: column;
-    gap: 1px;
 }
 
-.list-item__text-container__primary-text {
-    display: flex;
-    align-items: center;
-    font-size: 14px;
-    margin: 10px 10px 0px 12px;
-    color: var(--global-text-color);
-    text-shadow: var(--global-text-shadow);
-    transition-property: color, text-shadow;
-    transition-duration: .5s;
-}
+.list-item__custom-prefix-container {
 
-.list-item__text-container__secondary-text {
-    display: flex;
-    align-items: center;
-    font-size: 12px;
-    opacity: .75;
-    margin: 0px 10px 10px 12px;
-    color: var(--global-text-color);
-    text-shadow: var(--global-text-shadow);
-    transition-property: color, text-shadow;
-    transition-duration: .5s;
 }

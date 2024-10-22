@@ -19,8 +19,8 @@ export const User: React.FC = () => {
             <StackList header={t('ui.settings.user.pixely_account')} animation={{delay: getAnimationTiming.fromFrames(10)}}>
                 <ListItem
                     text={{primary: 'CuteKims#0303', secondary: t('ui.settings.user.pixely_account')}}
-                    customPrefix={<Avatar src={avatar} size={36} rounded style={{margin: "-2px"}}/>}
-                    customSuffix={<Button>{t('ui.settings.user.pixely_account.check_profile')}</Button>}
+                    customPrefix={<Avatar src={avatar} size={36} rounded/>}
+                    customSuffix={<Button icon={<IconSwitchAccount />}>{[t('ui.settings.user.pixely_account.check_profile')]}</Button>}
                 />
                 <ListItem
                     text={{primary: t('ui.settings.user.pixely_account.switch')}}

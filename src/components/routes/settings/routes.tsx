@@ -7,6 +7,7 @@ import { About } from "./about/About";
 import { Network } from "./network/Network";
 import { Notification } from "./notification/Notification";
 import { PresetImages } from "./personalization/PresetImages";
+import { Accessibility } from "./accessibility/Accessibility";
 
 export const settingsRoutes: RouteObject = {
     path: '/settings',
@@ -48,7 +49,7 @@ export const settingsRoutes: RouteObject = {
         {
             path: '/settings/accessibility',
             id: 'settings.accessibility',
-            element: <></>
+            element: <Accessibility />
         },
         {
             path: '/settings/advanced',
