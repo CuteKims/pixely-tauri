@@ -27,7 +27,7 @@
     width: min(100%, 960px);
     display: flex;
     flex-direction: column;
-    gap: 18px;
+    gap: 24px;
     /* animation: intro cubic-bezier(0,.8,.2,1) .5s; */
 }
 

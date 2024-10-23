@@ -14,13 +14,12 @@ import { CircularProgress } from "../../../ui/dataDisplay/spinner/Spinner"
 export const User: React.FC = () => {
     let {t} = useTranslation()
     return (
-        <Subpage>
-            <h1>{t('ui.settings.user')}</h1>
+        <Subpage header={'查看和管理账号档案'}>
             <StackList header={t('ui.settings.user.pixely_account')} animation={{delay: getAnimationTiming.fromFrames(10)}}>
                 <ListItem
                     text={{primary: 'CuteKims#0303', secondary: t('ui.settings.user.pixely_account')}}
-                    customPrefix={<Avatar src={avatar} size={36} rounded/>}
-                    customSuffix={<Button icon={<IconSwitchAccount />}>{[t('ui.settings.user.pixely_account.check_profile')]}</Button>}
+                    customPrefix={<Avatar src={avatar} size={36} rounded outlined/>}
+                    customSuffix={<Button icon={<IconSwitchAccount />} text={'查看或编辑个人资料'}/>}
                 />
                 <ListItem
                     text={{primary: t('ui.settings.user.pixely_account.switch')}}

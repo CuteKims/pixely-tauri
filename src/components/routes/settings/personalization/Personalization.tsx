@@ -76,7 +76,7 @@ export const Personalization: React.FC = () => {
                     text={{
                         primary: [
                             '高级材质',
-                            <span style={{fontSize: '12px', opacity: .5, marginLeft: '6px'}}>需要重启</span>
+                            <span className='marked-text--sidenote'>需要重启</span>
                         ],
                         secondary: '用户界面元素的透明、颜色过滤和模糊效果。如果用户界面出现性能问题，请尝试关闭该选项。'
                     }}
@@ -88,7 +88,7 @@ export const Personalization: React.FC = () => {
                     text={{
                         primary: [
                             '全局动画效果',
-                            <span style={{fontSize: '12px', opacity: .5, marginLeft: '6px'}}>需要重启</span>
+                            <span className='marked-text--sidenote'>需要重启</span>
                         ]
                     }}
                     icon={<IconAnimation />}
@@ -97,7 +97,7 @@ export const Personalization: React.FC = () => {
                     text={{
                         primary: [
                             '过渡动画速度倍率',
-                            <span style={{fontSize: '12px', opacity: .5, marginLeft: '6px'}}>需要重启</span>
+                            <span className='marked-text--sidenote'>需要重启</span>
                         ]
                     }}
                     icon={<IconAnimation />}
@@ -106,7 +106,7 @@ export const Personalization: React.FC = () => {
                     text={{
                         primary: [
                             '关键帧动画速度倍率',
-                            <span style={{fontSize: '12px', opacity: .5, marginLeft: '6px'}}>需要重启</span>
+                            <span className='marked-text--sidenote'>需要重启</span>
                         ]
                     }}
                     icon={<IconAnimation />}
@@ -121,8 +121,7 @@ const ImageSetter: React.FC<{animation?: UiAnimationProperty}> = (props) => {
     return (
         <div className={styles['image-setter']} style={{backgroundColor: isOnDragOver ? 'rgba(0,0,0,.25)' : 'transparent', ...getCssAnimation(props.animation)}} onDragOver={() => setIsOnDragOver(true)} onDragOverCapture={() => console.log('DragOver')}>
             <DragDropIcon />
-            <p>拖放图片来设置</p>
-            <p style={{opacity: .75, fontSize: '12px'}}>将受支持的图像文件拖放到此处即可设置背景图片。</p>
+            <p className='white-text--small' style={{textAlign: 'center'}}>拖放图片来设置<br /><span className='marked-text--sidenote'>将受支持的图像文件拖放到此处即可设置背景图片。</span></p>
         </div>
     )
 }

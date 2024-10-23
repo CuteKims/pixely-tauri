@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-import bgimage from '../../../assets/bgimage/wallpaper12.png'
+import bgimage from '../../../assets/bgimage/wallpaper7.jpg'
 
 import Titlebar from './titlebar/Titlebar';
 

@@ -9,15 +9,11 @@ const defaultAnimationProps: AnimationProperties = {
 export const StackList: React.FC<{children: React.ReactNode, gap?: string, header?: string, animation?: UiAnimationProperty}> = (props) => {
     let childrenLength = useRef(React.Children.count(props.children)).current
     return (
-        <div className={styles['stack-list']} style={getCssAnimation(props.animation, defaultAnimationProps, ['fade-in'])}>
-            {(() => {
-                if (props.header !== undefined) {
-                    return (
-                        <p className={styles['stack-list__header']} style={getCssAnimation(props.animation, defaultAnimationProps, ['top-slide-in', 'bottom-slide-in', 'left-slide-in', 'right-slide-in', 'scale-up-in', 'scale-down-in'])}>{props.header}</p>
-                    )
-                }
-            })()}
-            <div className={styles['stack-list__container']} style={{gap: props.gap}}>
+        <div className={styles['stack-list-container']} style={getCssAnimation(props.animation, defaultAnimationProps, ['fade-in'])}>
+            {props.header ? (
+                <p className='white-text--medium' style={{padding: '0px 0px 8px 0px', ...getCssAnimation(props.animation, defaultAnimationProps, ['top-slide-in', 'bottom-slide-in', 'left-slide-in', 'right-slide-in', 'scale-up-in', 'scale-down-in'])}}>{props.header}</p>
+            ) : null}
+            <div className={styles['stack-list']} style={{gap: props.gap}}>
                 {(() => {
                     if (props.animation) {
                         let delay = 0
@@ -47,7 +43,7 @@ export const StackList: React.FC<{children: React.ReactNode, gap?: string, heade
 export const GridList: React.FC<{children?: React.ReactNode, gap?: string, animation?: UiAnimationProperty}> = (props) => {
     let childrenLength = useRef(React.Children.count(props.children)).current
     return (
-        <div className={styles['grid-list__container']} style={{gap: props.gap, ...getCssAnimation(props.animation, defaultAnimationProps, ['fade-in'])}}>
+        <div className={styles['grid-list']} style={{gap: props.gap, ...getCssAnimation(props.animation, defaultAnimationProps, ['fade-in'])}}>
             {(() => {
                     if (props.animation) {
                         let delay = 0

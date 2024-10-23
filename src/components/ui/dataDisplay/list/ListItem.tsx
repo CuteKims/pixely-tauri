@@ -18,51 +18,30 @@ export type ListItemProps = {
 export const ListItem: React.FC<ListItemProps> = (props) => {
     let listItem = (
         <div className={styles['list-item']}>
-            {(() => {
-                if(props.customPrefix) {
-                    return (
-                        <div className={styles['custom-prefix-container']}>
-                            {props.customPrefix}
-                        </div>
-                    )
-                }
-            })()}
-            {(() => {
-                if(props.icon) {
-                    return (
-                        <div className={styles['icon-container']}>
-                            {props.icon}
-                        </div>
-                    )
-                }
-            })()}
-            {(() => {
-                if(props.text) {
-                    if(props.text.secondary) {
-                        return (
-                            <div className={styles['list-item__text-container']}>
-                                <p className='plain-text--main'>{props.text.primary}</p>
-                                <p className='plain-text--small' style={{opacity: .8}}>{props.text.secondary}</p>
-                            </div>
-                        )
-                    } else {
-                        return (
-                            <div className={styles['list-item__text-container']}>
-                                <p className='plain-text--main'>{props.text.primary}</p>
-                            </div>
-                        )
-                    }
-                }
-            })()}
-            {(() => {
-                if(props.customSuffix) {
-                    return (
-                        <div className={styles['custom-suffix-container']}>
-                            {props.customSuffix}
-                        </div>
-                    )
-                }
-            })()}
+            {props.customPrefix ? (
+                <div className={styles['list-item__custom-prefix-container']}>
+                    {props.customPrefix}
+                </div>
+            ) : null}
+
+            {props.icon ? (
+                <div className={styles['list-item__icon-container']}>
+                    {props.icon}
+                </div>
+            ) : null}
+
+            {props.text ? (
+                <div className={styles['list-item__text-container']}>
+                    <p className='plain-text--main'>{props.text.primary}</p>
+                    {props.text.secondary ? <p className='plain-text--small' style={{opacity: .75}}>{props.text.secondary}</p> : null}
+                </div>
+            ) : null}
+
+            {props.customSuffix ? (
+                <div className={styles['list-item__custom-suffix-container']}>
+                    {props.customSuffix}
+                </div>
+            ) : null}
         </div>
     )
 

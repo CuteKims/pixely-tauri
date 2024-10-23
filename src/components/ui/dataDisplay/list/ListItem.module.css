@@ -20,11 +20,28 @@
 .list-item__text-container {
     flex-grow: 1;
     margin: auto;
-    padding: 8px;
+    padding: 10px 14px;
     display: flex;
     flex-direction: column;
+    gap: 2px;
 }
 
 .list-item__custom-prefix-container {
+    margin: auto;
+    margin-right: -4px;
+    padding: 10px;
+    padding-right: 0px;
+}
 
+.list-item__icon-container {
+    margin: auto;
+    margin-right: -4px;
+    padding: 16px;
+    padding-right: 0px;
+}
+
+.list-item__custom-suffix-container {
+    margin: auto;
+    padding: 12px;
+    padding-left: 0px;
 }

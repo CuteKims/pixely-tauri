@@ -4,24 +4,29 @@ export type AvatarProps = {
     src: string | undefined,
     size: number,
     rounded?: boolean | number,
-    bordered?: boolean,
+    outlined?: boolean | string,
     style?: CSSProperties
 }
 
 export const Avatar: React.FC<AvatarProps> = (props) => {
-    let borderRadius = (() => {
-        if(props.rounded === true) return props.size / 2 + 'px'
-        else if(props.rounded) return props.rounded + 'px'
-        else return '0px'
-    })()
+    let borderRadius: string
+
+    if(props.rounded === true) borderRadius = props.size / 2 + 'px'
+    else if(props.rounded) borderRadius = props.rounded + 'px'
+    else borderRadius = '0px'
+
+    let outline: string | undefined
+
+    if(props.outlined === true) outline = '1px solid var(--reverse-color-10)'
+    else if(props.outlined) outline = props.outlined
+    else outline = undefined
     return (
         <img style={{
             height: props.size + 'px',
             width: props.size + 'px',
             borderRadius,
             objectFit: 'cover',
-            boxSizing: props.bordered ? 'border-box' : undefined,
-            border: props.bordered ? '1px solid var(--reverse-color-10)' : undefined,
+            outline,
             ...props.style
         }} src={props.src} />
     )

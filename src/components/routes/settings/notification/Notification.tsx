@@ -5,8 +5,7 @@ import { Subpage } from "../../../ui/page/Page"
 
 export const Notification: React.FC = () => {
     return (
-        <Subpage>
-            <h1>管理通知的推送方式</h1>
+        <Subpage header={'管理通知的推送方式'}>
             <StackList animation={{delay: getAnimationTiming.fromFrames(10)}}>
                 <ListItem text={{primary: '通知', secondary: '推送、提醒并管理启动器内的通知信息'}}/>
                 <ListItem text={{primary: '请勿打扰', secondary: '将通知直接推送到操作中心而不提醒'}}/>

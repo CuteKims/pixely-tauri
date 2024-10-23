@@ -54,15 +54,13 @@ export const SubpageBase: React.FC<{children?: React.ReactNode, style?: React.CS
 
 export const Subpage: React.FC<{header?: React.ReactNode, children?: React.ReactNode, gap?: string}> = (props) => {
     return (
-        <ScrollBox contentContainerStyle={{display: 'flex', justifyContent: 'center', padding: '36px'}}>
+        <ScrollBox contentContainerStyle={{padding: '36px'}}>
+            {props.header ? (
+                <p className='white-text--header' style={{paddingBottom: '18px'}}>
+                    {props.header}
+                </p>
+            ) : null}
             <SubpageBase>
-                {(() => {
-                    if (props.header) return (
-                        <div style={{margin: 0, fontWeight: 400, fontSize: '24px', color: 'var(--text-color-light)', textShadow: '0px 1px 4px rgba(0, 0, 0, .6)'}}>
-                            {props.header}
-                        </div>
-                    )
-                })()}
                 {props.children}
             </SubpageBase>
         </ScrollBox>
