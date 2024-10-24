@@ -23,8 +23,8 @@
 }
 
 #subpage {
-    height: 100%;
-    width: min(100%, 960px);
+    margin: auto;
+    width: min(100%, 800px);
     display: flex;
     flex-direction: column;
     gap: 24px;

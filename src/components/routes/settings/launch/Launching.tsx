@@ -19,8 +19,7 @@ import ImagePresenter from '../../../ui/dataDisplay/imagePresenter/ImagePresente
 export const Launching: React.FC = () => {
     let {t} = useTranslation()
     return (
-        <Subpage>
-            <h1>{t('ui.settings.launching')}</h1>
+        <Subpage header={t('ui.settings.launching')}>
             <StackList header={t('ui.settings.launching.jre')} animation={{delay: getAnimationTiming.fromFrames(10)}}>
                 <ListItem
                     text={{primary: 'Java(TM) Platform SE binary 8.0.4010.10 (x64)', secondary: 'C:/Program Files/Java/jre-1.8/bin/javaw.exe'}}

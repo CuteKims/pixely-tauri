@@ -56,7 +56,7 @@ export const Subpage: React.FC<{header?: React.ReactNode, children?: React.React
     return (
         <ScrollBox contentContainerStyle={{padding: '36px'}}>
             {props.header ? (
-                <p className='white-text--header' style={{paddingBottom: '18px'}}>
+                <p className='white-text--header' style={{paddingBottom: '18px', width: 'min(100%, 800px)', margin: 'auto'}}>
                     {props.header}
                 </p>
             ) : null}
