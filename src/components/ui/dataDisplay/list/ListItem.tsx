@@ -33,7 +33,7 @@ export const ListItem: React.FC<ListItemProps> = (props) => {
             {props.text ? (
                 <div className={styles['list-item__text-container']}>
                     <p className='plain-text--main'>{props.text.primary}</p>
-                    {props.text.secondary ? <p className='plain-text--small' style={{opacity: .75}}>{props.text.secondary}</p> : null}
+                    {props.text.secondary ? <p className='plain-text--small opacity-75'>{props.text.secondary}</p> : null}
                 </div>
             ) : null}
 

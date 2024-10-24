@@ -4,6 +4,7 @@ import "./root.css"
 import { RouteObject, RouterProvider, createMemoryRouter } from "react-router";
 import React from "react";
 import Root from "./components/routes/_root/Root";
+import 'virtual:uno.css'
 
 import "./i18n/i18n";
 import { launcherRoutes } from "./components/routes/launcher/routes";

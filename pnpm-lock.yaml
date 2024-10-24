@@ -69,6 +69,9 @@ importers:
       '@types/three':
         specifier: ^0.167.2
         version: 0.167.2
+      '@unocss/preset-uno':
+        specifier: ^0.63.6
+        version: 0.63.6
       '@vitejs/plugin-react':
         specifier: ^4.3.1
         version: 4.3.1(vite@4.5.3)
